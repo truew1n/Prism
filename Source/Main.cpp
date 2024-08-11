@@ -17,6 +17,7 @@
 #include "Shader.hpp"
 #include "Texture.hpp"
 
+#include "Uniform.hpp"
 
 void ResizeCallback(GLFWwindow *Window, int32_t FrameBufferWidth, int32_t FrameBufferHeight)
 {
@@ -118,22 +119,21 @@ int main(void)
     glm::mat4 ProjectionMatrix = glm::perspective(FOV, AspectRatio, NearPlane, FarPlane);
 
     DefaultShader.Activate();
-    GLint ProjectionLoc = glGetUniformLocation(DefaultShader.GetId(), "Projection");
-    glUniformMatrix4fv(ProjectionLoc, 1, GL_FALSE, glm::value_ptr(ProjectionMatrix));
+    CUniform::SetUniform<glm::mat4>(DefaultShader, "Projection", ProjectionMatrix);
 
     glm::vec3 CameraPosition = glm::vec3(0.0f, 0.0f, 3.0f);
     float CameraSpeed = 10.0f;
 
     glm::mat4 ViewMatrix = glm::translate(glm::mat4(1.0f), -CameraPosition);
-    GLint ViewLoc = glGetUniformLocation(DefaultShader.GetId(), "View");
-    glUniformMatrix4fv(ViewLoc, 1, GL_FALSE, glm::value_ptr(ViewMatrix));
+    CUniform::SetUniform<glm::mat4>(DefaultShader, "View", ViewMatrix);
+
 
     CTexture SomeTexture = CTexture("Assets/Textures/Font/Font.png", "Diffuse", 0);
     SomeTexture.TextureUnit(DefaultShader, "Diffuse", 0);
     SomeTexture.Bind();
 
-    GLint WorldPositionLocation = glGetUniformLocation(DefaultShader.GetId(), "WorldPosition");
-    glUniform3fv(WorldPositionLocation, 1, glm::value_ptr(glm::vec3(0.0f, 0.0f, 0.0f)));
+    glm::vec3 WorldPosition = glm::vec3(0.0f, 0.0f, 0.0f);
+    CUniform::SetUniform<glm::vec3>(DefaultShader, "WorldPosition", WorldPosition);
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
@@ -151,11 +151,8 @@ int main(void)
         
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
-        GLint UniformX = glGetUniformLocation(DefaultShader.GetId(), "X");
-        glUniform1i(UniformX, i);
-
-        GLint UniformY = glGetUniformLocation(DefaultShader.GetId(), "Y");
-        glUniform1i(UniformY, j);
+        CUniform::SetUniform<int>(DefaultShader, "X", i);
+        CUniform::SetUniform<int>(DefaultShader, "Y", j);
 
         VertexArray.Bind();
         glDrawElements(GL_TRIANGLES, Indices.size(), GL_UNSIGNED_INT, 0);

@@ -13,6 +13,7 @@ Source/Shader/Shader.cpp
 Source/Buffer/ElementBuffer.cpp
 Source/Buffer/VertexArray.cpp
 Source/Buffer/VertexBuffer.cpp
+Source/Render/Uniform.cpp
 Source/Render/Texture.cpp
 #
 ~ Include Directories
