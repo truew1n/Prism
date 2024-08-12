@@ -1,27 +1,33 @@
 ~ Esoteric Build System
 ~
 ~ Main File Filepath
-$Source/Main.cpp
+$Game/Main.cpp
 ~ Output Directory
 !Bin/Debug/
 ~ Output File
 @Prism
 ~ Classes
 #
-Source/Lib/stb_image.cpp
-Source/Shader/Shader.cpp
-Source/Buffer/ElementBuffer.cpp
-Source/Buffer/VertexArray.cpp
-Source/Buffer/VertexBuffer.cpp
-Source/Render/Uniform.cpp
-Source/Render/Texture.cpp
+Engine/Lib/stb_image.cpp
+Engine/Shader/Shader.cpp
+Engine/Buffer/ElementBuffer.cpp
+Engine/Buffer/VertexArray.cpp
+Engine/Buffer/VertexBuffer.cpp
+Engine/Render/Uniform.cpp
+Engine/Render/Texture.cpp
+Engine/Render/Material.cpp
+Engine/Render/Mesh.cpp
+Engine/Render/MeshFactory.cpp
+Game/Materials/BaseMaterial.cpp
 #
 ~ Include Directories
 *
-Source/Lib/
-Source/Shader/
-Source/Buffer/
-Source/Render/
+Engine/Lib/
+Engine/Shader/
+Engine/Buffer/
+Engine/Render/
+Engine/Utils/
+Game/Materials/
 *
 ~ Linking
 &

@@ -18,11 +18,11 @@ typedef struct {
     char out_dir[MAX_LENGTH];
     char out_name[MAX_LENGTH];
     char main_file[MAX_LENGTH];
-    char classes[10][MAX_LENGTH];
+    char classes[50][MAX_LENGTH];
     int class_count;
-    char include_dirs[10][MAX_LENGTH];
+    char include_dirs[50][MAX_LENGTH];
     int include_count;
-    char link_libs[10][MAX_LENGTH];
+    char link_libs[50][MAX_LENGTH];
     int link_count;
 } Config;
 
