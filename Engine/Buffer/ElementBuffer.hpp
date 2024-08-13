@@ -8,7 +8,7 @@ class CElementBuffer {
 public:
     uint32_t Id;
 
-    CElementBuffer(CArray<uint32_t> &Indices);
+    CElementBuffer(CArray<uint32_t> *Indices);
 
     void Bind();
     void Unbind();

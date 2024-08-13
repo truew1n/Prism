@@ -12,9 +12,9 @@ private:
     CMaterial *Material;
 public:
     CMesh();
-    CMesh(CArray<SVertex> &Vertices, CArray<uint32_t> &Indices);
+    CMesh(CArray<SVertex> *Vertices, CArray<uint32_t> *Indices);
     void Draw();
-    void Delete();
+    ~CMesh();
 
     void SetMaterial(CMaterial *NewMaterial);
     CMaterial *GetMaterial();

@@ -17,7 +17,7 @@ class CVertexBuffer {
 public:
     uint32_t Id;
 
-    CVertexBuffer(CArray<SVertex> &Vertices);
+    CVertexBuffer(CArray<SVertex> *Vertices);
 
 	void Bind();
 	void Unbind();

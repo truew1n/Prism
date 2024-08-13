@@ -14,7 +14,7 @@ public:
 	CTexture() : Id(0), Type(nullptr), Unit(0) {};
 	CTexture(const char *Image, const char *TextureType, uint32_t Slot);
 
-	void SetUniform(CShader &OShader, const char *Uniform, uint32_t Unit);
+	void SetUniform(CShader *Shader, const char *Uniform, uint32_t Unit);
 	void Bind();
 	void Unbind();
 	void Delete();

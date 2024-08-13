@@ -8,13 +8,13 @@
 
 class CMaterial {
 protected:
-    CShader Shader;
-    CArray<CTexture> Textures;
+    CShader *Shader;
+    CArray<CTexture*> *Textures;
 public:
     CMaterial();
     virtual void Bind();
     virtual void Unbind();
-    virtual void Delete();
+    ~CMaterial();
 
     virtual void SetProjection(glm::mat4 Projection);
     virtual void SetView(glm::mat4 View);

@@ -24,7 +24,7 @@ public:
         Clear();
     }
 
-    void Free()
+    ~CArray()
     {
         delete Data;
     }
@@ -99,12 +99,12 @@ public:
 
     /*  Convertes P-type array to T-type templated Array
     */
-    static CArray<T> From(T *Source, int32_t Length)
+    static CArray<T> *From(T *Source, int32_t Length)
     {
-        if(Length <= 0 || !Source) new CArray<T>();
-        CArray<T> NewArray(Length);
+        if(Length <= 0 || !Source) return new CArray<T>();
+        CArray<T> *NewArray = new CArray<T>(Length);
         for(int32_t i = 0; i < Length; ++i) {
-            NewArray.Set(Source[i], i);
+            NewArray->Set(Source[i], i);
         }
         return NewArray;
     }

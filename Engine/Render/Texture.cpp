@@ -36,11 +36,11 @@ CTexture::CTexture(const char *Image, const char *TextureType, uint32_t Slot)
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void CTexture::SetUniform(CShader &Shader, const char *Uniform, uint32_t Unit)
+void CTexture::SetUniform(CShader *Shader, const char *Uniform, uint32_t Unit)
 {
-	Shader.Activate();
+	Shader->Activate();
 
-	uint32_t TexUnitLocation = glGetUniformLocation(Shader.GetId(), Uniform);
+	uint32_t TexUnitLocation = glGetUniformLocation(Shader->GetId(), Uniform);
 	
 	glUniform1i(TexUnitLocation, Unit);	
 }

@@ -8,10 +8,10 @@
 
 class CUniform {
 private:
-    static GLint GetUniformLocation(CShader &Shader, std::string Name);
+    static GLint GetUniformLocation(CShader *Shader, std::string Name);
 public:
     template<typename T>
-    static void SetUniform(CShader &Shader, std::string Name, T Value);
+    static void SetUniform(CShader *Shader, std::string Name, T Value);
 };
 
 #endif

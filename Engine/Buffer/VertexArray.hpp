@@ -10,7 +10,7 @@ public:
 
 	CVertexArray();
 
-	void LinkAttribute(CVertexBuffer &VertexBuffer, uint32_t Layout, uint32_t ComponentCount, uint32_t Type, ptrdiff_t Stride, void *Offset);
+	void LinkAttribute(CVertexBuffer *VertexBuffer, uint32_t Layout, uint32_t ComponentCount, uint32_t Type, ptrdiff_t Stride, void *Offset);
 	void Bind();
 	void Unbind();
 	void Delete();

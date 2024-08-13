@@ -8,6 +8,7 @@ $Game/Main.cpp
 @Prism
 ~ Classes
 #
+Engine/Utils/Transform.cpp
 Engine/Lib/stb_image.cpp
 Engine/Shader/Shader.cpp
 Engine/Buffer/ElementBuffer.cpp
@@ -18,6 +19,11 @@ Engine/Render/Texture.cpp
 Engine/Render/Material.cpp
 Engine/Render/Mesh.cpp
 Engine/Render/MeshFactory.cpp
+Engine/Scene/Object.cpp
+Engine/Scene/ActorComponent.cpp
+Engine/Scene/SceneComponent.cpp
+Engine/Scene/Actor.cpp
+Engine/Scene/Level.cpp
 Game/Materials/BaseMaterial.cpp
 #
 ~ Include Directories
@@ -27,6 +33,7 @@ Engine/Shader/
 Engine/Buffer/
 Engine/Render/
 Engine/Utils/
+Engine/Scene/
 Game/Materials/
 *
 ~ Linking

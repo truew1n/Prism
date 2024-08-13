@@ -3,28 +3,32 @@
 
 CMaterial::CMaterial()
 {
-    // ;;
+    Shader = new CShader();
+    Textures = new CArray<CTexture *>(); 
 }
 
 void CMaterial::Bind()
 {
-    Shader.Activate();
-    for(CTexture Texture : Textures) {
-        Texture.SetUniform(Shader, Texture.GetType(), Texture.GetUnit());
-        Texture.Bind();
+    Shader->Activate();
+    for(int32_t I = 0; I < Textures->Num(); ++I) {
+        CTexture *Texture = Textures->Get(I);
+        Texture->SetUniform(Shader, Texture->GetType(), Texture->GetUnit());
+        Texture->Bind();
     }
 }
 
 void CMaterial::Unbind()
 {
-    for(CTexture Texture : Textures) {
-        Texture.Unbind();
+    for(int32_t I = 0; I < Textures->Num(); ++I) {
+        CTexture *Texture = Textures->Get(I);
+        Texture->Unbind();
     }
 }
 
-void CMaterial::Delete()
+CMaterial::~CMaterial()
 {
-    Textures.Free();
+    delete Shader;
+    delete Textures;
 }
 
 void CMaterial::SetProjection(glm::mat4 Projection)

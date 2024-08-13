@@ -1,10 +1,10 @@
 #include "ElementBuffer.hpp"
 
-CElementBuffer::CElementBuffer(CArray<uint32_t> &Indices)
+CElementBuffer::CElementBuffer(CArray<uint32_t> *Indices)
 {
     glGenBuffers(1, &Id);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, Id);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, Indices.Num() * sizeof(uint32_t), Indices.begin(), GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, Indices->Num() * sizeof(uint32_t), Indices->begin(), GL_STATIC_DRAW);
 }
 
 void CElementBuffer::Bind()
