@@ -20,6 +20,7 @@ Engine/Render/Material.cpp
 Engine/Render/Mesh.cpp
 Engine/Render/MeshFactory.cpp
 Engine/Scene/Object.cpp
+Engine/Scene/Asset.cpp
 Engine/Scene/ActorComponent.cpp
 Engine/Scene/SceneComponent.cpp
 Engine/Scene/Actor.cpp

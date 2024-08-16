@@ -128,7 +128,7 @@ int main(void)
     CMesh *Second = new CMesh();
     Second->SetMaterial(BaseMaterial);
     
-    CMesh *Third = CMeshFactory::GenerateSphere(1.0f, 32, 32);
+    CMesh *Third = CMeshFactory::GenerateSphere(10.0f, 32, 32);
     Third->SetMaterial(BaseMaterial);
 
     // Set initial projection matrix
@@ -139,11 +139,15 @@ int main(void)
 
     glm::mat4 ProjectionMatrix = glm::perspective(FOV, AspectRatio, NearPlane, FarPlane);
     BaseMaterial->SetProjection(ProjectionMatrix);
-
-    glEnable(GL_DEPTH_TEST);
     
     bool IsPressed = false;
     bool Mode = false;
+
+    glEnable(GL_DEPTH_TEST);
+    
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
+    glFrontFace(GL_CCW);
 
     auto LastTime = std::chrono::high_resolution_clock::now();
     while (!glfwWindowShouldClose(Window)) {
@@ -165,6 +169,12 @@ int main(void)
         }
         if (glfwGetKey(Window, GLFW_KEY_S) == GLFW_PRESS) {
             CameraPosition -= CameraFront * CameraSpeed * DeltaTime;
+        }
+        if (glfwGetKey(Window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+            CameraPosition.y += CameraSpeed * DeltaTime;
+        }
+        if (glfwGetKey(Window, GLFW_KEY_C) == GLFW_PRESS) {
+            CameraPosition.y -= CameraSpeed * DeltaTime;
         }
         if (glfwGetKey(Window, GLFW_KEY_E) == GLFW_PRESS) {
             if(!IsPressed) {
@@ -192,8 +202,10 @@ int main(void)
         BaseMaterial->SetWorldPosition(glm::vec3(2.0f, 0.0f, 0.0f));
         Second->Draw();
 
-        BaseMaterial->SetWorldPosition(glm::vec3(-2.0f, 0.0f, 0.0f));
+        glDisable(GL_CULL_FACE);
+        BaseMaterial->SetWorldPosition(glm::vec3(-20.0f, 0.0f, 0.0f));
         Third->Draw();
+        glEnable(GL_CULL_FACE);
 
         glfwSwapBuffers(Window);
         glfwPollEvents();

@@ -3,8 +3,16 @@
 
 #include "Object.hpp"
 
-class CActorComponent : public CObject {
+class CActor;
 
+class CActorComponent : public CObject {
+private:
+    CActor *Owner;
+public:
+    CActorComponent();
+    CActor *GetOwner();
+    void Tick(float DeltaTime) override;
+    ~CActorComponent();
 };
 
 #endif

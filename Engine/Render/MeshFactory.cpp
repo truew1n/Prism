@@ -1,5 +1,6 @@
 #include "MeshFactory.hpp"
 
+
 CMesh *CMeshFactory::GeneratePlaneRing(float InnerRadius, float OuterRadius, int32_t SegmentCount)
 {
     float AngleStep = 2.0f * M_PI / SegmentCount;

@@ -40,9 +40,9 @@ void CTexture::SetUniform(CShader *Shader, const char *Uniform, uint32_t Unit)
 {
 	Shader->Activate();
 
-	uint32_t TexUnitLocation = glGetUniformLocation(Shader->GetId(), Uniform);
+	uint32_t TextureLocation = glGetUniformLocation(Shader->GetId(), Uniform);
 	
-	glUniform1i(TexUnitLocation, Unit);	
+	glUniform1i(TextureLocation, Unit);	
 }
 
 void CTexture::Bind()

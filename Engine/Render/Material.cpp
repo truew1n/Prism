@@ -4,7 +4,7 @@
 CMaterial::CMaterial()
 {
     Shader = new CShader();
-    Textures = new CArray<CTexture *>(); 
+    Textures = new CArray<CTexture *>();
 }
 
 void CMaterial::Bind()
@@ -27,7 +27,12 @@ void CMaterial::Unbind()
 
 CMaterial::~CMaterial()
 {
+    Shader->Delete();
     delete Shader;
+    for(int32_t I = 0; I < Textures->Num(); ++I) {
+        CTexture *Texture = Textures->Get(I);
+        Texture->Delete();
+    }
     delete Textures;
 }
 
