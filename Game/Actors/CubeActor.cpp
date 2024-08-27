@@ -45,8 +45,8 @@ void CFDCubeActor::Tick(float DeltaTime)
 {
     CActor::Tick(DeltaTime);
     
-    CTransform *Transform = SceneComponent->GetLocalTransformRef();
-    Transform->RotateX(30.0f * DeltaTime);
+    // CTransform *Transform = SceneComponent->GetLocalTransformRef();
+    // Transform->RotateX(30.0f * DeltaTime);
 }
 
 CFDCubeActor::~CFDCubeActor()

@@ -10,6 +10,9 @@ uniform mat4 Projection;
 uniform mat4 View;
 uniform mat4 Transform;
 
+uniform sampler2D Normal;
+uniform sampler2D Height;
+
 void main()
 {
     vec4 WorldPosition = Transform * vec4(LPosition, 1.0);
