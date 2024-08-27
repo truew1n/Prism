@@ -6,81 +6,76 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include "MeshFactory.hpp"
+#include "FunctionLibrary.hpp"
+#include "MainLevel.hpp"
 #include "BaseMaterial.hpp"
+#include "CubeActor.hpp"
+#include "CollisionSolver.hpp"
+#include "MeshFactory.hpp"
 
-// Global camera variables
-glm::vec3 CameraPosition(0.0f, 0.0f, 3.0f);
-glm::vec3 CameraFront(0.0f, 0.0f, -1.0f);
-glm::vec3 CameraUp(0.0f, 1.0f, 0.0f);
-float Yaw = -90.0f;
-float Pitch = 0.0f;
-float LastX = 800.0f;
-float LastY = 600.0f;
-bool FirstMouse = true;
-float CameraSpeed = 10.0f;
+// Struct to store input state
+struct InputState {
+    bool WPressed = false;
+    bool SPressed = false;
+    bool APressed = false;
+    bool DPressed = false;
+};
 
-void ResizeCallback(GLFWwindow *Window, int32_t FrameBufferWidth, int32_t FrameBufferHeight)
+InputState inputState;
+
+void ResizeCallback(GLFWwindow *Window, int32_t FramebufferWidth, int32_t FramebufferHeight)
 {
-    glViewport(0, 0, FrameBufferWidth, FrameBufferHeight);
-    float AspectRatio = static_cast<float>(FrameBufferWidth) / FrameBufferHeight;
-    float FOV = glm::radians(45.0f);
-    float NearPlane = 0.1f;
-    float FarPlane = 100.0f;
-
-    glm::mat4 ProjectionMatrix = glm::perspective(FOV, AspectRatio, NearPlane, FarPlane);
-    CFDBaseMaterial *BaseMaterial = static_cast<CFDBaseMaterial*>(glfwGetWindowUserPointer(Window));
-    BaseMaterial->SetProjection(ProjectionMatrix);
+    glViewport(0, 0, FramebufferWidth, FramebufferHeight);
+    CFDMainLevel *MainLevel = ForceCast<CFDMainLevel *>(glfwGetWindowUserPointer(Window));
+    MainLevel->ResizeCallback(FramebufferWidth, FramebufferHeight);
 }
 
-void MouseCallback(GLFWwindow* Window, double xpos, double ypos)
+void MouseCallback(GLFWwindow* Window, double X, double Y)
 {
-    int cursorMode = glfwGetInputMode(Window, GLFW_CURSOR);
-    
-    if (cursorMode == GLFW_CURSOR_DISABLED) {
-        if (FirstMouse) {
-            LastX = xpos;
-            LastY = ypos;
-            FirstMouse = false;
+    CFDMainLevel *MainLevel = ForceCast<CFDMainLevel *>(glfwGetWindowUserPointer(Window));
+    MainLevel->MouseCallback(X, Y);
+}
+
+void KeyCallback(GLFWwindow* Window, int Key, int Scancode, int Action, int Mods)
+{
+    // Update input state based on the key pressed or released
+    if (Action == GLFW_PRESS || Action == GLFW_RELEASE) {
+        bool isPressed = (Action == GLFW_PRESS);
+
+        switch (Key) {
+            case GLFW_KEY_W: inputState.WPressed = isPressed; break;
+            case GLFW_KEY_S: inputState.SPressed = isPressed; break;
+            case GLFW_KEY_A: inputState.APressed = isPressed; break;
+            case GLFW_KEY_D: inputState.DPressed = isPressed; break;
+            default: break;
         }
-
-        float xoffset = xpos - LastX;
-        float yoffset = LastY - ypos; // reversed since y-coordinates go from bottom to top
-        LastX = xpos;
-        LastY = ypos;
-
-        float sensitivity = 0.1f;
-        xoffset *= sensitivity;
-        yoffset *= sensitivity;
-
-        Yaw += xoffset;
-        Pitch += yoffset;
-
-        if (Pitch > 89.0f)
-            Pitch = 89.0f;
-        if (Pitch < -89.0f)
-            Pitch = -89.0f;
-
-        glm::vec3 front;
-        front.x = cos(glm::radians(Yaw)) * cos(glm::radians(Pitch));
-        front.y = sin(glm::radians(Pitch));
-        front.z = sin(glm::radians(Yaw)) * cos(glm::radians(Pitch));
-        CameraFront = glm::normalize(front);
     }
 }
 
-void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+// Function to process input and update the CubeActor
+void ProcessInputAndMoveActor(CFDCubeActor *CubeActor, float DeltaTime)
 {
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
-        static bool cursorVisible = false;
-        cursorVisible = !cursorVisible;
-        
-        if (cursorVisible) {
-            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-        } else {
-            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-        }
+    CTransform CubeActorTransform = CubeActor->GetTransform();
+    float MovementSpeed = 5.0f * DeltaTime;
+
+    if (inputState.WPressed) {
+        glm::vec3 Forward = glm::rotate(CubeActorTransform.GetRotation(), glm::vec3(0.0f, 0.0f, -1.0f));
+        CubeActorTransform.SetLocation(CubeActorTransform.GetLocation() + Forward * MovementSpeed);
     }
+    if (inputState.SPressed) {
+        glm::vec3 Backward = glm::rotate(CubeActorTransform.GetRotation(), glm::vec3(0.0f, 0.0f, 1.0f));
+        CubeActorTransform.SetLocation(CubeActorTransform.GetLocation() + Backward * MovementSpeed);
+    }
+    if (inputState.APressed) {
+        glm::vec3 Left = glm::rotate(CubeActorTransform.GetRotation(), glm::vec3(-1.0f, 0.0f, 0.0f));
+        CubeActorTransform.SetLocation(CubeActorTransform.GetLocation() + Left * MovementSpeed);
+    }
+    if (inputState.DPressed) {
+        glm::vec3 Right = glm::rotate(CubeActorTransform.GetRotation(), glm::vec3(1.0f, 0.0f, 0.0f));
+        CubeActorTransform.SetLocation(CubeActorTransform.GetLocation() + Right * MovementSpeed);
+    }
+
+    CubeActor->SetTransform(CubeActorTransform);
 }
 
 int main(void)
@@ -104,10 +99,6 @@ int main(void)
         return -1;
     }
 
-    glfwSetFramebufferSizeCallback(Window, ResizeCallback);
-    glfwSetCursorPosCallback(Window, MouseCallback);
-    glfwSetKeyCallback(Window, KeyCallback); // Register key callback
-
     glfwSetInputMode(Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     glfwMakeContextCurrent(Window);
@@ -118,37 +109,25 @@ int main(void)
         return -1;
     }
 
-    CFDBaseMaterial *BaseMaterial = new CFDBaseMaterial();
-    BaseMaterial->Bind();
-    glfwSetWindowUserPointer(Window, BaseMaterial);
+    CFDMainLevel *MainLevel = new CFDMainLevel();
+    MainLevel->ResizeCallback(WindowWidth, WindowHeight);
 
-    CMesh *First = new CMesh();
-    First->SetMaterial(BaseMaterial);
+    glfwSetWindowUserPointer(Window, (void *) MainLevel);
 
-    CMesh *Second = new CMesh();
-    Second->SetMaterial(BaseMaterial);
-    
-    CMesh *Third = CMeshFactory::GenerateSphere(10.0f, 32, 32);
-    Third->SetMaterial(BaseMaterial);
-
-    // Set initial projection matrix
-    float AspectRatio = static_cast<float>(WindowWidth) / WindowHeight;
-    float FOV = glm::radians(45.0f);
-    float NearPlane = 0.1f;
-    float FarPlane = 100.0f;
-
-    glm::mat4 ProjectionMatrix = glm::perspective(FOV, AspectRatio, NearPlane, FarPlane);
-    BaseMaterial->SetProjection(ProjectionMatrix);
-    
-    bool IsPressed = false;
-    bool Mode = false;
+    glfwSetFramebufferSizeCallback(Window, ResizeCallback);
+    glfwSetCursorPosCallback(Window, MouseCallback);
+    glfwSetKeyCallback(Window, KeyCallback);
 
     glEnable(GL_DEPTH_TEST);
-    
-    glEnable(GL_CULL_FACE);
-    glCullFace(GL_BACK);
-    glFrontFace(GL_CCW);
 
+    glm::vec3 Point = glm::vec3(0.2f, 0.0f, 0.0f);
+    CTransform Ellipsoid = CTransform();
+    Ellipsoid.SetScale(glm::vec3(0.4f, 1.0f, 1.0f));
+
+    std::cout << (CCollisionSolver::SolvePointEllipsoid(Point, Ellipsoid) ? "Collision" : "No Collision") << std::endl;
+
+    CFDCubeActor *CubeActor = Cast<CFDCubeActor *>(MainLevel->GetActor(0));
+    
     auto LastTime = std::chrono::high_resolution_clock::now();
     while (!glfwWindowShouldClose(Window)) {
         auto CurrentTime = std::chrono::high_resolution_clock::now();
@@ -156,65 +135,18 @@ int main(void)
         float DeltaTime = ElapsedTime.count();
         LastTime = CurrentTime;
 
+        ProcessInputAndMoveActor(CubeActor, DeltaTime);
+
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        if (glfwGetKey(Window, GLFW_KEY_A) == GLFW_PRESS) {
-            CameraPosition -= glm::normalize(glm::cross(CameraFront, CameraUp)) * CameraSpeed * DeltaTime;
-        }
-        if (glfwGetKey(Window, GLFW_KEY_D) == GLFW_PRESS) {
-            CameraPosition += glm::normalize(glm::cross(CameraFront, CameraUp)) * CameraSpeed * DeltaTime;
-        }
-        if (glfwGetKey(Window, GLFW_KEY_W) == GLFW_PRESS) {
-            CameraPosition += CameraFront * CameraSpeed * DeltaTime;
-        }
-        if (glfwGetKey(Window, GLFW_KEY_S) == GLFW_PRESS) {
-            CameraPosition -= CameraFront * CameraSpeed * DeltaTime;
-        }
-        if (glfwGetKey(Window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-            CameraPosition.y += CameraSpeed * DeltaTime;
-        }
-        if (glfwGetKey(Window, GLFW_KEY_C) == GLFW_PRESS) {
-            CameraPosition.y -= CameraSpeed * DeltaTime;
-        }
-        if (glfwGetKey(Window, GLFW_KEY_E) == GLFW_PRESS) {
-            if(!IsPressed) {
-                if(Mode) {
-                    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-                    Mode = false;
-                } else {
-                    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-                    Mode = true;
-                }
-                IsPressed = true;
-            }
-        }
-        if(glfwGetKey(Window, GLFW_KEY_E) == GLFW_RELEASE) {
-            IsPressed = false;
-        }
-
-        // Update view matrix based on camera position and direction
-        glm::mat4 ViewMatrix = glm::lookAt(CameraPosition, CameraPosition + CameraFront, CameraUp);
-        BaseMaterial->SetView(ViewMatrix);
-
-        BaseMaterial->SetWorldPosition(glm::vec3(0.0f, 0.0f, 0.0f));
-        First->Draw();
-
-        BaseMaterial->SetWorldPosition(glm::vec3(2.0f, 0.0f, 0.0f));
-        Second->Draw();
-
-        glDisable(GL_CULL_FACE);
-        BaseMaterial->SetWorldPosition(glm::vec3(-20.0f, 0.0f, 0.0f));
-        Third->Draw();
-        glEnable(GL_CULL_FACE);
+        MainLevel->Tick(DeltaTime);
+        MainLevel->Draw();
 
         glfwSwapBuffers(Window);
         glfwPollEvents();
     }
 
-    delete BaseMaterial;
-    delete First;
-    delete Second;
-    delete Third;
+    delete MainLevel;
 
     glfwDestroyWindow(Window);
     glfwTerminate();

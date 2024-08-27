@@ -8,13 +8,14 @@ out vec2 UV;
 
 uniform mat4 Projection;
 uniform mat4 View;
-uniform vec3 CameraPosition;
-
-uniform vec3 WorldPosition;
+uniform mat4 Transform;
 
 void main()
 {
-    Position = LPosition;
+    vec4 WorldPosition = Transform * vec4(LPosition, 1.0);
+    
+    Position = WorldPosition.xyz;
     UV = LUV;
-    gl_Position = Projection * View * vec4(LPosition + WorldPosition, 1.0f);
+
+    gl_Position = Projection * View * WorldPosition;
 }

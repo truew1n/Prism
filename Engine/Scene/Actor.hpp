@@ -5,17 +5,30 @@
 #include "SceneComponent.hpp"
 #include "Transform.hpp"
 
+class CLevel;
+class CController;
+
 class CActor : public CObject {
+private:
+    CLevel *Level;
 public:
+    CController *Controller;
     CSceneComponent *RootComponent;
 
     CActor();
     void Draw();
-    void Tick(float DeltaTime);
+    virtual void Tick(float DeltaTime) override;
     ~CActor();
 
+    CLevel *GetLevel();
+    void SetLevel(CLevel *NewLevel);
+
     CTransform GetTransform();
+    CTransform *GetTransformRef();
     void SetTransform(CTransform NewTransform);
+
+    CController *GetController();
+    void SetController(CController *NewController);
 };
 
 #endif

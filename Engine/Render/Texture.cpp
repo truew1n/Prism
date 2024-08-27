@@ -38,8 +38,6 @@ CTexture::CTexture(const char *Image, const char *TextureType, uint32_t Slot)
 
 void CTexture::SetUniform(CShader *Shader, const char *Uniform, uint32_t Unit)
 {
-	Shader->Activate();
-
 	uint32_t TextureLocation = glGetUniformLocation(Shader->GetId(), Uniform);
 	
 	glUniform1i(TextureLocation, Unit);	

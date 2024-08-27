@@ -1,6 +1,6 @@
 #include "Shader.hpp"
 
-
+#include <iostream>
 uint8_t CShader::Load(const char *Filepath, EShaderType Type)
 {
     char *Content = read_file(Filepath);
@@ -67,6 +67,11 @@ void CShader::Create()
 void CShader::Activate()
 {
     glUseProgram(Id);
+}
+
+void CShader::Deactivate()
+{
+    glUseProgram(0);
 }
 
 void CShader::Delete()

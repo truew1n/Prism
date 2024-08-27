@@ -3,14 +3,23 @@
 
 #include "Actor.hpp"
 #include "Array.hpp"
+#include "PlayerController.hpp"
 
 class CLevel {
 private:
+    CPlayerController *PlayerController;
     CArray<CActor *> *Actors;
 public:
     CLevel();
-    void Tick(float DeltaTime);
+    virtual void Tick(float DeltaTime);
+    void Draw();
     ~CLevel();
+
+    void AddActor(CActor *NewActor);
+    CActor *GetActor(int32_t Index);
+
+    CPlayerController *GetPlayerController();
+    void SetPlayerController(CPlayerController *NewPlayerController);
 };
 
 #endif

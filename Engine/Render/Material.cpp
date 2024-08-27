@@ -19,6 +19,7 @@ void CMaterial::Bind()
 
 void CMaterial::Unbind()
 {
+    Shader->Deactivate();
     for(int32_t I = 0; I < Textures->Num(); ++I) {
         CTexture *Texture = Textures->Get(I);
         Texture->Unbind();
@@ -39,17 +40,21 @@ CMaterial::~CMaterial()
 void CMaterial::SetProjection(glm::mat4 Projection)
 {
     CUniform::SetUniform<glm::mat4>(Shader, "Projection", Projection);
-    
 }
 
 void CMaterial::SetView(glm::mat4 View)
 {
     CUniform::SetUniform<glm::mat4>(Shader, "View", View);
-
 }
 
-void CMaterial::SetWorldPosition(glm::vec3 WorldPosition)
+void CMaterial::SetTransform(CTransform Transform)
 {
-    CUniform::SetUniform<glm::vec3>(Shader, "WorldPosition", WorldPosition);
+    glm::mat4 TransformMatrix = Transform.GetTransformMatrix();
 
+    CUniform::SetUniform<glm::mat4>(Shader, "Transform", TransformMatrix);
+}
+
+void CMaterial::SetTransform(glm::mat4 TransformMatrix)
+{
+    CUniform::SetUniform<glm::mat4>(Shader, "Transform", TransformMatrix);
 }

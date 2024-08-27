@@ -29,6 +29,11 @@ public:
         delete Data;
     }
 
+    bool InBounds(int32_t Index)
+    {
+        return (Index >= 0 && Index < Size);
+    }
+
     int32_t Num()
     {
         return Size;

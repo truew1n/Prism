@@ -1,6 +1,81 @@
 #include "MeshFactory.hpp"
 
 
+CMesh* CMeshFactory::GenerateCube(float SideLength)
+{
+    float HalfSide = SideLength / 2.0f;
+
+    CArray<SVertex>* Vertices = new CArray<SVertex>();
+
+    // Top Face
+    Vertices->Add(SVertex(glm::vec3(-HalfSide, HalfSide, HalfSide), glm::vec2(0.0f, 0.0f)));
+    Vertices->Add(SVertex(glm::vec3(HalfSide, HalfSide, HalfSide), glm::vec2(1.0f, 0.0f)));
+    Vertices->Add(SVertex(glm::vec3(HalfSide, HalfSide, -HalfSide), glm::vec2(1.0f, 1.0f)));
+    Vertices->Add(SVertex(glm::vec3(-HalfSide, HalfSide, -HalfSide), glm::vec2(0.0f, 1.0f)));
+
+    // Bottom Face
+    Vertices->Add(SVertex(glm::vec3(-HalfSide, -HalfSide, -HalfSide), glm::vec2(0.0f, 0.0f)));
+    Vertices->Add(SVertex(glm::vec3(HalfSide, -HalfSide, -HalfSide), glm::vec2(1.0f, 0.0f)));
+    Vertices->Add(SVertex(glm::vec3(HalfSide, -HalfSide, HalfSide), glm::vec2(1.0f, 1.0f)));
+    Vertices->Add(SVertex(glm::vec3(-HalfSide, -HalfSide, HalfSide), glm::vec2(0.0f, 1.0f)));
+
+    // Front Face
+    Vertices->Add(SVertex(glm::vec3(-HalfSide, -HalfSide, HalfSide), glm::vec2(0.0f, 0.0f)));
+    Vertices->Add(SVertex(glm::vec3(HalfSide, -HalfSide, HalfSide), glm::vec2(1.0f, 0.0f)));
+    Vertices->Add(SVertex(glm::vec3(HalfSide, HalfSide, HalfSide), glm::vec2(1.0f, 1.0f)));
+    Vertices->Add(SVertex(glm::vec3(-HalfSide, HalfSide, HalfSide), glm::vec2(0.0f, 1.0f)));
+
+    // Back Face
+    Vertices->Add(SVertex(glm::vec3(HalfSide, -HalfSide, -HalfSide), glm::vec2(0.0f, 0.0f)));
+    Vertices->Add(SVertex(glm::vec3(-HalfSide, -HalfSide, -HalfSide), glm::vec2(1.0f, 0.0f)));
+    Vertices->Add(SVertex(glm::vec3(-HalfSide, HalfSide, -HalfSide), glm::vec2(1.0f, 1.0f)));
+    Vertices->Add(SVertex(glm::vec3(HalfSide, HalfSide, -HalfSide), glm::vec2(0.0f, 1.0f)));
+
+    // Left Face
+    Vertices->Add(SVertex(glm::vec3(-HalfSide, -HalfSide, -HalfSide), glm::vec2(0.0f, 0.0f)));
+    Vertices->Add(SVertex(glm::vec3(-HalfSide, -HalfSide, HalfSide), glm::vec2(1.0f, 0.0f)));
+    Vertices->Add(SVertex(glm::vec3(-HalfSide, HalfSide, HalfSide), glm::vec2(1.0f, 1.0f)));
+    Vertices->Add(SVertex(glm::vec3(-HalfSide, HalfSide, -HalfSide), glm::vec2(0.0f, 1.0f)));
+
+    // Right Face
+    Vertices->Add(SVertex(glm::vec3(HalfSide, -HalfSide, HalfSide), glm::vec2(0.0f, 0.0f)));
+    Vertices->Add(SVertex(glm::vec3(HalfSide, -HalfSide, -HalfSide), glm::vec2(1.0f, 0.0f)));
+    Vertices->Add(SVertex(glm::vec3(HalfSide, HalfSide, -HalfSide), glm::vec2(1.0f, 1.0f)));
+    Vertices->Add(SVertex(glm::vec3(HalfSide, HalfSide, HalfSide), glm::vec2(0.0f, 1.0f)));
+
+    CArray<uint32_t>* Indices = new CArray<uint32_t>();
+
+    // Top Face
+    Indices->Add(0); Indices->Add(1); Indices->Add(2);
+    Indices->Add(2); Indices->Add(3); Indices->Add(0);
+
+    // Bottom Face
+    Indices->Add(4); Indices->Add(5); Indices->Add(6);
+    Indices->Add(6); Indices->Add(7); Indices->Add(4);
+
+    // Front Face
+    Indices->Add(8); Indices->Add(9); Indices->Add(10);
+    Indices->Add(10); Indices->Add(11); Indices->Add(8);
+
+    // Back Face
+    Indices->Add(12); Indices->Add(13); Indices->Add(14);
+    Indices->Add(14); Indices->Add(15); Indices->Add(12);
+
+    // Left Face
+    Indices->Add(16); Indices->Add(17); Indices->Add(18);
+    Indices->Add(18); Indices->Add(19); Indices->Add(16);
+
+    // Right Face
+    Indices->Add(20); Indices->Add(21); Indices->Add(22);
+    Indices->Add(22); Indices->Add(23); Indices->Add(20);
+
+    CMesh* ReturnMesh = new CMesh(Vertices, Indices);
+    delete Vertices;
+    delete Indices;
+    return ReturnMesh;
+}
+
+
 CMesh *CMeshFactory::GeneratePlaneRing(float InnerRadius, float OuterRadius, int32_t SegmentCount)
 {
     float AngleStep = 2.0f * M_PI / SegmentCount;

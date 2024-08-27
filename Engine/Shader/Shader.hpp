@@ -23,6 +23,7 @@ public:
     void Create();
     uint8_t Load(const char *Filepath, EShaderType Type);
     void Activate();
+    void Deactivate();
     void Delete();
 
     uint32_t GetId() const { return Id; }

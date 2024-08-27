@@ -4,10 +4,11 @@
 #include "Shader.hpp"
 #include "Texture.hpp"
 #include "Uniform.hpp"
+#include "Transform.hpp"
 #include "Array.hpp"
 
 class CMaterial {
-protected:
+public:
     CShader *Shader;
     CArray<CTexture *> *Textures;
 public:
@@ -18,7 +19,8 @@ public:
 
     virtual void SetProjection(glm::mat4 Projection);
     virtual void SetView(glm::mat4 View);
-    virtual void SetWorldPosition(glm::vec3 WorldPosition);
+    virtual void SetTransform(CTransform Transform);
+    virtual void SetTransform(glm::mat4 TransformMatrix);
 };
 
 #endif
