@@ -7,10 +7,12 @@
 
 typedef struct SVertex {
 	glm::vec3 Position;
+	glm::vec3 Normal;
 	glm::vec2 UV;
 
-	SVertex() : Position(glm::vec3(0.0f, 0.0f, 0.0f)), UV(glm::vec2(0.0f, 0.0f)) {}
-	SVertex(glm::vec3 Position, glm::vec2 UV) : Position(Position), UV(UV) {}
+	SVertex() : Position(0.0f), Normal(0.0f), UV(0.0f) {}
+	SVertex(glm::vec3 IPosition, glm::vec2 IUV) : Position(IPosition), Normal(0.0f), UV(IUV) {}
+	SVertex(glm::vec3 IPosition, glm::vec3 INormal, glm::vec2 IUV) : Position(IPosition), Normal(INormal), UV(IUV) {}
 } SVertex;
 
 class CVertexBuffer {

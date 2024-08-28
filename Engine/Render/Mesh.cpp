@@ -19,7 +19,8 @@ CMesh::CMesh()
     CElementBuffer ElementBuffer(Indices);
 
     VertexArray.LinkAttribute(&VertexBuffer, 0, 3, GL_FLOAT, sizeof(SVertex), (void*)0);
-    VertexArray.LinkAttribute(&VertexBuffer, 1, 2, GL_FLOAT, sizeof(SVertex), (void*)(3 * sizeof(float)));
+    VertexArray.LinkAttribute(&VertexBuffer, 1, 3, GL_FLOAT, sizeof(SVertex), (void*)(3 * sizeof(float)));
+    VertexArray.LinkAttribute(&VertexBuffer, 2, 2, GL_FLOAT, sizeof(SVertex), (void*)(6 * sizeof(float)));
     VertexArray.Unbind();
 
     TriangleCount = Indices->Num();
@@ -31,11 +32,12 @@ CMesh::CMesh()
 CMesh::CMesh(CArray<SVertex> *Vertices, CArray<uint32_t> *Indices)
 {
     VertexArray.Bind();
-    CVertexBuffer VertexBuffer1(Vertices);
-    CElementBuffer ElementBuffer1(Indices);
+    CVertexBuffer VertexBuffer(Vertices);
+    CElementBuffer ElementBuffer(Indices);
 
-    VertexArray.LinkAttribute(&VertexBuffer1, 0, 3, GL_FLOAT, sizeof(SVertex), (void*)0);
-    VertexArray.LinkAttribute(&VertexBuffer1, 1, 2, GL_FLOAT, sizeof(SVertex), (void*)(3 * sizeof(float)));
+    VertexArray.LinkAttribute(&VertexBuffer, 0, 3, GL_FLOAT, sizeof(SVertex), (void*)0);
+    VertexArray.LinkAttribute(&VertexBuffer, 1, 3, GL_FLOAT, sizeof(SVertex), (void*)(3 * sizeof(float)));
+    VertexArray.LinkAttribute(&VertexBuffer, 2, 2, GL_FLOAT, sizeof(SVertex), (void*)(6 * sizeof(float)));
     VertexArray.Unbind();
 
     TriangleCount = Indices->Num();

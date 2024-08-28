@@ -14,12 +14,12 @@ private:
     float Yaw;
     float Pitch;
     float Roll;
-
+    
+public:
     glm::vec3 CalculateFront();
     glm::vec3 CalculateRight();
     glm::vec3 CalculateUp();
 
-public:
     CCamera();
     ~CCamera();
 

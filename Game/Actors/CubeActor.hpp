@@ -13,10 +13,6 @@ public:
 
     CSceneComponent *SceneComponent;
 
-    CMeshComponent *CubeMeshComponent;
-    CMesh *CubeMesh;
-    CMaterial *CubeMaterial;
-
     CCameraComponent *MainCameraComponent;
     CCamera *MainCamera;
 };

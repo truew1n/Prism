@@ -6,8 +6,8 @@ CFDBaseMaterial::CFDBaseMaterial()
     Shader->Load("Engine\\Resource\\Default.vert", EShaderType::VERTEX);
     Shader->Load("Engine\\Resource\\Default.frag", EShaderType::FRAGMENT);
 
-    Textures->Add(new CTexture("Assets\\Textures\\Rock\\Rock13_4K_BaseColor.png", "Diffuse", 0));
-    Textures->Add(new CTexture("Assets\\Textures\\Rock\\Rock13_4K_Normal.png", "Normal", 1));
+    Textures->Add(new CTexture("Assets\\Textures\\Rust\\SpaceLabWallOld_albedo.png", "UDiffuse", 0));
+    Textures->Add(new CTexture("Assets\\Textures\\Rust\\SpaceLabWallOld_normal.png", "UNormal", 1));
 }
 
 void CFDBaseMaterial::Bind()

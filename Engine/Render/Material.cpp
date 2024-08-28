@@ -39,22 +39,22 @@ CMaterial::~CMaterial()
 
 void CMaterial::SetProjection(glm::mat4 Projection)
 {
-    CUniform::SetUniform<glm::mat4>(Shader, "Projection", Projection);
+    CUniform::SetUniform<glm::mat4>(Shader, "UProjection", Projection);
 }
 
 void CMaterial::SetView(glm::mat4 View)
 {
-    CUniform::SetUniform<glm::mat4>(Shader, "View", View);
+    CUniform::SetUniform<glm::mat4>(Shader, "UView", View);
 }
 
 void CMaterial::SetTransform(CTransform Transform)
 {
     glm::mat4 TransformMatrix = Transform.GetTransformMatrix();
 
-    CUniform::SetUniform<glm::mat4>(Shader, "Transform", TransformMatrix);
+    CUniform::SetUniform<glm::mat4>(Shader, "UTransform", TransformMatrix);
 }
 
 void CMaterial::SetTransform(glm::mat4 TransformMatrix)
 {
-    CUniform::SetUniform<glm::mat4>(Shader, "Transform", TransformMatrix);
+    CUniform::SetUniform<glm::mat4>(Shader, "UTransform", TransformMatrix);
 }

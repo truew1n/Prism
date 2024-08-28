@@ -19,6 +19,8 @@ struct InputState {
     bool SPressed = false;
     bool APressed = false;
     bool DPressed = false;
+    bool SPACEPressed = false;
+    bool CPressed = false;
 };
 
 InputState inputState;
@@ -47,6 +49,8 @@ void KeyCallback(GLFWwindow* Window, int Key, int Scancode, int Action, int Mods
             case GLFW_KEY_S: inputState.SPressed = isPressed; break;
             case GLFW_KEY_A: inputState.APressed = isPressed; break;
             case GLFW_KEY_D: inputState.DPressed = isPressed; break;
+            case GLFW_KEY_SPACE: inputState.SPACEPressed = isPressed; break;
+            case GLFW_KEY_C: inputState.CPressed = isPressed; break;
             default: break;
         }
     }
@@ -56,27 +60,35 @@ void KeyCallback(GLFWwindow* Window, int Key, int Scancode, int Action, int Mods
 void ProcessInputAndMoveActor(CFDCubeActor *CubeActor, float DeltaTime)
 {
     CTransform CubeActorTransform = CubeActor->GetTransform();
+    CPlayerController *Controller = Cast<CPlayerController *>(CubeActor->GetController());
+    CCamera *Camera = Controller->GetCameraComponent()->GetCamera();
+    glm::vec3 CameraForward = Camera->CalculateFront();
+    glm::vec3 CameraRight = Camera->CalculateRight();
+    glm::vec3 CameraUp = Camera->CalculateUp();
     float MovementSpeed = 5.0f * DeltaTime;
 
     if (inputState.WPressed) {
-        glm::vec3 Forward = glm::rotate(CubeActorTransform.GetRotation(), glm::vec3(0.0f, 0.0f, -1.0f));
-        CubeActorTransform.SetLocation(CubeActorTransform.GetLocation() + Forward * MovementSpeed);
+        CubeActorTransform.SetLocation(CubeActorTransform.GetLocation() + CameraForward * MovementSpeed);
     }
     if (inputState.SPressed) {
-        glm::vec3 Backward = glm::rotate(CubeActorTransform.GetRotation(), glm::vec3(0.0f, 0.0f, 1.0f));
-        CubeActorTransform.SetLocation(CubeActorTransform.GetLocation() + Backward * MovementSpeed);
+        CubeActorTransform.SetLocation(CubeActorTransform.GetLocation() - CameraForward * MovementSpeed);
     }
     if (inputState.APressed) {
-        glm::vec3 Left = glm::rotate(CubeActorTransform.GetRotation(), glm::vec3(-1.0f, 0.0f, 0.0f));
-        CubeActorTransform.SetLocation(CubeActorTransform.GetLocation() + Left * MovementSpeed);
+        CubeActorTransform.SetLocation(CubeActorTransform.GetLocation() - CameraRight * MovementSpeed);
     }
     if (inputState.DPressed) {
-        glm::vec3 Right = glm::rotate(CubeActorTransform.GetRotation(), glm::vec3(1.0f, 0.0f, 0.0f));
-        CubeActorTransform.SetLocation(CubeActorTransform.GetLocation() + Right * MovementSpeed);
+        CubeActorTransform.SetLocation(CubeActorTransform.GetLocation() + CameraRight * MovementSpeed);
+    }
+    if (inputState.SPACEPressed) {
+        CubeActorTransform.SetLocation(CubeActorTransform.GetLocation() + CameraUp * MovementSpeed);
+    }
+    if (inputState.CPressed) {
+        CubeActorTransform.SetLocation(CubeActorTransform.GetLocation() - CameraUp * MovementSpeed);
     }
 
     CubeActor->SetTransform(CubeActorTransform);
 }
+
 
 int main(void)
 {
