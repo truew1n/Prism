@@ -19,7 +19,7 @@ void main()
     // Material properties
     float SpecularStrength = 0.5f;
     float Shininess = 32.0f;
-    vec3 AmbientColor = vec3(0.1f, 0.1f, 0.1f);
+    vec3 AmbientColor = vec3(0.05f, 0.05f, 0.05f);
 
     // Normal from normal map
     vec3 Normal = normalize(texture(UNormal, EUV).rgb * 2.0 - 1.0);

@@ -9,7 +9,6 @@ private:
     CCamera *Camera;
 public:
     CCameraComponent();
-    void Tick(float DeltaTime) override;
     ~CCameraComponent();
     
     CCamera *GetCamera();

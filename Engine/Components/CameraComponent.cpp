@@ -5,11 +5,6 @@ CCameraComponent::CCameraComponent()
     Camera = nullptr;
 }
 
-void CCameraComponent::Tick(float DeltaTime)
-{
-    
-}
-
 CCameraComponent::~CCameraComponent()
 {
     if(Camera) {

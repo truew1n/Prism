@@ -11,13 +11,7 @@ CSceneComponent::CSceneComponent()
 void CSceneComponent::Draw()
 {
     if(SceneComponents) {
-        glm::mat4 NewTransformMatrix = glm::mat4(1.0f);
-        if(CSceneComponent *Parent = GetParent()) {
-            NewTransformMatrix = Parent->GetWorldTransform() * GetLocalTransform().GetTransformMatrix();
-        } else {
-            NewTransformMatrix = GetLocalTransform().GetTransformMatrix();
-        }
-        SetWorldTransform(NewTransformMatrix);
+        SetParentChildTransform();
 
         for(int32_t I = 0; I < SceneComponents->Num(); ++I) {
             CSceneComponent *SceneComponent = SceneComponents->Get(I);
@@ -79,6 +73,30 @@ CTransform *CSceneComponent::GetLocalTransformRef()
 void CSceneComponent::SetLocalTransform(CTransform NewTransform)
 {
     LocalTransform = NewTransform;
+}
+
+glm::mat4 CSceneComponent::CalculateParentChildTransform()
+{
+    glm::mat4 ParentChildTransform = glm::mat4(1.0f);
+    if(CSceneComponent *Parent = GetParent()) {
+        ParentChildTransform = Parent->GetWorldTransform() * GetLocalTransform().GetTransformMatrix();
+    } else {
+        ParentChildTransform = GetLocalTransform().GetTransformMatrix();
+    }
+
+    return ParentChildTransform;
+}
+
+glm::mat4 CSceneComponent::GetSetParentChildTransform()
+{
+    glm::mat4 ParentChildTransform = CalculateParentChildTransform();
+    SetWorldTransform(ParentChildTransform);
+    return ParentChildTransform;
+}
+
+void CSceneComponent::SetParentChildTransform()
+{
+    SetWorldTransform(CalculateParentChildTransform());
 }
 
 void CSceneComponent::AddComponent(CSceneComponent *SceneComponent)

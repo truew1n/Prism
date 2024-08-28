@@ -18,7 +18,7 @@ public:
     ~CSceneComponent();
 
     CSceneComponent *GetParent();
-    void SetParent(CSceneComponent *NewParent);
+    void SetParent(CSceneComponent *NewParent);    
 
     glm::mat4 GetWorldTransform();
     glm::mat4 *GetWorldTransformRef();
@@ -27,6 +27,10 @@ public:
     CTransform GetLocalTransform();
     CTransform *GetLocalTransformRef();
     void SetLocalTransform(CTransform NewTransform);
+
+    glm::mat4 CalculateParentChildTransform();
+    glm::mat4 GetSetParentChildTransform();
+    void SetParentChildTransform();
 
     void AddComponent(CSceneComponent *SceneComponent);
     CSceneComponent *RemoveComponent(int32_t Index);

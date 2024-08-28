@@ -14,7 +14,7 @@
 #include "MeshFactory.hpp"
 
 // Struct to store input state
-struct InputState {
+struct SInputState {
     bool WPressed = false;
     bool SPressed = false;
     bool APressed = false;
@@ -23,7 +23,7 @@ struct InputState {
     bool CPressed = false;
 };
 
-InputState inputState;
+SInputState InputState;
 
 void ResizeCallback(GLFWwindow *Window, int32_t FramebufferWidth, int32_t FramebufferHeight)
 {
@@ -40,23 +40,22 @@ void MouseCallback(GLFWwindow* Window, double X, double Y)
 
 void KeyCallback(GLFWwindow* Window, int Key, int Scancode, int Action, int Mods)
 {
-    // Update input state based on the key pressed or released
     if (Action == GLFW_PRESS || Action == GLFW_RELEASE) {
         bool isPressed = (Action == GLFW_PRESS);
 
         switch (Key) {
-            case GLFW_KEY_W: inputState.WPressed = isPressed; break;
-            case GLFW_KEY_S: inputState.SPressed = isPressed; break;
-            case GLFW_KEY_A: inputState.APressed = isPressed; break;
-            case GLFW_KEY_D: inputState.DPressed = isPressed; break;
-            case GLFW_KEY_SPACE: inputState.SPACEPressed = isPressed; break;
-            case GLFW_KEY_C: inputState.CPressed = isPressed; break;
+            case GLFW_KEY_W: InputState.WPressed = isPressed; break;
+            case GLFW_KEY_S: InputState.SPressed = isPressed; break;
+            case GLFW_KEY_A: InputState.APressed = isPressed; break;
+            case GLFW_KEY_D: InputState.DPressed = isPressed; break;
+            case GLFW_KEY_SPACE: InputState.SPACEPressed = isPressed; break;
+            case GLFW_KEY_C: InputState.CPressed = isPressed; break;
             default: break;
         }
     }
 }
 
-// Function to process input and update the CubeActor
+
 void ProcessInputAndMoveActor(CFDCubeActor *CubeActor, float DeltaTime)
 {
     CTransform CubeActorTransform = CubeActor->GetTransform();
@@ -67,22 +66,22 @@ void ProcessInputAndMoveActor(CFDCubeActor *CubeActor, float DeltaTime)
     glm::vec3 CameraUp = Camera->CalculateUp();
     float MovementSpeed = 5.0f * DeltaTime;
 
-    if (inputState.WPressed) {
+    if (InputState.WPressed) {
         CubeActorTransform.SetLocation(CubeActorTransform.GetLocation() + CameraForward * MovementSpeed);
     }
-    if (inputState.SPressed) {
+    if (InputState.SPressed) {
         CubeActorTransform.SetLocation(CubeActorTransform.GetLocation() - CameraForward * MovementSpeed);
     }
-    if (inputState.APressed) {
+    if (InputState.APressed) {
         CubeActorTransform.SetLocation(CubeActorTransform.GetLocation() - CameraRight * MovementSpeed);
     }
-    if (inputState.DPressed) {
+    if (InputState.DPressed) {
         CubeActorTransform.SetLocation(CubeActorTransform.GetLocation() + CameraRight * MovementSpeed);
     }
-    if (inputState.SPACEPressed) {
+    if (InputState.SPACEPressed) {
         CubeActorTransform.SetLocation(CubeActorTransform.GetLocation() + CameraUp * MovementSpeed);
     }
-    if (inputState.CPressed) {
+    if (InputState.CPressed) {
         CubeActorTransform.SetLocation(CubeActorTransform.GetLocation() - CameraUp * MovementSpeed);
     }
 

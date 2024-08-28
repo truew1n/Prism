@@ -12,16 +12,8 @@ void CMeshComponent::Draw()
     if(Mesh) {
         CMaterial *MeshMaterial = Mesh->GetMaterial();
         if(MeshMaterial) {
-            glm::mat4 NewTransformMatrix = glm::mat4(1.0f);
-            if(CSceneComponent *Parent = GetParent()) {
-                NewTransformMatrix = Parent->GetWorldTransform() * GetLocalTransform().GetTransformMatrix();
-            } else {
-                NewTransformMatrix = GetLocalTransform().GetTransformMatrix();
-            }
-            SetWorldTransform(NewTransformMatrix);
-
-            bool dbgprint = false;
-
+            glm::mat4 ParentChildTransform = GetSetParentChildTransform();
+            
             if(CActor *Owner = GetOwner()) {
                 if(CLevel *Level = Owner->GetLevel()) {
                     if(CPlayerController *PlayerController = Level->GetPlayerController()) {
@@ -33,7 +25,7 @@ void CMeshComponent::Draw()
                                     CameraComponent->GetWorldTransform(),
                                     CameraComponent->GetLocalTransform()
                                 ));
-                                MeshMaterial->SetTransform(NewTransformMatrix);
+                                MeshMaterial->SetTransform(ParentChildTransform);
                                 Mesh->Draw();
                                 MeshMaterial->Unbind();
                             }

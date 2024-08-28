@@ -8,6 +8,8 @@ def count_lines_of_code(directory):
         for file in files:
             # Check if the file has one of the desired extensions
             if file.endswith(('.cpp', '.hpp', '.h', '.c')):
+                if file == "stb_image.h" or file == "stb_image.cpp":
+                    continue
                 file_path = os.path.join(root, file)
                 with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
                     lines = f.readlines()
