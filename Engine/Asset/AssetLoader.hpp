@@ -8,7 +8,10 @@
 #include "Asset.hpp"
 
 class CAssetLoader {
-    static CAsset Load(const char *Filepath);
+private:
+    static glm::vec3 Vec3AssimpGLM(aiVector3D Vector3D);
+public:
+    static CAsset *LoadStatic(const char *Filepath);
 };
 
 #endif

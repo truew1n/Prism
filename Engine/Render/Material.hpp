@@ -17,6 +17,9 @@ public:
     virtual void Unbind();
     virtual ~CMaterial();
 
+    CShader *GetShader() const { return Shader; }
+    void AddTexture(CTexture *Texture);
+
     virtual void SetProjection(glm::mat4 Projection);
     virtual void SetView(glm::mat4 View);
     virtual void SetTransform(CTransform Transform);

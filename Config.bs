@@ -51,6 +51,7 @@ Engine/Controllers/
 Engine/Components/
 Engine/Scene/
 Engine/Collisions/
+Engine/Asset/
 Game/Materials/
 Game/Actors/
 Game/Levels

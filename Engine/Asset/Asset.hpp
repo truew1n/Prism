@@ -9,6 +9,8 @@
 class CAsset {
 public:
     CArray<CPair<CMesh *, CMaterial *>> AssetData;
+    CAsset();
+    ~CAsset();
 };
 
 #endif

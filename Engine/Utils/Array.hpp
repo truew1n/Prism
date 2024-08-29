@@ -53,6 +53,7 @@ public:
         for(int32_t i = 0; i < Size - 1; ++i) {
             NewData[i] = Data[i];
         }
+        
         NewData[Size - 1] = Item;
         if(Data) delete Data;
         Data = NewData;
@@ -60,7 +61,7 @@ public:
 
     T Get(int32_t Index)
     {
-        if(Index < 0 || Index >= Size) return (T) -1;
+        if(Index < 0 || Index >= Size) return T();
         return Data[Index];
     }
 
@@ -155,12 +156,12 @@ public:
         return true;
     }
 
-    T* begin()
+    T *begin()
     {
         return Data;
     }
 
-    T* end()
+    T *end()
     {
         return Data + Size;
     }

@@ -7,7 +7,6 @@ CFDBaseMaterial::CFDBaseMaterial()
     Shader->Load("Engine\\Resource\\Default.frag", EShaderType::FRAGMENT);
 
     Textures->Add(new CTexture("Assets\\Textures\\Rust\\SpaceLabWallOld_albedo.png", "UDiffuse", 0));
-    Textures->Add(new CTexture("Assets\\Textures\\Rust\\SpaceLabWallOld_normal.png", "UNormal", 1));
 }
 
 void CFDBaseMaterial::Bind()

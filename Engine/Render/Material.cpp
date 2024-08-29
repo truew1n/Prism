@@ -37,6 +37,13 @@ CMaterial::~CMaterial()
     delete Textures;
 }
 
+void CMaterial::AddTexture(CTexture *Texture)
+{
+    if(Texture) {
+        Textures->Add(Texture);
+    }
+}
+
 void CMaterial::SetProjection(glm::mat4 Projection)
 {
     CUniform::SetUniform<glm::mat4>(Shader, "UProjection", Projection);

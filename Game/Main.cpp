@@ -130,6 +130,7 @@ int main(void)
     glfwSetKeyCallback(Window, KeyCallback);
 
     glEnable(GL_DEPTH_TEST);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     CFDCubeActor *CubeActor = Cast<CFDCubeActor *>(MainLevel->GetActor(0));
     

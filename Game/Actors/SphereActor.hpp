@@ -3,6 +3,7 @@
 
 #include "Actor.hpp"
 #include "MeshComponent.hpp"
+#include "AssetLoader.hpp"
 
 class CFDSphereActor : public CActor {
 public:
@@ -10,9 +11,10 @@ public:
     void Tick(float DeltaTime) override;
     ~CFDSphereActor();
 
-    CMeshComponent *SphereMeshComponent;
-    CMesh *SphereMesh;
-    CMaterial *SphereMaterial;
+    CSceneComponent *Root;
+
+    CAsset *YuccaAsset;
+    CAsset *TerrainAsset;
 };
 
 #endif

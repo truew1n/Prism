@@ -4,19 +4,19 @@
 template<typename T, typename S>
 class CPair {
 private:
-    T First;
-    S Second;
+    T MFirst;
+    S MSecond;
 public:
-    CPair() : First(), Second() {}
-    CPair(T First, S Second) : First(First), Second(Second) {}
+    CPair() : MFirst(), MSecond() {}
+    CPair(T IFirst, S ISecond) : MFirst(IFirst), MSecond(ISecond) {}
 
     static CPair<T, S> Make(T First, S Second)
     {
         return CPair(First, Second);
     }
 
-    T GetFirst() const { return First; }
-    S GetSecond() const { return Second; }
+    T GetFirst() const { return MFirst; }
+    S GetSecond() const { return MSecond; }
 };
 
 #endif
