@@ -11,7 +11,7 @@ protected:
 public:
     CActorComponent();
     virtual void Tick(float DeltaTime) override;
-    ~CActorComponent();
+    ~CActorComponent() override;
 
     CActor *GetOwner();
     void SetOwner(CActor *NewOwner);

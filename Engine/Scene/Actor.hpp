@@ -18,7 +18,7 @@ public:
     CActor();
     void Draw();
     virtual void Tick(float DeltaTime) override;
-    ~CActor();
+    ~CActor() override;
 
     CLevel *GetLevel();
     void SetLevel(CLevel *NewLevel);

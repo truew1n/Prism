@@ -9,7 +9,7 @@ private:
     CCamera *Camera;
 public:
     CCameraComponent();
-    ~CCameraComponent();
+    ~CCameraComponent() override;
     
     CCamera *GetCamera();
     void SetCamera(CCamera *NewCamera);

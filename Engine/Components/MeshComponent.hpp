@@ -10,7 +10,7 @@ private:
 public:
     CMeshComponent();
     void Draw() override;
-    ~CMeshComponent();
+    ~CMeshComponent() override;
 
     CMesh *GetMesh();
     void SetMesh(CMesh *Mesh);

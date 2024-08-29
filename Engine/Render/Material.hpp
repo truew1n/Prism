@@ -15,7 +15,7 @@ public:
     CMaterial();
     virtual void Bind();
     virtual void Unbind();
-    ~CMaterial();
+    virtual ~CMaterial();
 
     virtual void SetProjection(glm::mat4 Projection);
     virtual void SetView(glm::mat4 View);

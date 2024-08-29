@@ -8,7 +8,7 @@
 
 class CAsset {
 public:
-    CArray<CPair<CMesh *, CMaterial *>> Pairs;
+    CArray<CPair<CMesh *, CMaterial *>> AssetData;
 };
 
 #endif

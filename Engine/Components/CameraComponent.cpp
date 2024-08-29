@@ -7,9 +7,7 @@ CCameraComponent::CCameraComponent()
 
 CCameraComponent::~CCameraComponent()
 {
-    if(Camera) {
-        delete Camera;
-    }
+    
 }
 
 CCamera *CCameraComponent::GetCamera()

@@ -5,7 +5,9 @@
 
 class CObject {
 public:
+    CObject();
     virtual void Tick(float DeltaTime);
+    virtual ~CObject();
 };
 
 #endif

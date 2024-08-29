@@ -13,7 +13,7 @@ public:
     CLevel();
     virtual void Tick(float DeltaTime);
     void Draw();
-    ~CLevel();
+    virtual ~CLevel();
 
     void AddActor(CActor *NewActor);
     CActor *GetActor(int32_t Index);

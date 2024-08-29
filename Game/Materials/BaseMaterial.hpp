@@ -8,7 +8,7 @@ public:
     CFDBaseMaterial();
     virtual void Bind() override;
     virtual void Unbind() override;
-    ~CFDBaseMaterial();
+    ~CFDBaseMaterial() override;
 };
 
 #endif

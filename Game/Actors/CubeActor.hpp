@@ -9,7 +9,7 @@ class CFDCubeActor : public CActor {
 public:
     CFDCubeActor();
     void Tick(float DeltaTime) override;
-    ~CFDCubeActor();
+    ~CFDCubeActor() override;
 
     CSceneComponent *SceneComponent;
 

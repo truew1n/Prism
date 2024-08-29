@@ -10,7 +10,7 @@ class CFDMainLevel : public CLevel {
 public:
     CFDMainLevel();
     void Tick(float DeltaTime) override;
-    ~CFDMainLevel();
+    ~CFDMainLevel() override;
 
     CFDCubeActor *CubeActor;
     CFDSphereActor *SphereActor;

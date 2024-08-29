@@ -60,4 +60,5 @@ Game/Levels
 glfw3
 glew32
 opengl32
+assimp
 &

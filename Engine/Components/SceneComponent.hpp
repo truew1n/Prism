@@ -15,7 +15,7 @@ private:
 public:
     CSceneComponent();
     virtual void Draw();
-    ~CSceneComponent();
+    ~CSceneComponent() override;
 
     CSceneComponent *GetParent();
     void SetParent(CSceneComponent *NewParent);    
