@@ -10,6 +10,7 @@ $Game/Main.cpp
 #
 Engine/Utils/Transform.cpp
 Engine/Lib/stb_image.cpp
+Engine/Base/RenderObject.cpp
 Engine/Shader/Shader.cpp
 Engine/Buffer/ElementBuffer.cpp
 Engine/Buffer/VertexArray.cpp

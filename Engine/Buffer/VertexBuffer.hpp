@@ -4,6 +4,7 @@
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 #include "Array.hpp"
+#include "RenderObject.hpp"
 
 typedef struct SVertex {
 	glm::vec3 Position;
@@ -15,10 +16,8 @@ typedef struct SVertex {
 	SVertex(glm::vec3 IPosition, glm::vec3 INormal, glm::vec2 IUV) : Position(IPosition), Normal(INormal), UV(IUV) {}
 } SVertex;
 
-class CVertexBuffer {
+class CVertexBuffer : public RenderObject {
 public:
-    uint32_t Id;
-
     CVertexBuffer(CArray<SVertex> *Vertices);
 
 	void Bind();

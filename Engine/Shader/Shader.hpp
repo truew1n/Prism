@@ -9,15 +9,14 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "file.h"
+#include "RenderObject.hpp"
 
 enum class EShaderType : uint8_t {
     VERTEX,
     FRAGMENT
 };
 
-class CShader {
-private:
-    uint32_t Id;
+class CShader : public RenderObject {
 public:
     uint32_t Compile(const char *Source, EShaderType Type);
     void Create();
@@ -25,8 +24,6 @@ public:
     void Activate();
     void Deactivate();
     void Delete();
-
-    uint32_t GetId() const { return Id; }
 };
 
 #endif

@@ -3,11 +3,10 @@
 
 #include <GL/glew.h>
 #include "Array.hpp"
+#include "RenderObject.hpp"
 
-class CElementBuffer {
+class CElementBuffer : public RenderObject {
 public:
-    uint32_t Id;
-
     CElementBuffer(CArray<uint32_t> *Indices);
 
     void Bind();

@@ -4,14 +4,14 @@
 #include <GL/glew.h>
 #include "Shader.hpp"
 #include "stb_image.h"
+#include "RenderObject.hpp"
 
-class CTexture {
+class CTexture : public RenderObject {
 private:
-	uint32_t Id;
 	const char *Type;
 	uint32_t Unit;
 public:
-	CTexture() : Id(0), Type(nullptr), Unit(0) {};
+	CTexture() : Type(nullptr), Unit(0) {};
 	CTexture(const char *Image, const char *TextureType, uint32_t Slot);
 
 	void SetUniform(CShader *Shader, const char *Uniform, uint32_t Unit);
@@ -19,7 +19,6 @@ public:
 	void Unbind();
 	void Delete();
 
-	uint32_t GetId() { return Id; }
 	const char *GetType() { return Type; }
 	uint32_t GetUnit() { return Unit; }
 };

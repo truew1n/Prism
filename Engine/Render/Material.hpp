@@ -8,7 +8,7 @@
 #include "Array.hpp"
 
 class CMaterial {
-public:
+protected:
     CShader *Shader;
     CArray<CTexture *> *Textures;
 public:
