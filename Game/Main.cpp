@@ -131,12 +131,6 @@ int main(void)
 
     glEnable(GL_DEPTH_TEST);
 
-    glm::vec3 Point = glm::vec3(0.2f, 0.0f, 0.0f);
-    CTransform Ellipsoid = CTransform();
-    Ellipsoid.SetScale(glm::vec3(0.4f, 1.0f, 1.0f));
-
-    std::cout << (CCollisionSolver::SolvePointEllipsoid(Point, Ellipsoid) ? "Collision" : "No Collision") << std::endl;
-
     CFDCubeActor *CubeActor = Cast<CFDCubeActor *>(MainLevel->GetActor(0));
     
     auto LastTime = std::chrono::high_resolution_clock::now();
