@@ -7,6 +7,8 @@
 
 #include "Asset.hpp"
 
+#define LOG_ASSET_LOADING
+
 class CAssetLoader {
 private:
     static glm::vec3 Vec3AssimpGLM(aiVector3D Vector3D);

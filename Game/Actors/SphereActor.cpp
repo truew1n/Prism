@@ -8,7 +8,7 @@ CFDSphereActor::CFDSphereActor()
 {
     YuccaAsset = CAssetLoader::LoadStatic("Assets\\Models\\Yucca\\model.obj");
     TerrainAsset = CAssetLoader::LoadStatic("Assets\\Models\\Terrain\\model.obj");
-    ZilAsset = CAssetLoader::LoadStatic("Assets\\Models\\Zil\\model.obj");
+    ZilAsset = CAssetLoader::LoadStatic("Assets\\Models\\WatermelonFBX\\Watermelon.fbx");
 
     Root = new CSceneComponent();
 
