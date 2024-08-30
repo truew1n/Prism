@@ -67,8 +67,8 @@ CFDSphereActor::CFDSphereActor()
     }
 
 
-    CMeshComponent *SphereComponent = new CMeshComponent();
-    CMesh *SphereMesh = CMeshFactory::GenerateSphere(5.0f, 32, 32);
+    SphereComponent = new CMeshComponent();
+    SphereMesh = CMeshFactory::GenerateSphere(5.0f, 32, 32);
     SphereMesh->SetMaterial(new CFDBaseMaterial());
     SphereComponent->SetMesh(SphereMesh);
     SphereComponent->SetLocalTransform(
@@ -88,6 +88,8 @@ void CFDSphereActor::Tick(float DeltaTime)
 {
     CActor::Tick(DeltaTime);
     
+    CTransform *SphereTransform = SphereComponent->GetLocalTransformRef();
+    SphereTransform->Rotate(10.0f * DeltaTime, 10.0f * DeltaTime, 10.0f * DeltaTime);
 }
 
 CFDSphereActor::~CFDSphereActor()
@@ -107,4 +109,6 @@ CFDSphereActor::~CFDSphereActor()
     delete YuccaAsset;
     delete TerrainAsset;
     delete ZilAsset;
+
+    delete SphereMesh;
 }

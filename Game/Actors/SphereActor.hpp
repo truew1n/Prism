@@ -13,6 +13,9 @@ public:
 
     CSceneComponent *Root;
 
+    CMeshComponent *SphereComponent;
+    CMesh *SphereMesh;
+
     CAsset *YuccaAsset;
     CAsset *TerrainAsset;
     CAsset *ZilAsset;
