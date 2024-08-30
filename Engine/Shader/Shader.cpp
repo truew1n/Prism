@@ -1,6 +1,31 @@
 #include "Shader.hpp"
 
-#include <iostream>
+uint32_t CShader::MatchShaderType(EShaderType Type)
+{
+    switch(Type) {
+        case EShaderType::VERTEX:                       return GL_VERTEX_SHADER;
+        case EShaderType::TESSELLATION_CONTROL:         return GL_TESS_CONTROL_SHADER;
+        case EShaderType::TESSELLATION_EVALUATION:      return GL_TESS_EVALUATION_SHADER;
+        case EShaderType::GEOMETRY:                     return GL_GEOMETRY_SHADER;
+        case EShaderType::FRAGMENT:                     return GL_FRAGMENT_SHADER;
+        case EShaderType::COMPUTE:                      return GL_COMPUTE_SHADER;
+        default:                                        return GL_VERTEX_SHADER;
+    }
+}
+
+const char *CShader::GLTypeToString(uint32_t GLType)
+{
+    switch(GLType) {
+        case GL_VERTEX_SHADER:                          return "Vertex Shader";
+        case GL_TESS_CONTROL_SHADER:                    return "Tessellation Control Shader";
+        case GL_TESS_EVALUATION_SHADER:                 return "Tessellation Evaluation Shader";
+        case GL_GEOMETRY_SHADER:                        return "Geometry Shader";
+        case GL_FRAGMENT_SHADER:                        return "Fragment Shader";
+        case GL_COMPUTE_SHADER:                         return "Compute Shader";
+        default:                                        return "Unknown Shader Type";
+    }
+}
+
 uint8_t CShader::Load(const char *Filepath, EShaderType Type)
 {
     char *Content = read_file(Filepath);
@@ -24,17 +49,8 @@ uint8_t CShader::Load(const char *Filepath, EShaderType Type)
 
 uint32_t CShader::Compile(const char *Source, EShaderType Type)
 {
-    uint32_t GLType = GL_VERTEX_SHADER;
-    switch(Type) {
-        case EShaderType::VERTEX: {
-            GLType = GL_VERTEX_SHADER;
-            break;
-        }
-        case EShaderType::FRAGMENT: {
-            GLType = GL_FRAGMENT_SHADER;
-            break;
-        }
-    }
+    uint32_t GLType = MatchShaderType(Type);
+    
     uint32_t ShaderId = glCreateShader(GLType);
     glShaderSource(ShaderId, 1, &Source, nullptr);
     glCompileShader(ShaderId);
@@ -48,7 +64,7 @@ uint32_t CShader::Compile(const char *Source, EShaderType Type)
         glGetShaderInfoLog(ShaderId, Length, &Length, Message);
         printf(
             "Failed to compile %s shader!\n%s\n",
-            (GLType == GL_VERTEX_SHADER ? "vertex" : "fragment"),
+            GLTypeToString(GLType),
             Message
         );
         free(Message);

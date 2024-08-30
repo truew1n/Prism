@@ -6,6 +6,7 @@
 #include <stdint.h>
 #include <assert.h>
 
+#include <iostream>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "file.h"
@@ -13,10 +14,17 @@
 
 enum class EShaderType : uint8_t {
     VERTEX,
-    FRAGMENT
+    TESSELLATION_CONTROL,
+    TESSELLATION_EVALUATION,
+    GEOMETRY,
+    FRAGMENT,
+    COMPUTE
 };
 
 class CShader : public RenderObject {
+private:
+    uint32_t MatchShaderType(EShaderType Type);
+    const char *GLTypeToString(uint32_t GLType);
 public:
     uint32_t Compile(const char *Source, EShaderType Type);
     void Create();
