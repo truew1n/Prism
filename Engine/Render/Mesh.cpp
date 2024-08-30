@@ -2,17 +2,19 @@
 
 CMesh::CMesh()
 {
-    CArray<SVertex> *Vertices = CArray<SVertex>::From((SVertex[]){
+    SVertex StackVertices[4] = {
         SVertex(glm::vec3(-1.0f, -1.0f, 0.0f), glm::vec2(0.0f, 0.0f)),
         SVertex(glm::vec3(1.0f, -1.0f, 0.0f), glm::vec2(1.0f, 0.0f)),
         SVertex(glm::vec3(1.0f, 1.0f, 0.0f), glm::vec2(1.0f, 1.0f)),
         SVertex(glm::vec3(-1.0f, 1.0f, 0.0f), glm::vec2(0.0f, 1.0f))
-    }, 4);
+    };
+    CArray<SVertex> *Vertices = CArray<SVertex>::From(StackVertices, sizeof(StackVertices)/sizeof(StackVertices[0]));
 
-    CArray<uint32_t> *Indices = CArray<uint32_t>::From((uint32_t[]){
+    uint32_t StackIndices[6] = {
         0, 1, 2,
         0, 2, 3
-    }, 6);
+    };
+    CArray<uint32_t> *Indices = CArray<uint32_t>::From(StackIndices, sizeof(StackIndices)/sizeof(StackIndices[0]));
 
     VertexArray.Bind();
     CVertexBuffer VertexBuffer(Vertices);

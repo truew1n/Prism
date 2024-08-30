@@ -8,6 +8,7 @@ CFDSphereActor::CFDSphereActor()
 {
     YuccaAsset = CAssetLoader::LoadStatic("Assets\\Models\\Yucca\\model.obj");
     TerrainAsset = CAssetLoader::LoadStatic("Assets\\Models\\Terrain\\model.obj");
+    ZilAsset = CAssetLoader::LoadStatic("Assets\\Models\\Zil\\model.obj");
 
     Root = new CSceneComponent();
 
@@ -41,6 +42,24 @@ CFDSphereActor::CFDSphereActor()
                     glm::vec3(0.0f, 0.0f, 5.0f),
                     glm::vec3(0.0f, 0.0f, 0.0f),
                     glm::vec3(10.0f, 10.0f, 10.0f)
+                )
+            );
+            Root->AddComponent(TempMeshComponent);
+        }
+    }
+
+    for(CPair<CMesh *, CMaterial *> &Pair : ZilAsset->AssetData) {
+        CMesh *Mesh = Pair.GetFirst();
+        CMaterial *Material = Pair.GetSecond();
+        if(Mesh && Material) {
+            CMeshComponent *TempMeshComponent = new CMeshComponent();
+            Mesh->SetMaterial(Material);
+            TempMeshComponent->SetMesh(Mesh);
+            TempMeshComponent->SetLocalTransform(
+                CTransform(
+                    glm::vec3(0.0f, 10.0f, 15.0f),
+                    glm::vec3(0.0f, 0.0f, 0.0f),
+                    glm::vec3(1.0f, 1.0f, 1.0f)
                 )
             );
             Root->AddComponent(TempMeshComponent);
@@ -81,6 +100,11 @@ CFDSphereActor::~CFDSphereActor()
         delete Pair.GetFirst();
         delete Pair.GetSecond();
     }
+    for(CPair<CMesh *, CMaterial *> &Pair : ZilAsset->AssetData) {
+        delete Pair.GetFirst();
+        delete Pair.GetSecond();
+    }
     delete YuccaAsset;
     delete TerrainAsset;
+    delete ZilAsset;
 }

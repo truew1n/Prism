@@ -15,6 +15,7 @@ public:
 
     CAsset *YuccaAsset;
     CAsset *TerrainAsset;
+    CAsset *ZilAsset;
 };
 
 #endif
