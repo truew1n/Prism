@@ -105,7 +105,10 @@ int main(void)
     std::string WindowTitle = "Prism";
     GLFWwindow *Window = glfwCreateWindow(WindowWidth, WindowHeight, WindowTitle.c_str(), NULL, NULL);
     if (!Window) {
-        std::cerr << "Failed to create GLFW Window!\n" << std::endl;
+        const char *Message;
+        glfwGetError(&Message);
+        std::cerr << "Failed to create GLFW Window!" << std::endl;
+        std::cerr << Message << std::endl;
         glfwTerminate();
         return -1;
     }
