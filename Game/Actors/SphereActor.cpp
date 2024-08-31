@@ -8,7 +8,7 @@ CFDSphereActor::CFDSphereActor()
 {
     YuccaAsset = CAssetLoader::LoadStatic("Assets\\Models\\Yucca\\model.obj");
     TerrainAsset = CAssetLoader::LoadStatic("Assets\\Models\\Terrain\\model.obj");
-    ZilAsset = CAssetLoader::LoadStatic("Assets\\Models\\WatermelonFBX\\Watermelon.fbx");
+    ZilAsset = CAssetLoader::LoadStatic("Assets\\Models\\Zil\\model.obj");
 
     Root = new CSceneComponent();
 
@@ -89,7 +89,7 @@ void CFDSphereActor::Tick(float DeltaTime)
     CActor::Tick(DeltaTime);
     
     CTransform *SphereTransform = SphereComponent->GetLocalTransformRef();
-    SphereTransform->Rotate(10.0f * DeltaTime, 10.0f * DeltaTime, 10.0f * DeltaTime);
+    SphereTransform->Rotate(10.0f * DeltaTime, 20.0f * DeltaTime, 10.0f * DeltaTime);
 }
 
 CFDSphereActor::~CFDSphereActor()
