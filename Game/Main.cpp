@@ -21,6 +21,7 @@ struct SInputState {
     bool DPressed = false;
     bool SPACEPressed = false;
     bool CPressed = false;
+    bool SHIFTPressed = false;
 };
 
 SInputState InputState;
@@ -38,6 +39,8 @@ void MouseCallback(GLFWwindow* Window, double X, double Y)
     MainLevel->MouseCallback(X, Y);
 }
 
+bool IsWireframe = false;
+
 void KeyCallback(GLFWwindow* Window, int Key, int Scancode, int Action, int Mods)
 {
     if (Action == GLFW_PRESS || Action == GLFW_RELEASE) {
@@ -50,11 +53,25 @@ void KeyCallback(GLFWwindow* Window, int Key, int Scancode, int Action, int Mods
             case GLFW_KEY_D: InputState.DPressed = isPressed; break;
             case GLFW_KEY_SPACE: InputState.SPACEPressed = isPressed; break;
             case GLFW_KEY_C: InputState.CPressed = isPressed; break;
+            case GLFW_KEY_LEFT_SHIFT: InputState.SHIFTPressed = isPressed; break;
+            case GLFW_KEY_E: {
+                if(isPressed) {
+                    if(IsWireframe) {
+                        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+                        IsWireframe = false;
+                    } else {
+                        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+                        IsWireframe = true;
+                    }
+                }
+                break;
+            }
             default: break;
         }
     }
 }
 
+float Speed = 5.0f;
 
 void ProcessInputAndMoveActor(CFDCubeActor *CubeActor, float DeltaTime)
 {
@@ -64,7 +81,8 @@ void ProcessInputAndMoveActor(CFDCubeActor *CubeActor, float DeltaTime)
     glm::vec3 CameraForward = Camera->CalculateFront();
     glm::vec3 CameraRight = Camera->CalculateRight();
     glm::vec3 CameraUp = Camera->CalculateUp();
-    float MovementSpeed = 5.0f * DeltaTime;
+    
+    float MovementSpeed = Speed * DeltaTime;
 
     if (InputState.WPressed) {
         CubeActorTransform.SetLocation(CubeActorTransform.GetLocation() + CameraForward * MovementSpeed);
@@ -83,6 +101,12 @@ void ProcessInputAndMoveActor(CFDCubeActor *CubeActor, float DeltaTime)
     }
     if (InputState.CPressed) {
         CubeActorTransform.SetLocation(CubeActorTransform.GetLocation() - CameraUp * MovementSpeed);
+    }
+    if (InputState.SHIFTPressed) {
+        Speed = 20.0f;
+    }
+    if (!InputState.SHIFTPressed) {
+        Speed = 5.0f;
     }
 
     CubeActor->SetTransform(CubeActorTransform);

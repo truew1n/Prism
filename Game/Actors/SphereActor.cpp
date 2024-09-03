@@ -7,7 +7,6 @@
 CFDSphereActor::CFDSphereActor()
 {
     YuccaAsset = CAssetLoader::LoadStatic("Assets\\Models\\Yucca\\model.obj");
-    TerrainAsset = CAssetLoader::LoadStatic("Assets\\Models\\Terrain\\model.obj");
     ZilAsset = CAssetLoader::LoadStatic("Assets\\Models\\Zil\\model.obj");
 
     Root = new CSceneComponent();
@@ -30,23 +29,18 @@ CFDSphereActor::CFDSphereActor()
         }
     }
     
-    for(CPair<CMesh *, CMaterial *> &Pair : TerrainAsset->AssetData) {
-        CMesh *Mesh = Pair.GetFirst();
-        CMaterial *Material = Pair.GetSecond();
-        if(Mesh && Material) {
-            CMeshComponent *TempMeshComponent = new CMeshComponent();
-            Mesh->SetMaterial(Material);
-            TempMeshComponent->SetMesh(Mesh);
-            TempMeshComponent->SetLocalTransform(
-                CTransform(
-                    glm::vec3(0.0f, 0.0f, 5.0f),
-                    glm::vec3(0.0f, 0.0f, 0.0f),
-                    glm::vec3(10.0f, 10.0f, 10.0f)
-                )
-            );
-            Root->AddComponent(TempMeshComponent);
-        }
-    }
+    TerrainComponent = new CMeshComponent();
+    TerrainMaterial = new CFDBaseMaterial();
+    TerrainMesh = CMeshFactory::GenerateTerrain(200, 200, 3.0f, 1.0f, 1, 1.0f, 2.0f);
+    TerrainMesh->SetMaterial(TerrainMaterial);
+    TerrainComponent->SetMesh(TerrainMesh);
+    TerrainComponent->SetLocalTransform(
+        CTransform(
+            glm::vec3(-100.0f, 20.0f, -100.0f),
+            glm::vec3(0.0f, 0.0f, 0.0f),
+            glm::vec3(1.0f, 1.0, 1.0f)
+        )
+    );
 
     for(CPair<CMesh *, CMaterial *> &Pair : ZilAsset->AssetData) {
         CMesh *Mesh = Pair.GetFirst();
@@ -65,11 +59,12 @@ CFDSphereActor::CFDSphereActor()
             Root->AddComponent(TempMeshComponent);
         }
     }
+    Root->AddComponent(TerrainComponent);
 
 
     SphereComponent = new CMeshComponent();
     SphereMesh = CMeshFactory::GenerateSphere(5.0f, 32, 32);
-    SphereMesh->SetMaterial(new CFDBaseMaterial());
+    SphereMesh->SetMaterial(TerrainMaterial);
     SphereComponent->SetMesh(SphereMesh);
     SphereComponent->SetLocalTransform(
         CTransform(
@@ -98,17 +93,16 @@ CFDSphereActor::~CFDSphereActor()
         delete Pair.GetFirst();
         delete Pair.GetSecond();
     }
-    for(CPair<CMesh *, CMaterial *> &Pair : TerrainAsset->AssetData) {
-        delete Pair.GetFirst();
-        delete Pair.GetSecond();
-    }
+    delete YuccaAsset;
+
+    delete TerrainMaterial;
+    delete TerrainMesh;
+
     for(CPair<CMesh *, CMaterial *> &Pair : ZilAsset->AssetData) {
         delete Pair.GetFirst();
         delete Pair.GetSecond();
     }
-    delete YuccaAsset;
-    delete TerrainAsset;
     delete ZilAsset;
-
+    
     delete SphereMesh;
 }

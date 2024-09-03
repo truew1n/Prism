@@ -122,37 +122,30 @@ CMesh *CMeshFactory::GenerateSphere(float Radius, int32_t LatitudeCount, int32_t
     if (LatitudeCount < 2)
         LatitudeCount = 2;
 
-    // Arrays to hold vertices and indices
     CArray<SVertex> *Vertices = new CArray<SVertex>();
     CArray<uint32_t> *Indices = new CArray<uint32_t>();
 
-    // Angles between latitude and longitude lines
     float DeltaLatitude = M_PI / LatitudeCount;
     float DeltaLongitude = 2.0f * M_PI / LongitudeCount;
 
-    // Generate vertices
     for (int32_t i = 0; i <= LatitudeCount; ++i) {
-        float LatitudeAngle = M_PI / 2.0f - i * DeltaLatitude; // From top to bottom
-        float xy = Radius * cosf(LatitudeAngle); // Distance from the Z axis
-        float z = Radius * sinf(LatitudeAngle); // Height from the XY plane
+        float LatitudeAngle = M_PI / 2.0f - i * DeltaLatitude;
+        float xy = Radius * cosf(LatitudeAngle);
+        float z = Radius * sinf(LatitudeAngle);
 
         for (int32_t j = 0; j <= LongitudeCount; ++j) {
-            float LongitudeAngle = j * DeltaLongitude; // From left to right
+            float LongitudeAngle = j * DeltaLongitude;
 
-            // Calculate vertex position
             float x = xy * cosf(LongitudeAngle);
             float y = xy * sinf(LongitudeAngle);
 
-            // Texture coordinates
             float s = (float)j / LongitudeCount;
             float t = (float)i / LatitudeCount;
 
-            // Add vertex with position and texture coordinates
             Vertices->Add(SVertex(glm::vec3(x, y, z), glm::vec2(s, t)));
         }
     }
 
-    // Generate indices
     for (int32_t i = 0; i < LatitudeCount; ++i) {
         int32_t k1 = i * (LongitudeCount + 1);
         int32_t k2 = k1 + LongitudeCount + 1;
@@ -171,9 +164,68 @@ CMesh *CMeshFactory::GenerateSphere(float Radius, int32_t LatitudeCount, int32_t
             }
         }
     }
-
-    // Create and return mesh
+    
     CMesh *ReturnMesh = new CMesh(Vertices, Indices);
+    delete Vertices;
+    delete Indices;
+    return ReturnMesh;
+}
+
+float CMeshFactory::PerlinNoise(float x, float y) {
+    return glm::perlin(glm::vec2(x, y));
+}
+
+CMesh *CMeshFactory::GenerateTerrain(int32_t Width, int32_t Depth, float Scale, float HeightMultiplier, int32_t Octaves, float Persistence, float Lacunarity)
+{
+    CArray<SVertex>* Vertices = new CArray<SVertex>(Depth * Width);
+    CArray<uint32_t>* Indices = new CArray<uint32_t>(Depth * Width * 6);
+
+    int32_t Counter = 0;
+    for (int32_t z = 0; z < Depth; ++z) {
+        for (int32_t x = 0; x < Width; ++x) {
+            float Height = 0.0f;
+            float Frequency = 1.0f;
+            float Amplitude = 1.0f;
+            float MaxValue = 0.0f;
+
+            for (int32_t i = 0; i < Octaves; ++i) {
+                float SampleX = (x / Scale) * Frequency;
+                float SampleZ = (z / Scale) * Frequency;
+
+                float NoiseValue = PerlinNoise(SampleX, SampleZ) * 2.0f - 1.0f;
+                Height += NoiseValue * Amplitude;
+
+                MaxValue += Amplitude;
+
+                Amplitude *= Persistence;
+                Frequency *= Lacunarity;
+            }
+
+            Height = (Height / MaxValue) * HeightMultiplier;
+
+            Vertices->Set(SVertex(glm::vec3(x, Height, z), glm::vec2(x / (float)Width, z / (float)Depth)), Counter++);
+        }
+    }
+
+    Counter = 0;
+    for (int32_t z = 0; z < Depth - 1; ++z) {
+        for (int32_t x = 0; x < Width - 1; ++x) {
+            int32_t TopLeft = (z * Width) + x;
+            int32_t TopRight = TopLeft + 1;
+            int32_t BottomLeft = ((z + 1) * Width) + x;
+            int32_t BottomRight = BottomLeft + 1;
+
+            Indices->Set(TopLeft, Counter++);
+            Indices->Set(BottomLeft, Counter++);
+            Indices->Set(TopRight, Counter++);
+
+            Indices->Set(TopRight, Counter++);
+            Indices->Set(BottomLeft, Counter++);
+            Indices->Set(BottomRight, Counter++);
+        }
+    }
+
+    CMesh* ReturnMesh = new CMesh(Vertices, Indices);
     delete Vertices;
     delete Indices;
     return ReturnMesh;

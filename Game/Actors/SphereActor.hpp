@@ -16,8 +16,11 @@ public:
     CMeshComponent *SphereComponent;
     CMesh *SphereMesh;
 
+    CMeshComponent *TerrainComponent;
+    CMaterial *TerrainMaterial;
+    CMesh *TerrainMesh;
+
     CAsset *YuccaAsset;
-    CAsset *TerrainAsset;
     CAsset *ZilAsset;
 };
 
