@@ -175,22 +175,24 @@ float CMeshFactory::PerlinNoise(float x, float y) {
     return glm::perlin(glm::vec2(x, y));
 }
 
-CMesh *CMeshFactory::GenerateTerrain(int32_t Width, int32_t Depth, float Scale, float HeightMultiplier, int32_t Octaves, float Persistence, float Lacunarity)
-{
-    CArray<SVertex>* Vertices = new CArray<SVertex>(Depth * Width);
-    CArray<uint32_t>* Indices = new CArray<uint32_t>(Depth * Width * 6);
+CMesh* CMeshFactory::GenerateTerrain(int32_t Width, int32_t Depth, float RightStep, float LeftStep, float Scale, float HeightMultiplier, int32_t Octaves, float Persistence, float Lacunarity) {
+    int32_t NumVerticesX = static_cast<int32_t>((Width - 1) / RightStep) + 1;
+    int32_t NumVerticesZ = static_cast<int32_t>((Depth - 1) / LeftStep) + 1;
+
+    CArray<SVertex>* Vertices = new CArray<SVertex>(NumVerticesX * NumVerticesZ);
+    CArray<uint32_t>* Indices = new CArray<uint32_t>((NumVerticesX - 1) * (NumVerticesZ - 1) * 6);
 
     int32_t Counter = 0;
-    for (int32_t z = 0; z < Depth; ++z) {
-        for (int32_t x = 0; x < Width; ++x) {
+    for (int32_t z = 0; z < NumVerticesZ; ++z) {
+        for (int32_t x = 0; x < NumVerticesX; ++x) {
             float Height = 0.0f;
             float Frequency = 1.0f;
             float Amplitude = 1.0f;
             float MaxValue = 0.0f;
 
             for (int32_t i = 0; i < Octaves; ++i) {
-                float SampleX = (x / Scale) * Frequency;
-                float SampleZ = (z / Scale) * Frequency;
+                float SampleX = (x * RightStep / Scale) * Frequency;
+                float SampleZ = (z * LeftStep / Scale) * Frequency;
 
                 float NoiseValue = PerlinNoise(SampleX, SampleZ) * 2.0f - 1.0f;
                 Height += NoiseValue * Amplitude;
@@ -203,16 +205,21 @@ CMesh *CMeshFactory::GenerateTerrain(int32_t Width, int32_t Depth, float Scale, 
 
             Height = (Height / MaxValue) * HeightMultiplier;
 
-            Vertices->Set(SVertex(glm::vec3(x, Height, z), glm::vec2(x / (float)Width, z / (float)Depth)), Counter++);
+            Vertices->Set(
+                SVertex(
+                    glm::vec3(x * RightStep, Height, z * LeftStep),
+                    glm::vec2(x / (float)NumVerticesX, z / (float)NumVerticesZ)
+                ),
+            Counter++);
         }
     }
 
     Counter = 0;
-    for (int32_t z = 0; z < Depth - 1; ++z) {
-        for (int32_t x = 0; x < Width - 1; ++x) {
-            int32_t TopLeft = (z * Width) + x;
+    for (int32_t z = 0; z < NumVerticesZ - 1; ++z) {
+        for (int32_t x = 0; x < NumVerticesX - 1; ++x) {
+            int32_t TopLeft = (z * NumVerticesX) + x;
             int32_t TopRight = TopLeft + 1;
-            int32_t BottomLeft = ((z + 1) * Width) + x;
+            int32_t BottomLeft = ((z + 1) * NumVerticesX) + x;
             int32_t BottomRight = BottomLeft + 1;
 
             Indices->Set(TopLeft, Counter++);

@@ -1,7 +1,9 @@
 #include "SphereActor.hpp"
 #include "MeshFactory.hpp"
-#include "BaseMaterial.hpp"
 #include "MainLevel.hpp"
+
+#include "BaseMaterial.hpp"
+#include "GrassMaterial.hpp"
 
 
 CFDSphereActor::CFDSphereActor()
@@ -30,13 +32,13 @@ CFDSphereActor::CFDSphereActor()
     }
     
     TerrainComponent = new CMeshComponent();
-    TerrainMaterial = new CFDBaseMaterial();
-    TerrainMesh = CMeshFactory::GenerateTerrain(200, 200, 3.0f, 1.0f, 1, 1.0f, 2.0f);
+    TerrainMaterial = new CFDGrassMaterial();
+    TerrainMesh = CMeshFactory::GenerateTerrain(200, 200, 0.1f, 0.1f, 6.0f, 1.0f, 1, 1.0f, 2.0f);
     TerrainMesh->SetMaterial(TerrainMaterial);
     TerrainComponent->SetMesh(TerrainMesh);
     TerrainComponent->SetLocalTransform(
         CTransform(
-            glm::vec3(-100.0f, 20.0f, -100.0f),
+            glm::vec3(-100.0f, 0.0f, -100.0f),
             glm::vec3(0.0f, 0.0f, 0.0f),
             glm::vec3(1.0f, 1.0, 1.0f)
         )
@@ -63,8 +65,9 @@ CFDSphereActor::CFDSphereActor()
 
 
     SphereComponent = new CMeshComponent();
+    SphereMaterial = new CFDBaseMaterial();
     SphereMesh = CMeshFactory::GenerateSphere(5.0f, 32, 32);
-    SphereMesh->SetMaterial(TerrainMaterial);
+    SphereMesh->SetMaterial(SphereMaterial);
     SphereComponent->SetMesh(SphereMesh);
     SphereComponent->SetLocalTransform(
         CTransform(
@@ -104,5 +107,6 @@ CFDSphereActor::~CFDSphereActor()
     }
     delete ZilAsset;
     
+    delete SphereMaterial;
     delete SphereMesh;
 }

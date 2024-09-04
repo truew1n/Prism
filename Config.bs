@@ -35,6 +35,7 @@ Engine/Asset/AssetLoader.cpp
 Engine/Collisions/CollisionSolver.cpp
 Engine/Collisions/CollisionManager.cpp
 Game/Materials/BaseMaterial.cpp
+Game/Materials/GrassMaterial.cpp
 Game/Actors/CubeActor.cpp
 Game/Actors/SphereActor.cpp
 Game/Levels/MainLevel.cpp

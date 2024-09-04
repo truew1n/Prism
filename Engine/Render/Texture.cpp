@@ -16,11 +16,11 @@ CTexture::CTexture(const char *Image, const char *TextureType, uint32_t Slot)
 	Unit = Slot;
 	glBindTexture(GL_TEXTURE_2D, Id);
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	SetTextureParameter(ETextureParameter::MinFilter, ETextureParameterValue::LinearMipMapLinear);
+	SetTextureParameter(ETextureParameter::MagFilter, ETextureParameterValue::Linear);
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	SetTextureParameter(ETextureParameter::WrapU, ETextureParameterValue::Repeat);
+	SetTextureParameter(ETextureParameter::WrapV, ETextureParameterValue::Repeat);
 
 	if(TextureChannels == 4) {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, TextureWidth, TextureHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, TextureData);
@@ -41,6 +41,11 @@ void CTexture::SetUniform(CShader *Shader, const char *Uniform, uint32_t Unit)
 	uint32_t TextureLocation = glGetUniformLocation(Shader->GetId(), Uniform);
 	
 	glUniform1i(TextureLocation, Unit);	
+}
+
+void CTexture::SetTextureParameter(ETextureParameter Type, ETextureParameterValue Value)
+{
+	glTexParameteri(GL_TEXTURE_2D, (GLenum) Type, (GLint) Value);
 }
 
 void CTexture::Bind()

@@ -14,6 +14,7 @@ public:
     CSceneComponent *Root;
 
     CMeshComponent *SphereComponent;
+    CMaterial *SphereMaterial;
     CMesh *SphereMesh;
 
     CMeshComponent *TerrainComponent;

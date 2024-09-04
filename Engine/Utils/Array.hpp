@@ -8,18 +8,21 @@ class CArray
 {
 private:
     T *Data;
+    size_t TypeSize;
     int32_t Size;
 
 public:
     CArray()
     {
         Data = nullptr;
+        TypeSize = sizeof(T);
         Size = 0;
     }
 
     CArray(int32_t InitialSize)
     {
         Data = new T[InitialSize];
+        TypeSize = sizeof(T);
         Size = InitialSize;
         Clear();
     }
@@ -50,9 +53,7 @@ public:
     {
         T *NewData = new T[++Size];
         
-        for(int32_t i = 0; i < Size - 1; ++i) {
-            NewData[i] = Data[i];
-        }
+        memcpy(NewData, Data, (Size - 1) * TypeSize);
         
         NewData[Size - 1] = Item;
         if(Data) delete Data;
@@ -83,12 +84,9 @@ public:
 
         T *NewData = new T[--Size];
 
-        for(int32_t i = 0; i < Index; ++i) {
-            NewData[i] = Data[i];
-        }
-        for(int32_t i = Index + 1; i < (Size + 1); ++i) {
-            NewData[i - 1] = Data[i];
-        }
+        memcpy(NewData, Data, (Index - 1) * TypeSize);
+        memcpy(NewData + Index, Data + Index + 1, (Size - Index) * TypeSize);
+
         if(Data) delete Data;
         Data = NewData;
     }

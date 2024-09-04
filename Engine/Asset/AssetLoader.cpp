@@ -92,8 +92,8 @@ CAsset *CAssetLoader::LoadStatic(const char *Filepath)
 
         CShader *MaterialShader = PrismMaterial->GetShader();
         MaterialShader->Create();
-        MaterialShader->Load("Engine\\Resource\\Default.vert", EShaderType::VERTEX);
-        MaterialShader->Load("Engine\\Resource\\Default.frag", EShaderType::FRAGMENT);
+        MaterialShader->Load("Engine\\Resource\\Default.vert", EShaderType::Vertex);
+        MaterialShader->Load("Engine\\Resource\\Default.frag", EShaderType::Fragment);
 
         aiMaterial *AssimpMaterial = AssimpScene->mMaterials[AssimpMesh->mMaterialIndex];
         

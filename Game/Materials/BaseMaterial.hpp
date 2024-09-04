@@ -1,5 +1,5 @@
-#ifndef CFD_BASEMATERIAL_HPP
-#define CFD_BASEMATERIAL_HPP
+#ifndef CFD_BASE_MATERIAL_HPP
+#define CFD_BASE_MATERIAL_HPP
 
 #include "Material.hpp"
 
