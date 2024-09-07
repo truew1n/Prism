@@ -97,10 +97,10 @@ void ProcessInputAndMoveActor(CFDCubeActor *CubeActor, float DeltaTime)
         CubeActorTransform.SetLocation(CubeActorTransform.GetLocation() + CameraRight * MovementSpeed);
     }
     if (InputState.SPACEPressed) {
-        CubeActorTransform.SetLocation(CubeActorTransform.GetLocation() + CameraUp * MovementSpeed);
+        CubeActorTransform.SetLocation(CubeActorTransform.GetLocation() + glm::vec3(0.0f, 1.0f, 0.0f) * MovementSpeed);
     }
     if (InputState.CPressed) {
-        CubeActorTransform.SetLocation(CubeActorTransform.GetLocation() - CameraUp * MovementSpeed);
+        CubeActorTransform.SetLocation(CubeActorTransform.GetLocation() - glm::vec3(0.0f, 1.0f, 0.0f) * MovementSpeed);
     }
     if (InputState.SHIFTPressed) {
         Speed = 20.0f;

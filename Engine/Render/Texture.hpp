@@ -58,22 +58,57 @@ enum class ETextureParameterValue : int32_t {
 	MirrorClampToEdge = GL_MIRROR_CLAMP_TO_EDGE
 };
 
+enum class ETextureType : int8_t {
+	None = 0,
+	Diffuse = 1,
+	Specular = 2,
+	Ambient = 3,
+	Emissive = 4,
+	Height = 5,
+	Normals = 6,
+	Shininess = 7,
+	Opacity = 8,
+	Displacement = 9,
+	Lightmap = 10,
+	Reflection = 11,
+	BaseColor = 12,
+	NormalCamera = 13,
+	EmissionColor = 14,
+	Metalness = 15,
+	DiffuseRoughness = 16,
+	AmbientOcclusion = 17,
+	Unknown = 18,
+	Sheen = 19,
+	ClearCoat = 20,
+	Transmission = 21,
+	MayaBase = 22,
+	MayaSpecular = 23,
+	MayaSpecularColor = 24,
+	MayaSpecularRoughness = 25
+};
+
 class CTexture : public RenderObject {
 private:
-	const char *Type;
-	uint32_t Unit;
+	ETextureType MType;
+	const char *MUniformName;
+	uint32_t MUnit;
 public:
-	CTexture() : Type(nullptr), Unit(0) {};
-	CTexture(const char *Image, const char *TextureType, uint32_t Slot);
+	CTexture() : MType(ETextureType::None), MUniformName(nullptr), MUnit(0) {};
+	CTexture(const char *ITexturePath, const char *IUniformName, uint32_t ISlot);
 
-	void SetUniform(CShader *Shader, const char *Uniform, uint32_t Unit);
+	void SetUniform(CShader *Shader);
 	void SetTextureParameter(ETextureParameter Type, ETextureParameterValue Value);
 	void Bind();
 	void Unbind();
 	void Delete();
 
-	const char *GetType() { return Type; }
-	uint32_t GetUnit() { return Unit; }
+	ETextureType GetType() const { return MType; }
+	void SetType(ETextureType Type) { MType = Type; }
+
+	const char *GetUniformName() const { return MUniformName; }
+	void SetUniformName(const char *UniformName) { MUniformName = UniformName; }
+
+	uint32_t GetUnit() const { return MUnit; }
 };
 
 #endif

@@ -6,7 +6,7 @@ CFDBaseMaterial::CFDBaseMaterial()
     Shader->Load("Engine\\Resource\\Default.vert", EShaderType::Vertex);
     Shader->Load("Engine\\Resource\\Default.frag", EShaderType::Fragment);
 
-    Textures->Add(new CTexture("Assets\\Textures\\Rust\\SpaceLabWallOld_albedo.png", "UDiffuse", 0));
+    Textures->Add(new CTexture("Assets\\Textures\\autumn_field_puresky.jpg", "UDiffuse", 0));
 }
 
 void CFDBaseMaterial::Bind()

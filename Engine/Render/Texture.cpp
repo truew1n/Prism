@@ -2,18 +2,18 @@
 #include <iostream>
 
 
-CTexture::CTexture(const char *Image, const char *TextureType, uint32_t Slot)
+CTexture::CTexture(const char *ITexturePath, const char *IUniformName, uint32_t ISlot)
 {
-    Type = TextureType;
+    MUniformName = IUniformName;
 
 	int32_t TextureWidth, TextureHeight, TextureChannels;
 	stbi_set_flip_vertically_on_load(true);
-	uint8_t *TextureData = stbi_load(Image, &TextureWidth, &TextureHeight, &TextureChannels, 0);
+	uint8_t *TextureData = stbi_load(ITexturePath, &TextureWidth, &TextureHeight, &TextureChannels, 0);
 
 	glGenTextures(1, &Id);
 	
-	glActiveTexture(GL_TEXTURE0 + Slot);
-	Unit = Slot;
+	glActiveTexture(GL_TEXTURE0 + ISlot);
+	MUnit = ISlot;
 	glBindTexture(GL_TEXTURE_2D, Id);
 
 	SetTextureParameter(ETextureParameter::MinFilter, ETextureParameterValue::LinearMipMapLinear);
@@ -36,11 +36,11 @@ CTexture::CTexture(const char *Image, const char *TextureType, uint32_t Slot)
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void CTexture::SetUniform(CShader *Shader, const char *Uniform, uint32_t Unit)
+void CTexture::SetUniform(CShader *Shader)
 {
-	uint32_t TextureLocation = glGetUniformLocation(Shader->GetId(), Uniform);
+	uint32_t TextureLocation = glGetUniformLocation(Shader->GetId(), MUniformName);
 	
-	glUniform1i(TextureLocation, Unit);	
+	glUniform1i(TextureLocation, MUnit);	
 }
 
 void CTexture::SetTextureParameter(ETextureParameter Type, ETextureParameterValue Value)
@@ -50,7 +50,7 @@ void CTexture::SetTextureParameter(ETextureParameter Type, ETextureParameterValu
 
 void CTexture::Bind()
 {
-	glActiveTexture(GL_TEXTURE0 + Unit);
+	glActiveTexture(GL_TEXTURE0 + MUnit);
 	glBindTexture(GL_TEXTURE_2D, Id);
 }
 

@@ -9,7 +9,7 @@
 CFDSphereActor::CFDSphereActor()
 {
     YuccaAsset = CAssetLoader::LoadStatic("Assets\\Models\\Yucca\\model.obj");
-    ZilAsset = CAssetLoader::LoadStatic("Assets\\Models\\Zil\\model.obj");
+    ZilAsset = CAssetLoader::LoadStatic("Assets\\Models\\PlanterBox\\model.obj");
 
     Root = new CSceneComponent();
 
@@ -33,12 +33,12 @@ CFDSphereActor::CFDSphereActor()
     
     TerrainComponent = new CMeshComponent();
     TerrainMaterial = new CFDGrassMaterial();
-    TerrainMesh = CMeshFactory::GenerateTerrain(200, 200, 0.1f, 0.1f, 6.0f, 1.0f, 1, 1.0f, 2.0f);
+    TerrainMesh = CMeshFactory::GenerateTerrain(300, 300, 0.3f, 0.3f, 6.0f, 1.0f, 3, 1.0f, 2.0f);
     TerrainMesh->SetMaterial(TerrainMaterial);
     TerrainComponent->SetMesh(TerrainMesh);
     TerrainComponent->SetLocalTransform(
         CTransform(
-            glm::vec3(-100.0f, 0.0f, -100.0f),
+            glm::vec3(-150.0f, 0.0f, -150.0f),
             glm::vec3(0.0f, 0.0f, 0.0f),
             glm::vec3(1.0f, 1.0, 1.0f)
         )
@@ -66,7 +66,7 @@ CFDSphereActor::CFDSphereActor()
 
     SphereComponent = new CMeshComponent();
     SphereMaterial = new CFDBaseMaterial();
-    SphereMesh = CMeshFactory::GenerateSphere(5.0f, 32, 32);
+    SphereMesh = CMeshFactory::GenerateSphere(50.0f, 32, 32);
     SphereMesh->SetMaterial(SphereMaterial);
     SphereComponent->SetMesh(SphereMesh);
     SphereComponent->SetLocalTransform(

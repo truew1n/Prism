@@ -12,6 +12,7 @@ CFDCubeActor::CFDCubeActor()
 
     MainCameraComponent = new CCameraComponent();
     MainCamera = new CCamera();
+    MainCamera->SetFarPlane(200.0f);
     MainCameraComponent->SetCamera(MainCamera);
     MainCameraComponent->SetLocalTransform(
         CTransform(

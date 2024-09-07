@@ -9,8 +9,8 @@ CFDGrassMaterial::CFDGrassMaterial()
 
     GrassDiffuse = new CTexture("Assets\\Textures\\Grass\\Grass_2_Diffuse.jpg", "UDiffuse", 0);
 
-    GrassDiffuse->SetTextureParameter(ETextureParameter::MinFilter, ETextureParameterValue::Nearest);
-	GrassDiffuse->SetTextureParameter(ETextureParameter::MagFilter, ETextureParameterValue::Nearest);
+    GrassDiffuse->SetTextureParameter(ETextureParameter::MinFilter, ETextureParameterValue::LinearMipMapLinear);
+	GrassDiffuse->SetTextureParameter(ETextureParameter::MagFilter, ETextureParameterValue::Linear);
 
 	GrassDiffuse->SetTextureParameter(ETextureParameter::WrapU, ETextureParameterValue::Repeat);
 	GrassDiffuse->SetTextureParameter(ETextureParameter::WrapV, ETextureParameterValue::Repeat);

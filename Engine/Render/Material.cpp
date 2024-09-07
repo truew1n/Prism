@@ -12,7 +12,7 @@ void CMaterial::Bind()
     Shader->Activate();
     for(int32_t I = 0; I < Textures->Num(); ++I) {
         CTexture *Texture = Textures->Get(I);
-        Texture->SetUniform(Shader, Texture->GetType(), Texture->GetUnit());
+        Texture->SetUniform(Shader);
         Texture->Bind();
     }
 }

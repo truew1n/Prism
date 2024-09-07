@@ -108,6 +108,7 @@ CAsset *CAssetLoader::LoadStatic(const char *Filepath)
 
         Asset->AssetData.Add(CPair<CMesh *, CMaterial *>(PrismMesh, PrismMaterial));
     }
+    
     #ifdef LOG_ASSET_LOADING
     std::cout << "Model Loaded: " << Filepath << std::endl;
     #endif
