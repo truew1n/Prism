@@ -4,8 +4,8 @@
 
 CFDMainLevel::CFDMainLevel()
 {
-    LastX = 0.0f;
-    LastY = 0.0f;
+    LastX = 0.0;
+    LastY = 0.0;
 
     CubeActor = new CFDCubeActor();
     SphereActor = new CFDSphereActor();
@@ -29,8 +29,8 @@ CFDMainLevel::~CFDMainLevel()
 
 void CFDMainLevel::MouseCallback(double X, double Y)
 {
-    float XOffset = X - LastX;
-    float YOffset = LastY - Y;
+    float XOffset = (float)(X - LastX);
+    float YOffset = (float)(LastY - Y);
 
     LastX = X;
     LastY = Y;
