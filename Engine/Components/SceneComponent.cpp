@@ -8,11 +8,23 @@ CSceneComponent::CSceneComponent()
     SceneComponents = new CArray<CSceneComponent *>();
 }
 
+void CSceneComponent::Tick(float DeltaTime)
+{
+    SetParentChildTransform();
+
+    if(SceneComponents) {
+        for(int32_t I = 0; I < SceneComponents->Num(); ++I) {
+            CSceneComponent *SceneComponent = SceneComponents->Get(I);
+            if(SceneComponent) {
+                SceneComponent->Tick(DeltaTime);
+            }
+        }
+    }
+}
+
 void CSceneComponent::Draw()
 {
     if(SceneComponents) {
-        SetParentChildTransform();
-
         for(int32_t I = 0; I < SceneComponents->Num(); ++I) {
             CSceneComponent *SceneComponent = SceneComponents->Get(I);
             if(SceneComponent) {

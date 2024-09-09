@@ -14,6 +14,7 @@ private:
     CArray<CSceneComponent *> *SceneComponents;
 public:
     CSceneComponent();
+    virtual void Tick(float DeltaTime) override;
     virtual void Draw();
     ~CSceneComponent() override;
 

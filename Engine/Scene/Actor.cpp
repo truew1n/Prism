@@ -19,7 +19,9 @@ void CActor::Tick(float DeltaTime)
 {
     CObject::Tick(DeltaTime);
 
-
+    if(RootComponent) {
+        RootComponent->Tick(DeltaTime);
+    }
 }
 
 CActor::~CActor()

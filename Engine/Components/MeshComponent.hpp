@@ -4,11 +4,15 @@
 #include "SceneComponent.hpp"
 #include "Mesh.hpp"
 
+class CCameraComponent;
+
 class CMeshComponent : public CSceneComponent {
 private:
-    CMesh *Mesh;
+    CMesh *MMesh;
+    CCameraComponent *MCachedCameraComponent;
 public:
     CMeshComponent();
+    void Tick(float DeltaTime) override;
     void Draw() override;
     ~CMeshComponent() override;
 

@@ -88,6 +88,9 @@ void CFDSphereActor::Tick(float DeltaTime)
     
     CTransform *SphereTransform = SphereComponent->GetLocalTransformRef();
     SphereTransform->Rotate(10.0f * DeltaTime, 20.0f * DeltaTime, 10.0f * DeltaTime);
+
+    CTransform *ActorTransform = GetTransformRef();
+    ActorTransform->RotateY(30.0f * DeltaTime);
 }
 
 CFDSphereActor::~CFDSphereActor()

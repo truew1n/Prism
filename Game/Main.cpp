@@ -44,18 +44,18 @@ bool IsWireframe = false;
 void KeyCallback(GLFWwindow* Window, int Key, int Scancode, int Action, int Mods)
 {
     if (Action == GLFW_PRESS || Action == GLFW_RELEASE) {
-        bool isPressed = (Action == GLFW_PRESS);
+        bool IsPressed = (Action == GLFW_PRESS);
 
         switch (Key) {
-            case GLFW_KEY_W: InputState.WPressed = isPressed; break;
-            case GLFW_KEY_S: InputState.SPressed = isPressed; break;
-            case GLFW_KEY_A: InputState.APressed = isPressed; break;
-            case GLFW_KEY_D: InputState.DPressed = isPressed; break;
-            case GLFW_KEY_SPACE: InputState.SPACEPressed = isPressed; break;
-            case GLFW_KEY_C: InputState.CPressed = isPressed; break;
-            case GLFW_KEY_LEFT_SHIFT: InputState.SHIFTPressed = isPressed; break;
+            case GLFW_KEY_W: InputState.WPressed = IsPressed; break;
+            case GLFW_KEY_S: InputState.SPressed = IsPressed; break;
+            case GLFW_KEY_A: InputState.APressed = IsPressed; break;
+            case GLFW_KEY_D: InputState.DPressed = IsPressed; break;
+            case GLFW_KEY_SPACE: InputState.SPACEPressed = IsPressed; break;
+            case GLFW_KEY_C: InputState.CPressed = IsPressed; break;
+            case GLFW_KEY_LEFT_SHIFT: InputState.SHIFTPressed = IsPressed; break;
             case GLFW_KEY_E: {
-                if(isPressed) {
+                if(IsPressed) {
                     if(IsWireframe) {
                         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
                         IsWireframe = false;
@@ -103,7 +103,7 @@ void ProcessInputAndMoveActor(CFDCubeActor *CubeActor, float DeltaTime)
         CubeActorTransform.SetLocation(CubeActorTransform.GetLocation() - glm::vec3(0.0f, 1.0f, 0.0f) * MovementSpeed);
     }
     if (InputState.SHIFTPressed) {
-        Speed = 20.0f;
+        Speed = 50.0f;
     }
     if (!InputState.SHIFTPressed) {
         Speed = 5.0f;
@@ -112,6 +112,7 @@ void ProcessInputAndMoveActor(CFDCubeActor *CubeActor, float DeltaTime)
     CubeActor->SetTransform(CubeActorTransform);
 }
 
+#include "ShaderStorageBuffer.hpp"
 
 int main(void)
 {

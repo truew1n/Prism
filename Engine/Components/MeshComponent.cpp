@@ -4,33 +4,43 @@
 
 CMeshComponent::CMeshComponent()
 {
+    MMesh = nullptr;
+    MCachedCameraComponent = nullptr;
+}
 
+void CMeshComponent::Tick(float DeltaTime)
+{
+    SetParentChildTransform();
+    
+    if(!MCachedCameraComponent) {
+        if(CActor *Owner = GetOwner()) {
+            if(CLevel *Level = Owner->GetLevel()) {
+                if(CPlayerController *PlayerController = Level->GetPlayerController()) {
+                    if(CCameraComponent *CameraComponent = PlayerController->GetCameraComponent()) {
+                        MCachedCameraComponent = CameraComponent;
+                    }
+                }
+            }
+        }
+    }
 }
 
 void CMeshComponent::Draw()
 {
-    if(Mesh) {
-        CMaterial *MeshMaterial = Mesh->GetMaterial();
+    if(MMesh) {
+        CMaterial *MeshMaterial = MMesh->GetMaterial();
         if(MeshMaterial) {
-            glm::mat4 ParentChildTransform = GetSetParentChildTransform();
-            
-            if(CActor *Owner = GetOwner()) {
-                if(CLevel *Level = Owner->GetLevel()) {
-                    if(CPlayerController *PlayerController = Level->GetPlayerController()) {
-                        if(CCameraComponent *CameraComponent = PlayerController->GetCameraComponent()) {
-                            if(CCamera *Camera = CameraComponent->GetCamera()) {
-                                MeshMaterial->Bind();
-                                MeshMaterial->SetProjection(Camera->GetProjectionMatrix());
-                                MeshMaterial->SetView(Camera->GetViewMatrix(
-                                    CameraComponent->GetWorldTransform(),
-                                    CameraComponent->GetLocalTransform()
-                                ));
-                                MeshMaterial->SetTransform(ParentChildTransform);
-                                Mesh->Draw();
-                                MeshMaterial->Unbind();
-                            }
-                        }
-                    }
+            if(MCachedCameraComponent) {
+                if(CCamera *Camera = MCachedCameraComponent->GetCamera()) {
+                    MeshMaterial->Bind();
+                    MeshMaterial->SetProjection(Camera->GetProjectionMatrix());
+                    MeshMaterial->SetView(Camera->GetViewMatrix(
+                        MCachedCameraComponent->GetWorldTransform(),
+                        MCachedCameraComponent->GetLocalTransform()
+                    ));
+                    MeshMaterial->SetTransform(GetWorldTransform());
+                    MMesh->Draw();
+                    MeshMaterial->Unbind();
                 }
             }
         }
@@ -40,17 +50,17 @@ void CMeshComponent::Draw()
 CMeshComponent::~CMeshComponent()
 {
     // It causes multiple frees, when mesh is shared
-    // if(Mesh) {
-    //     delete Mesh;
+    // if(MMesh) {
+    //     delete MMesh;
     // }
 }
 
 CMesh *CMeshComponent::GetMesh()
 {
-    return Mesh;
+    return MMesh;
 }
 
 void CMeshComponent::SetMesh(CMesh *NewMesh)
 {
-    Mesh = NewMesh;
+    MMesh = NewMesh;
 }
