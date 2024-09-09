@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Pliki źródłowe">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Pliki nagłówkowe">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Pliki zasobów">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Pliki nagłówkowe\Actors">
+      <UniqueIdentifier>{5329436d-266e-40d5-a70f-89e442d51690}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki źródłowe\Actors">
+      <UniqueIdentifier>{d7dfb76e-1047-41bc-9af2-65dd3c8512d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki nagłówkowe\Levels">
+      <UniqueIdentifier>{374220e6-67a1-491f-9f5e-6e5047ed05d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki źródłowe\Levels">
+      <UniqueIdentifier>{8c819c98-143f-46a2-a7f7-6117af7c57eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki nagłówkowe\Materials">
+      <UniqueIdentifier>{dba59b22-97f2-4614-bc39-e6e18e0017ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki źródłowe\Materials">
+      <UniqueIdentifier>{0678e201-fe23-4b9d-8180-5d9c95f06d1e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="CubeActor.cpp">
+      <Filter>Pliki źródłowe\Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="SphereActor.cpp">
+      <Filter>Pliki źródłowe\Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="MainLevel.cpp">
+      <Filter>Pliki źródłowe\Levels</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseMaterial.cpp">
+      <Filter>Pliki źródłowe\Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="GrassMaterial.cpp">
+      <Filter>Pliki źródłowe\Materials</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CubeActor.h">
+      <Filter>Pliki nagłówkowe\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="SphereActor.h">
+      <Filter>Pliki nagłówkowe\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="MainLevel.h">
+      <Filter>Pliki nagłówkowe\Levels</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseMaterial.h">
+      <Filter>Pliki nagłówkowe\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="GrassMaterial.h">
+      <Filter>Pliki nagłówkowe\Materials</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

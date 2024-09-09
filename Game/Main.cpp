@@ -1,17 +1,14 @@
-#include <iostream>
-#include <chrono>
-#include <vector>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include "FunctionLibrary.hpp"
-#include "MainLevel.hpp"
-#include "BaseMaterial.hpp"
-#include "CubeActor.hpp"
-#include "CollisionSolver.hpp"
-#include "MeshFactory.hpp"
+#include <chrono>
+
+#include "FunctionLibrary.h"
+#include "MainLevel.h"
+#include "BaseMaterial.h"
+#include "CubeActor.h"
+#include "CollisionSolver.h"
+#include "MeshFactory.h"
 
 // Struct to store input state
 struct SInputState {
@@ -33,7 +30,7 @@ void ResizeCallback(GLFWwindow *Window, int32_t FramebufferWidth, int32_t Frameb
     MainLevel->ResizeCallback(FramebufferWidth, FramebufferHeight);
 }
 
-void MouseCallback(GLFWwindow* Window, double X, double Y)
+void MouseCallback(GLFWwindow *Window, double X, double Y)
 {
     CFDMainLevel *MainLevel = ForceCast<CFDMainLevel *>(glfwGetWindowUserPointer(Window));
     MainLevel->MouseCallback(X, Y);
@@ -41,32 +38,33 @@ void MouseCallback(GLFWwindow* Window, double X, double Y)
 
 bool IsWireframe = false;
 
-void KeyCallback(GLFWwindow* Window, int Key, int Scancode, int Action, int Mods)
+void KeyCallback(GLFWwindow *Window, int Key, int Scancode, int Action, int Mods)
 {
     if (Action == GLFW_PRESS || Action == GLFW_RELEASE) {
         bool IsPressed = (Action == GLFW_PRESS);
 
         switch (Key) {
-            case GLFW_KEY_W: InputState.WPressed = IsPressed; break;
-            case GLFW_KEY_S: InputState.SPressed = IsPressed; break;
-            case GLFW_KEY_A: InputState.APressed = IsPressed; break;
-            case GLFW_KEY_D: InputState.DPressed = IsPressed; break;
-            case GLFW_KEY_SPACE: InputState.SPACEPressed = IsPressed; break;
-            case GLFW_KEY_C: InputState.CPressed = IsPressed; break;
-            case GLFW_KEY_LEFT_SHIFT: InputState.SHIFTPressed = IsPressed; break;
-            case GLFW_KEY_E: {
-                if(IsPressed) {
-                    if(IsWireframe) {
-                        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-                        IsWireframe = false;
-                    } else {
-                        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-                        IsWireframe = true;
-                    }
+        case GLFW_KEY_W: InputState.WPressed = IsPressed; break;
+        case GLFW_KEY_S: InputState.SPressed = IsPressed; break;
+        case GLFW_KEY_A: InputState.APressed = IsPressed; break;
+        case GLFW_KEY_D: InputState.DPressed = IsPressed; break;
+        case GLFW_KEY_SPACE: InputState.SPACEPressed = IsPressed; break;
+        case GLFW_KEY_C: InputState.CPressed = IsPressed; break;
+        case GLFW_KEY_LEFT_SHIFT: InputState.SHIFTPressed = IsPressed; break;
+        case GLFW_KEY_E: {
+            if (IsPressed) {
+                if (IsWireframe) {
+                    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+                    IsWireframe = false;
                 }
-                break;
+                else {
+                    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+                    IsWireframe = true;
+                }
             }
-            default: break;
+            break;
+        }
+        default: break;
         }
     }
 }
@@ -81,7 +79,7 @@ void ProcessInputAndMoveActor(CFDCubeActor *CubeActor, float DeltaTime)
     glm::vec3 CameraForward = Camera->CalculateFront();
     glm::vec3 CameraRight = Camera->CalculateRight();
     glm::vec3 CameraUp = Camera->CalculateUp();
-    
+
     float MovementSpeed = Speed * DeltaTime;
 
     if (InputState.WPressed) {
@@ -111,8 +109,6 @@ void ProcessInputAndMoveActor(CFDCubeActor *CubeActor, float DeltaTime)
 
     CubeActor->SetTransform(CubeActorTransform);
 }
-
-#include "ShaderStorageBuffer.hpp"
 
 int main(void)
 {
@@ -151,7 +147,7 @@ int main(void)
     CFDMainLevel *MainLevel = new CFDMainLevel();
     MainLevel->ResizeCallback(WindowWidth, WindowHeight);
 
-    glfwSetWindowUserPointer(Window, (void *) MainLevel);
+    glfwSetWindowUserPointer(Window, (void *)MainLevel);
 
     glfwSetFramebufferSizeCallback(Window, ResizeCallback);
     glfwSetCursorPosCallback(Window, MouseCallback);
@@ -167,7 +163,7 @@ int main(void)
     // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     CFDCubeActor *CubeActor = Cast<CFDCubeActor *>(MainLevel->GetActor(0));
-    
+
     auto LastTime = std::chrono::high_resolution_clock::now();
     while (!glfwWindowShouldClose(Window)) {
         auto CurrentTime = std::chrono::high_resolution_clock::now();

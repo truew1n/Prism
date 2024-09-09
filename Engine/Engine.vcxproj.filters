@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Pliki źródłowe">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Pliki nagłówkowe">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Pliki zasobów">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Pliki nagłówkowe\Asset">
+      <UniqueIdentifier>{536bbb25-6dae-4f62-ae52-48617867d3c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki źródłowe\Asset">
+      <UniqueIdentifier>{86874c26-e644-41e1-ae29-db74e7f830b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki nagłówkowe\Base">
+      <UniqueIdentifier>{5cad93ef-cbc5-4b2a-bfd2-8d001b766e00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki źródłowe\Base">
+      <UniqueIdentifier>{56d1f9f6-5e61-4eaa-80d0-c3b27ca45555}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki nagłówkowe\Buffer">
+      <UniqueIdentifier>{3604b301-6da6-40a0-9531-69c3453267ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki źródłowe\Buffer">
+      <UniqueIdentifier>{28d696e7-ebc7-4472-98d2-7ba767a2d356}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki nagłówkowe\Collisions">
+      <UniqueIdentifier>{6d1a2776-7616-485d-810e-100551422562}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki źródłowe\Collisions">
+      <UniqueIdentifier>{c655638c-e784-4c5e-9912-c55d55e23c85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki nagłówkowe\Components">
+      <UniqueIdentifier>{efabb053-6cbd-462a-89a6-3b741abe179c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki źródłowe\Components">
+      <UniqueIdentifier>{2c066573-6af4-4150-8b96-b1317e3013ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki nagłówkowe\Controllers">
+      <UniqueIdentifier>{834a4e2a-7057-4494-85c7-f5c472d6611d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki źródłowe\Controllers">
+      <UniqueIdentifier>{5c6237b4-ef2b-49e9-a2fb-30e9ad9004d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki nagłówkowe\Utils">
+      <UniqueIdentifier>{421fd23f-9362-4946-8c8a-c360ec6e1299}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki źródłowe\Utils">
+      <UniqueIdentifier>{9956ba4a-e10c-4928-9209-9cc305609246}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki nagłówkowe\Render">
+      <UniqueIdentifier>{ae13979e-c460-4bff-a735-dee398c6bcf5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki źródłowe\Render">
+      <UniqueIdentifier>{d5eed6cc-c056-49ea-9cb2-048d7017f6fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki nagłówkowe\Scene">
+      <UniqueIdentifier>{64fbb448-debf-4630-b30f-aae260440437}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki źródłowe\Scene">
+      <UniqueIdentifier>{a06701ab-cebd-4a68-868f-aa833ee4d332}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Asset.h">
+      <Filter>Pliki nagłówkowe\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetLoader.h">
+      <Filter>Pliki nagłówkowe\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Pliki nagłówkowe\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderObject.h">
+      <Filter>Pliki nagłówkowe\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="ElementBuffer.h">
+      <Filter>Pliki nagłówkowe\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderStorageBuffer.h">
+      <Filter>Pliki nagłówkowe\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexArray.h">
+      <Filter>Pliki nagłówkowe\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexBuffer.h">
+      <Filter>Pliki nagłówkowe\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionManager.h">
+      <Filter>Pliki nagłówkowe\Collisions</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionSolver.h">
+      <Filter>Pliki nagłówkowe\Collisions</Filter>
+    </ClInclude>
+    <ClInclude Include="ActorComponent.h">
+      <Filter>Pliki nagłówkowe\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraComponent.h">
+      <Filter>Pliki nagłówkowe\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshComponent.h">
+      <Filter>Pliki nagłówkowe\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneComponent.h">
+      <Filter>Pliki nagłówkowe\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerController.h">
+      <Filter>Pliki nagłówkowe\Controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller.h">
+      <Filter>Pliki nagłówkowe\Controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image.h">
+      <Filter>Pliki nagłówkowe\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Pliki nagłówkowe\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Array.h">
+      <Filter>Pliki nagłówkowe\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="File.h">
+      <Filter>Pliki nagłówkowe\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="FunctionLibrary.h">
+      <Filter>Pliki nagłówkowe\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Pair.h">
+      <Filter>Pliki nagłówkowe\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Uniform.h">
+      <Filter>Pliki nagłówkowe\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Pliki nagłówkowe\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Pliki nagłówkowe\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Pliki nagłówkowe\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshFactory.h">
+      <Filter>Pliki nagłówkowe\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Pliki nagłówkowe\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Pliki nagłówkowe\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor.h">
+      <Filter>Pliki nagłówkowe\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Pliki nagłówkowe\Scene</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Asset.cpp">
+      <Filter>Pliki źródłowe\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetLoader.cpp">
+      <Filter>Pliki źródłowe\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Pliki źródłowe\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderObject.cpp">
+      <Filter>Pliki źródłowe\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="ElementBuffer.cpp">
+      <Filter>Pliki źródłowe\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexArray.cpp">
+      <Filter>Pliki źródłowe\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexBuffer.cpp">
+      <Filter>Pliki źródłowe\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionManager.cpp">
+      <Filter>Pliki źródłowe\Collisions</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionSolver.cpp">
+      <Filter>Pliki źródłowe\Collisions</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshComponent.cpp">
+      <Filter>Pliki źródłowe\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneComponent.cpp">
+      <Filter>Pliki źródłowe\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraComponent.cpp">
+      <Filter>Pliki źródłowe\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ActorComponent.cpp">
+      <Filter>Pliki źródłowe\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Controller.cpp">
+      <Filter>Pliki źródłowe\Controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerController.cpp">
+      <Filter>Pliki źródłowe\Controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="stb_image.cpp">
+      <Filter>Pliki źródłowe\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Uniform.cpp">
+      <Filter>Pliki źródłowe\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Pliki źródłowe\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>Pliki źródłowe\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Pliki źródłowe\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshFactory.cpp">
+      <Filter>Pliki źródłowe\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Pliki źródłowe\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Pliki źródłowe\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor.cpp">
+      <Filter>Pliki źródłowe\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Pliki źródłowe\Scene</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
