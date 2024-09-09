@@ -68,6 +68,13 @@ public:
         MLocation.z += Offset;
     }
 
+    void Translate(glm::vec3 Offset)
+    {
+        TranslateX(Offset.x);
+        TranslateY(Offset.y);
+        TranslateZ(Offset.z);
+    }
+
     void Translate(float XOffset, float YOffset, float ZOffset)
     {
         TranslateX(XOffset);

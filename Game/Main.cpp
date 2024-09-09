@@ -22,6 +22,8 @@ struct SInputState {
 };
 
 SInputState InputState;
+bool IsWireframe = false;
+bool IsCursorCaptured = true;
 
 void ResizeCallback(GLFWwindow *Window, int32_t FramebufferWidth, int32_t FramebufferHeight)
 {
@@ -32,11 +34,11 @@ void ResizeCallback(GLFWwindow *Window, int32_t FramebufferWidth, int32_t Frameb
 
 void MouseCallback(GLFWwindow *Window, double X, double Y)
 {
+    if (!IsCursorCaptured) return;
+
     CFDMainLevel *MainLevel = ForceCast<CFDMainLevel *>(glfwGetWindowUserPointer(Window));
     MainLevel->MouseCallback(X, Y);
 }
-
-bool IsWireframe = false;
 
 void KeyCallback(GLFWwindow *Window, int Key, int Scancode, int Action, int Mods)
 {
@@ -64,7 +66,26 @@ void KeyCallback(GLFWwindow *Window, int Key, int Scancode, int Action, int Mods
             }
             break;
         }
+        case GLFW_KEY_ESCAPE: {
+            if (IsPressed) {
+                if (IsCursorCaptured) {
+                    glfwSetInputMode(Window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+                    IsCursorCaptured = false;
+                }
+            }
+            break;
+        }
         default: break;
+        }
+    }
+}
+
+void MouseButtonCallback(GLFWwindow *Window, int Button, int Action, int Mods)
+{
+    if (Button == GLFW_MOUSE_BUTTON_LEFT && Action == GLFW_PRESS) {
+        if (!IsCursorCaptured) {
+            glfwSetInputMode(Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+            IsCursorCaptured = true;
         }
     }
 }
@@ -73,7 +94,7 @@ float Speed = 5.0f;
 
 void ProcessInputAndMoveActor(CFDCubeActor *CubeActor, float DeltaTime)
 {
-    CTransform CubeActorTransform = CubeActor->GetTransform();
+    CTransform *CubeActorTransform = CubeActor->GetTransformRef();
     CPlayerController *Controller = Cast<CPlayerController *>(CubeActor->GetController());
     CCamera *Camera = Controller->GetCameraComponent()->GetCamera();
     glm::vec3 CameraForward = Camera->CalculateFront();
@@ -83,22 +104,22 @@ void ProcessInputAndMoveActor(CFDCubeActor *CubeActor, float DeltaTime)
     float MovementSpeed = Speed * DeltaTime;
 
     if (InputState.WPressed) {
-        CubeActorTransform.SetLocation(CubeActorTransform.GetLocation() + CameraForward * MovementSpeed);
+        CubeActorTransform->Translate(CameraForward * MovementSpeed);
     }
     if (InputState.SPressed) {
-        CubeActorTransform.SetLocation(CubeActorTransform.GetLocation() - CameraForward * MovementSpeed);
+        CubeActorTransform->Translate(CameraForward * -MovementSpeed);
     }
     if (InputState.APressed) {
-        CubeActorTransform.SetLocation(CubeActorTransform.GetLocation() - CameraRight * MovementSpeed);
+        CubeActorTransform->Translate(CameraRight * -MovementSpeed);
     }
     if (InputState.DPressed) {
-        CubeActorTransform.SetLocation(CubeActorTransform.GetLocation() + CameraRight * MovementSpeed);
+        CubeActorTransform->Translate(CameraRight * MovementSpeed);
     }
     if (InputState.SPACEPressed) {
-        CubeActorTransform.SetLocation(CubeActorTransform.GetLocation() + glm::vec3(0.0f, 1.0f, 0.0f) * MovementSpeed);
+        CubeActorTransform->Translate(glm::vec3(0.0f, 1.0f, 0.0f) * MovementSpeed);
     }
     if (InputState.CPressed) {
-        CubeActorTransform.SetLocation(CubeActorTransform.GetLocation() - glm::vec3(0.0f, 1.0f, 0.0f) * MovementSpeed);
+        CubeActorTransform->Translate(glm::vec3(0.0f, 1.0f, 0.0f) * -MovementSpeed);
     }
     if (InputState.SHIFTPressed) {
         Speed = 50.0f;
@@ -106,8 +127,6 @@ void ProcessInputAndMoveActor(CFDCubeActor *CubeActor, float DeltaTime)
     if (!InputState.SHIFTPressed) {
         Speed = 5.0f;
     }
-
-    CubeActor->SetTransform(CubeActorTransform);
 }
 
 int main(void)
@@ -152,6 +171,7 @@ int main(void)
     glfwSetFramebufferSizeCallback(Window, ResizeCallback);
     glfwSetCursorPosCallback(Window, MouseCallback);
     glfwSetKeyCallback(Window, KeyCallback);
+    glfwSetMouseButtonCallback(Window, MouseButtonCallback);
 
     glEnable(GL_DEPTH_TEST);
 
