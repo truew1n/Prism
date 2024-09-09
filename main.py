@@ -4,8 +4,12 @@ def count_lines_of_code(directory):
     total_lines = 0
     total_classes = 0
     
-    # Loop through all files and subdirectories in the current directory
+    # Loop through all files and subdirectories in the specified directories
     for root, _, files in os.walk(directory):
+        # Skip directories that are not Engine or Game
+        if os.path.basename(root) not in ['Engine', 'Game']:
+            continue
+        
         for file in files:
             # Check if the file has one of the desired extensions
             if file.endswith(('.cpp', '.hpp', '.h', '.c', '.frag', '.vert')):
@@ -23,8 +27,18 @@ def count_lines_of_code(directory):
     return [total_lines, total_classes]
 
 if __name__ == "__main__":
-    directory = os.getcwd()  # Current directory
-    total_data = count_lines_of_code(directory)
+    current_directory = os.getcwd()  # Current directory
+    total_lines = 0
+    total_classes = 0
+    
+    # Process Engine and Game folders
+    for folder in ['Engine', 'Game']:
+        folder_path = os.path.join(current_directory, folder)
+        if os.path.isdir(folder_path):
+            data = count_lines_of_code(folder_path)
+            total_lines += data[0]
+            total_classes += data[1]
+    
     print("\n")
-    print(f"Total lines of code in .cpp, .hpp, .h, .c, .frag, .vert files: {total_data[0]}")
-    print(f"Total Class Count: {total_data[1]}")
+    print(f"Total lines of code in .cpp, .hpp, .h, .c, .frag, .vert files: {total_lines}")
+    print(f"Total Class Count: {total_classes}")
