@@ -1,10 +1,10 @@
-#include "CubeActor.h"
+#include "Player.h"
 #include "MeshFactory.h"
 #include "BaseMaterial.h"
 #include "MainLevel.h"
 
 
-CFDCubeActor::CFDCubeActor()
+CFDPlayer::CFDPlayer()
 {
     Controller = new CPlayerController();
 
@@ -22,19 +22,20 @@ CFDCubeActor::CFDCubeActor()
         )
     );
 
+
     RootComponent = SceneComponent;
     SceneComponent->AddComponent(MainCameraComponent);
 
     RootComponent->RegisterComponents(this);
 }
 
-void CFDCubeActor::Tick(float DeltaTime)
+void CFDPlayer::Tick(float DeltaTime)
 {
     CActor::Tick(DeltaTime);
-    
+
 }
 
-CFDCubeActor::~CFDCubeActor()
+CFDPlayer::~CFDPlayer()
 {
     delete MainCamera;
 }

@@ -1,25 +1,53 @@
 #include "MainLevel.h"
-#include "CubeActor.h"
-#include "SphereActor.h"
+#include "Player.h"
+
+#include "MeshFactory.h"
+#include "BaseMaterial.h"
 
 CFDMainLevel::CFDMainLevel()
 {
     LastX = 0.0;
     LastY = 0.0;
 
-    CubeActor = new CFDCubeActor();
-    SphereActor = new CFDSphereActor();
+    StartScale = glm::vec3(1.0f);
+    MaxTotalScale = 3.141592 * 2.0f;
+    ScaleStep = 1.0f;
+    TotalScale = 0.0f;
+    
+    TestActor = new CActor();
+    CMeshComponent *MeshComponent = new CMeshComponent();
+    CMesh *CubeMesh = CMeshFactory::GenerateCube(2.0f);
+    CubeMesh->SetMaterial(new CFDBaseMaterial());
+    MeshComponent->SetMesh(CubeMesh);
+    TestActor->RootComponent = MeshComponent;
 
-    AddActor(CubeActor);
-    AddActor(SphereActor);
+    MeshComponent->GetLocalTransformRef()->SetScale(StartScale);
 
-    SetPlayerController(Cast<CPlayerController *>(CubeActor->GetController()));
+    TestActor->RootComponent->RegisterComponents(TestActor);
+
+    Player = new CFDPlayer();
+
+    AddActor(Player);
+    AddActor(TestActor);
+
+    SetPlayerController(Cast<CPlayerController *>(Player->GetController()));
 }
 
 void CFDMainLevel::Tick(float DeltaTime)
 {
     CLevel::Tick(DeltaTime);
 
+    CTransform *TestTransform = TestActor->GetTransformRef();
+    
+    TestTransform->SetScale(
+        glm::vec3(
+            StartScale.x + (sin(TotalScale) + 1) / 2.0f,
+            StartScale.y + (cos(TotalScale) + 1) / 2.0f,
+            StartScale.z + (cos(TotalScale) + 1) / 2.0f
+        )
+    );
+    
+    TotalScale = fmodf(TotalScale + ScaleStep * DeltaTime, MaxTotalScale);
 }
 
 CFDMainLevel::~CFDMainLevel()
@@ -45,10 +73,10 @@ void CFDMainLevel::MouseCallback(double X, double Y)
                 Camera->SetYaw(Camera->GetYaw() + XOffset);
                 Camera->SetPitch(Camera->GetPitch() + YOffset);
 
-                if (Camera->GetPitch() > 89.0f)
-                    Camera->SetPitch(89.0f);
-                if (Camera->GetPitch() < -89.0f)
-                    Camera->SetPitch(-89.0f);
+                if (Camera->GetPitch() > 89.9f)
+                    Camera->SetPitch(89.9f);
+                if (Camera->GetPitch() < -89.9f)
+                    Camera->SetPitch(-89.9f);
             }
         }
     }

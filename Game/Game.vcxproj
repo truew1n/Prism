@@ -136,18 +136,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BaseMaterial.cpp" />
-    <ClCompile Include="CubeActor.cpp" />
     <ClCompile Include="GrassMaterial.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainLevel.cpp" />
-    <ClCompile Include="SphereActor.cpp" />
+    <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseMaterial.h" />
-    <ClInclude Include="CubeActor.h" />
     <ClInclude Include="GrassMaterial.h" />
     <ClInclude Include="MainLevel.h" />
-    <ClInclude Include="SphereActor.h" />
+    <ClInclude Include="Player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -8,6 +8,13 @@
 
 #include <iostream>
 
+enum class ETransformationType : uint8_t {
+    Translation,
+    Rotation,
+    Scaling
+};
+
+
 class CTransform {
 private:
     glm::vec3 MLocation;

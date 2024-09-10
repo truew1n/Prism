@@ -6,11 +6,11 @@
 #include "FunctionLibrary.h"
 #include "MainLevel.h"
 #include "BaseMaterial.h"
-#include "CubeActor.h"
+#include "Player.h"
 #include "CollisionSolver.h"
 #include "MeshFactory.h"
 
-// Struct to store input state
+
 struct SInputState {
     bool WPressed = false;
     bool SPressed = false;
@@ -92,10 +92,10 @@ void MouseButtonCallback(GLFWwindow *Window, int Button, int Action, int Mods)
 
 float Speed = 5.0f;
 
-void ProcessInputAndMoveActor(CFDCubeActor *CubeActor, float DeltaTime)
+void ProcessInputAndMoveActor(CFDPlayer *Player, float DeltaTime)
 {
-    CTransform *CubeActorTransform = CubeActor->GetTransformRef();
-    CPlayerController *Controller = Cast<CPlayerController *>(CubeActor->GetController());
+    CTransform *PlayerTransform = Player->GetTransformRef();
+    CPlayerController *Controller = Cast<CPlayerController *>(Player->GetController());
     CCamera *Camera = Controller->GetCameraComponent()->GetCamera();
     glm::vec3 CameraForward = Camera->CalculateFront();
     glm::vec3 CameraRight = Camera->CalculateRight();
@@ -104,22 +104,22 @@ void ProcessInputAndMoveActor(CFDCubeActor *CubeActor, float DeltaTime)
     float MovementSpeed = Speed * DeltaTime;
 
     if (InputState.WPressed) {
-        CubeActorTransform->Translate(CameraForward * MovementSpeed);
+        PlayerTransform->Translate(CameraForward * MovementSpeed);
     }
     if (InputState.SPressed) {
-        CubeActorTransform->Translate(CameraForward * -MovementSpeed);
+        PlayerTransform->Translate(CameraForward * -MovementSpeed);
     }
     if (InputState.APressed) {
-        CubeActorTransform->Translate(CameraRight * -MovementSpeed);
+        PlayerTransform->Translate(CameraRight * -MovementSpeed);
     }
     if (InputState.DPressed) {
-        CubeActorTransform->Translate(CameraRight * MovementSpeed);
+        PlayerTransform->Translate(CameraRight * MovementSpeed);
     }
     if (InputState.SPACEPressed) {
-        CubeActorTransform->Translate(glm::vec3(0.0f, 1.0f, 0.0f) * MovementSpeed);
+        PlayerTransform->Translate(glm::vec3(0.0f, 1.0f, 0.0f) * MovementSpeed);
     }
     if (InputState.CPressed) {
-        CubeActorTransform->Translate(glm::vec3(0.0f, 1.0f, 0.0f) * -MovementSpeed);
+        PlayerTransform->Translate(glm::vec3(0.0f, 1.0f, 0.0f) * -MovementSpeed);
     }
     if (InputState.SHIFTPressed) {
         Speed = 50.0f;
@@ -182,7 +182,7 @@ int main(void)
     // glEnable(GL_BLEND);
     // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    CFDCubeActor *CubeActor = Cast<CFDCubeActor *>(MainLevel->GetActor(0));
+    CFDPlayer *Player = Cast<CFDPlayer *>(MainLevel->GetActor(0));
 
     auto LastTime = std::chrono::high_resolution_clock::now();
     while (!glfwWindowShouldClose(Window)) {
@@ -191,7 +191,7 @@ int main(void)
         float DeltaTime = ElapsedTime.count();
         LastTime = CurrentTime;
 
-        ProcessInputAndMoveActor(CubeActor, DeltaTime);
+        ProcessInputAndMoveActor(Player, DeltaTime);
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

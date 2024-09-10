@@ -3,8 +3,7 @@
 
 #include "Level.h"
 
-class CFDCubeActor;
-class CFDSphereActor;
+class CFDPlayer;
 
 class CFDMainLevel : public CLevel {
 public:
@@ -12,8 +11,13 @@ public:
     void Tick(float DeltaTime) override;
     ~CFDMainLevel() override;
 
-    CFDCubeActor *CubeActor;
-    CFDSphereActor *SphereActor;
+    CActor *TestActor;
+    CFDPlayer *Player;
+
+    glm::vec3 StartScale;
+    float MaxTotalScale;
+    float TotalScale;
+    float ScaleStep;
 
     double LastX;
     double LastY;

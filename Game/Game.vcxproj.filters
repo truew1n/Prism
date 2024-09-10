@@ -36,12 +36,6 @@
     <ClCompile Include="Main.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="CubeActor.cpp">
-      <Filter>Pliki źródłowe\Actors</Filter>
-    </ClCompile>
-    <ClCompile Include="SphereActor.cpp">
-      <Filter>Pliki źródłowe\Actors</Filter>
-    </ClCompile>
     <ClCompile Include="MainLevel.cpp">
       <Filter>Pliki źródłowe\Levels</Filter>
     </ClCompile>
@@ -51,14 +45,11 @@
     <ClCompile Include="GrassMaterial.cpp">
       <Filter>Pliki źródłowe\Materials</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Pliki źródłowe\Actors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CubeActor.h">
-      <Filter>Pliki nagłówkowe\Actors</Filter>
-    </ClInclude>
-    <ClInclude Include="SphereActor.h">
-      <Filter>Pliki nagłówkowe\Actors</Filter>
-    </ClInclude>
     <ClInclude Include="MainLevel.h">
       <Filter>Pliki nagłówkowe\Levels</Filter>
     </ClInclude>
@@ -67,6 +58,9 @@
     </ClInclude>
     <ClInclude Include="GrassMaterial.h">
       <Filter>Pliki nagłówkowe\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Pliki nagłówkowe\Actors</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
