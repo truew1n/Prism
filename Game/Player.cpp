@@ -22,7 +22,6 @@ CFDPlayer::CFDPlayer()
         )
     );
 
-
     RootComponent = SceneComponent;
     SceneComponent->AddComponent(MainCameraComponent);
 

@@ -162,6 +162,15 @@
     <ClInclude Include="Level.h">
       <Filter>Pliki nagłówkowe\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="CollisionEvent.h">
+      <Filter>Pliki nagłówkowe\Collisions</Filter>
+    </ClInclude>
+    <ClInclude Include="HitEvent.h">
+      <Filter>Pliki nagłówkowe\Collisions</Filter>
+    </ClInclude>
+    <ClInclude Include="OverlapEvent.h">
+      <Filter>Pliki nagłówkowe\Collisions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Asset.cpp">

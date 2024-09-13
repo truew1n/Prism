@@ -139,12 +139,14 @@
     <ClCompile Include="GrassMaterial.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainLevel.cpp" />
+    <ClCompile Include="PerlinGrid.cpp" />
     <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseMaterial.h" />
     <ClInclude Include="GrassMaterial.h" />
     <ClInclude Include="MainLevel.h" />
+    <ClInclude Include="PerlinGrid.h" />
     <ClInclude Include="Player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

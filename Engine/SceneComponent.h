@@ -11,7 +11,7 @@ private:
     CTransform LocalTransform;
 
     CSceneComponent *Parent;
-    CArray<CSceneComponent *> *SceneComponents;
+    CArray<CSceneComponent *> SceneComponents;
 public:
     CSceneComponent();
     virtual void Tick(float DeltaTime) override;

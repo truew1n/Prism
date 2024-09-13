@@ -4,14 +4,13 @@
 CMaterial::CMaterial()
 {
     Shader = new CShader();
-    Textures = new CArray<CTexture *>();
 }
 
 void CMaterial::Bind()
 {
     Shader->Activate();
-    for (int32_t I = 0; I < Textures->Num(); ++I) {
-        CTexture *Texture = Textures->Get(I);
+    for (int32_t I = 0; I < Textures.Num(); ++I) {
+        CTexture *Texture = Textures.Get(I);
         Texture->SetUniform(Shader);
         Texture->Bind();
     }
@@ -20,8 +19,8 @@ void CMaterial::Bind()
 void CMaterial::Unbind()
 {
     Shader->Deactivate();
-    for (int32_t I = 0; I < Textures->Num(); ++I) {
-        CTexture *Texture = Textures->Get(I);
+    for (int32_t I = 0; I < Textures.Num(); ++I) {
+        CTexture *Texture = Textures.Get(I);
         Texture->Unbind();
     }
 }
@@ -30,17 +29,16 @@ CMaterial::~CMaterial()
 {
     Shader->Delete();
     delete Shader;
-    for (int32_t I = 0; I < Textures->Num(); ++I) {
-        CTexture *Texture = Textures->Get(I);
+    for (int32_t I = 0; I < Textures.Num(); ++I) {
+        CTexture *Texture = Textures.Get(I);
         Texture->Delete();
     }
-    delete Textures;
 }
 
 void CMaterial::AddTexture(CTexture *Texture)
 {
     if (Texture) {
-        Textures->Add(Texture);
+        Textures.Add(Texture);
     }
 }
 

@@ -4,6 +4,7 @@
 #include "Level.h"
 
 class CFDPlayer;
+class CFDPerlinGrid;
 
 class CFDMainLevel : public CLevel {
 public:
@@ -11,13 +12,8 @@ public:
     void Tick(float DeltaTime) override;
     ~CFDMainLevel() override;
 
-    CActor *TestActor;
     CFDPlayer *Player;
-
-    glm::vec3 StartScale;
-    float MaxTotalScale;
-    float TotalScale;
-    float ScaleStep;
+    CFDPerlinGrid *PerlinGrid;
 
     double LastX;
     double LastY;

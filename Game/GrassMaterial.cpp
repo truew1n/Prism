@@ -15,7 +15,7 @@ CFDGrassMaterial::CFDGrassMaterial()
     GrassDiffuse->SetTextureParameter(ETextureParameter::WrapU, ETextureParameterValue::Repeat);
     GrassDiffuse->SetTextureParameter(ETextureParameter::WrapV, ETextureParameterValue::Repeat);
 
-    Textures->Add(GrassDiffuse);
+    Textures.Add(GrassDiffuse);
 }
 
 void CFDGrassMaterial::Bind()

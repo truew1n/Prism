@@ -46,36 +46,36 @@ void KeyCallback(GLFWwindow *Window, int Key, int Scancode, int Action, int Mods
         bool IsPressed = (Action == GLFW_PRESS);
 
         switch (Key) {
-        case GLFW_KEY_W: InputState.WPressed = IsPressed; break;
-        case GLFW_KEY_S: InputState.SPressed = IsPressed; break;
-        case GLFW_KEY_A: InputState.APressed = IsPressed; break;
-        case GLFW_KEY_D: InputState.DPressed = IsPressed; break;
-        case GLFW_KEY_SPACE: InputState.SPACEPressed = IsPressed; break;
-        case GLFW_KEY_C: InputState.CPressed = IsPressed; break;
-        case GLFW_KEY_LEFT_SHIFT: InputState.SHIFTPressed = IsPressed; break;
-        case GLFW_KEY_E: {
-            if (IsPressed) {
-                if (IsWireframe) {
-                    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-                    IsWireframe = false;
+            case GLFW_KEY_W: InputState.WPressed = IsPressed; break;
+            case GLFW_KEY_S: InputState.SPressed = IsPressed; break;
+            case GLFW_KEY_A: InputState.APressed = IsPressed; break;
+            case GLFW_KEY_D: InputState.DPressed = IsPressed; break;
+            case GLFW_KEY_SPACE: InputState.SPACEPressed = IsPressed; break;
+            case GLFW_KEY_C: InputState.CPressed = IsPressed; break;
+            case GLFW_KEY_LEFT_SHIFT: InputState.SHIFTPressed = IsPressed; break;
+            case GLFW_KEY_E: {
+                if (IsPressed) {
+                    if (IsWireframe) {
+                        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+                        IsWireframe = false;
+                    }
+                    else {
+                        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+                        IsWireframe = true;
+                    }
                 }
-                else {
-                    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-                    IsWireframe = true;
-                }
+                break;
             }
-            break;
-        }
-        case GLFW_KEY_ESCAPE: {
-            if (IsPressed) {
-                if (IsCursorCaptured) {
-                    glfwSetInputMode(Window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-                    IsCursorCaptured = false;
+            case GLFW_KEY_ESCAPE: {
+                if (IsPressed) {
+                    if (IsCursorCaptured) {
+                        glfwSetInputMode(Window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+                        IsCursorCaptured = false;
+                    }
                 }
+                break;
             }
-            break;
-        }
-        default: break;
+            default: break;
         }
     }
 }
@@ -175,15 +175,16 @@ int main(void)
 
     glEnable(GL_DEPTH_TEST);
 
-    // glEnable(GL_CULL_FACE);
-    // glCullFace(GL_BACK);
-    // glFrontFace(GL_CCW);
+     glEnable(GL_CULL_FACE);
+     glCullFace(GL_BACK);
+     glFrontFace(GL_CCW);
 
     // glEnable(GL_BLEND);
     // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     CFDPlayer *Player = Cast<CFDPlayer *>(MainLevel->GetActor(0));
 
+    glClearColor(0.251f, 0.62f, 0.902f, 1.0f);
     auto LastTime = std::chrono::high_resolution_clock::now();
     while (!glfwWindowShouldClose(Window)) {
         auto CurrentTime = std::chrono::high_resolution_clock::now();

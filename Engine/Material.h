@@ -10,7 +10,7 @@
 class CMaterial {
 protected:
     CShader *Shader;
-    CArray<CTexture *> *Textures;
+    CArray<CTexture *> Textures;
 public:
     CMaterial();
     virtual void Bind();
