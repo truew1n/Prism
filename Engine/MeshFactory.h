@@ -2,17 +2,10 @@
 #define PE_MESH_FACTORY_H
 
 #include "Mesh.h"
-#define _USE_MATH_DEFINES
-#include <cmath>
-#ifndef M_PI
-    #define M_PI 3.14159265358979323846f
-#endif
-#include <glm/gtc/noise.hpp>
-
+#include "FunctionLibrary.h"
+#include <glm/ext/scalar_constants.hpp>
 
 class CMeshFactory {
-private:
-    static float PerlinNoise(float x, float y);
 public:
     static CMesh *GenerateCube(float SideLength);
     static CMesh *GeneratePlaneRing(float InnerRadius, float OuterRadius, int32_t SegmentCount);

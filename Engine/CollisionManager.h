@@ -15,7 +15,6 @@ enum class ECollisionChannel : uint16_t {
 	Object2
 };
 
-
 class CCollisionManager {
 	
 };

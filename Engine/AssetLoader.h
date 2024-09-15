@@ -11,7 +11,7 @@
 
 class CAssetLoader {
 private:
-    static glm::vec3 Vec3AssimpGLM(aiVector3D Vector3D);
+    static glm::vec3 ToGLMVec3(aiVector3D Vector3D);
 public:
     static CAsset *LoadStatic(const char *Filepath);
 };

@@ -75,10 +75,9 @@ CMesh *CMeshFactory::GenerateCube(float SideLength)
     return ReturnMesh;
 }
 
-
 CMesh *CMeshFactory::GeneratePlaneRing(float InnerRadius, float OuterRadius, int32_t SegmentCount)
 {
-    float AngleStep = 2.0f * M_PI / SegmentCount;
+    float AngleStep = 2.0f * glm::pi<float>() / SegmentCount;
 
     CArray<SVertex> *Vertices = new CArray<SVertex>();
     for (int i = 0; i < SegmentCount; ++i) {
@@ -125,11 +124,11 @@ CMesh *CMeshFactory::GenerateSphere(float Radius, int32_t LatitudeCount, int32_t
     CArray<SVertex> *Vertices = new CArray<SVertex>();
     CArray<uint32_t> *Indices = new CArray<uint32_t>();
 
-    float DeltaLatitude = M_PI / LatitudeCount;
-    float DeltaLongitude = 2.0f * M_PI / LongitudeCount;
+    float DeltaLatitude = glm::pi<float>() / LatitudeCount;
+    float DeltaLongitude = 2.0f * glm::pi<float>() / LongitudeCount;
 
     for (int32_t i = 0; i <= LatitudeCount; ++i) {
-        float LatitudeAngle = M_PI / 2.0f - i * DeltaLatitude;
+        float LatitudeAngle = glm::pi<float>() / 2.0f - i * DeltaLatitude;
         float xy = Radius * cosf(LatitudeAngle);
         float z = Radius * sinf(LatitudeAngle);
 
@@ -171,10 +170,6 @@ CMesh *CMeshFactory::GenerateSphere(float Radius, int32_t LatitudeCount, int32_t
     return ReturnMesh;
 }
 
-float CMeshFactory::PerlinNoise(float x, float y) {
-    return glm::perlin(glm::vec2(x, y));
-}
-
 CMesh *CMeshFactory::GenerateTerrain(int32_t Width, int32_t Depth, float RightStep, float LeftStep, float Scale, float HeightMultiplier, int32_t Octaves, float Persistence, float Lacunarity) {
     int32_t NumVerticesX = static_cast<int32_t>((Width - 1) / RightStep) + 1;
     int32_t NumVerticesZ = static_cast<int32_t>((Depth - 1) / LeftStep) + 1;
@@ -194,7 +189,7 @@ CMesh *CMeshFactory::GenerateTerrain(int32_t Width, int32_t Depth, float RightSt
                 float SampleX = (x * RightStep / Scale) * Frequency;
                 float SampleZ = (z * LeftStep / Scale) * Frequency;
 
-                float NoiseValue = PerlinNoise(SampleX, SampleZ) * 2.0f - 1.0f;
+                float NoiseValue = Perlin(SampleX, SampleZ) * 2.0f - 1.0f;
                 Height += NoiseValue * Amplitude;
 
                 MaxValue += Amplitude;
@@ -237,3 +232,4 @@ CMesh *CMeshFactory::GenerateTerrain(int32_t Width, int32_t Depth, float RightSt
     delete Indices;
     return ReturnMesh;
 }
+

@@ -171,6 +171,12 @@
     <ClInclude Include="OverlapEvent.h">
       <Filter>Pliki nagłówkowe\Collisions</Filter>
     </ClInclude>
+    <ClInclude Include="BoundingVolume.h">
+      <Filter>Pliki nagłówkowe\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="CuboidBoundingVolume.h">
+      <Filter>Pliki nagłówkowe\Render</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Asset.cpp">
@@ -247,6 +253,12 @@
     </ClCompile>
     <ClCompile Include="Level.cpp">
       <Filter>Pliki źródłowe\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="BoundingVolume.cpp">
+      <Filter>Pliki źródłowe\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="CuboidBoundingVolume.cpp">
+      <Filter>Pliki źródłowe\Render</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

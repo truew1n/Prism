@@ -1,7 +1,7 @@
 #include "AssetLoader.h"
+#include "CuboidBoundingVolume.h"
 
-
-glm::vec3 CAssetLoader::Vec3AssimpGLM(aiVector3D Vector3D)
+glm::vec3 CAssetLoader::ToGLMVec3(aiVector3D Vector3D)
 {
     return glm::vec3(
         Vector3D.x,
@@ -16,9 +16,10 @@ CAsset *CAssetLoader::LoadStatic(const char *Filepath)
     const aiScene *AssimpScene = Importer.ReadFile(Filepath,
         aiProcess_GenNormals |
         aiProcess_Triangulate |
+        aiProcess_GenBoundingBoxes |
         aiProcess_SortByPType
     );
-
+    
     std::string FullPath(Filepath);
     size_t LastBackslash = FullPath.find_last_of('\\') + 1;
     std::string DirectoryPath = FullPath.substr(0, LastBackslash);
@@ -56,9 +57,9 @@ CAsset *CAssetLoader::LoadStatic(const char *Filepath)
 
         CArray<SVertex> *Vertices = new CArray<SVertex>(VertexCount);
         for (int32_t V = 0; V < VertexCount; ++V) {
-            glm::vec3 Location = Vec3AssimpGLM(AssimpMesh->mVertices[V]);
-            glm::vec3 Normal = Vec3AssimpGLM(AssimpMesh->mNormals[V]);
-            glm::vec2 UV = Vec3AssimpGLM(AssimpMesh->HasTextureCoords(0) ? AssimpMesh->mTextureCoords[0][V] : Zero3D);
+            glm::vec3 Location = ToGLMVec3(AssimpMesh->mVertices[V]);
+            glm::vec3 Normal = ToGLMVec3(AssimpMesh->mNormals[V]);
+            glm::vec2 UV = ToGLMVec3(AssimpMesh->HasTextureCoords(0) ? AssimpMesh->mTextureCoords[0][V] : Zero3D);
             Vertices->Set(SVertex(
                 Location, Normal, UV
             ), V);
@@ -83,8 +84,13 @@ CAsset *CAssetLoader::LoadStatic(const char *Filepath)
 #ifdef LOG_ASSET_LOADING
         std::cout << "Index Count: " << IndicesCount << std::endl;
 #endif
+        
+        CCuboidBoundingVolume CuboidBoundingVolume(
+            ToGLMVec3(AssimpMesh->mAABB.mMin),
+            ToGLMVec3(AssimpMesh->mAABB.mMax)
+        );
 
-        CMesh *PrismMesh = new CMesh(Vertices, Indices);
+        CMesh *PrismMesh = new CMesh(Vertices, Indices, CuboidBoundingVolume);
         delete Vertices;
         delete Indices;
 

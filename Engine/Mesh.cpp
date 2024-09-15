@@ -1,5 +1,6 @@
 #include "Mesh.h"
 
+
 CMesh::CMesh()
 {
     SVertex StackVertices[4] = {
@@ -16,53 +17,79 @@ CMesh::CMesh()
     };
     CArray<uint32_t> *Indices = CArray<uint32_t>::From(StackIndices, sizeof(StackIndices) / sizeof(StackIndices[0]));
 
-    VertexArray.Bind();
+    MVertexArray.Bind();
     CVertexBuffer VertexBuffer(Vertices);
     CElementBuffer ElementBuffer(Indices);
 
-    VertexArray.LinkAttribute(&VertexBuffer, 0, 3, GL_FLOAT, sizeof(SVertex), (void *)0);
-    VertexArray.LinkAttribute(&VertexBuffer, 1, 3, GL_FLOAT, sizeof(SVertex), (void *)(3 * sizeof(float)));
-    VertexArray.LinkAttribute(&VertexBuffer, 2, 2, GL_FLOAT, sizeof(SVertex), (void *)(6 * sizeof(float)));
-    VertexArray.Unbind();
+    MVertexArray.LinkAttribute(&VertexBuffer, 0, 3, GL_FLOAT, sizeof(SVertex), (void *)0);
+    MVertexArray.LinkAttribute(&VertexBuffer, 1, 3, GL_FLOAT, sizeof(SVertex), (void *)(3 * sizeof(float)));
+    MVertexArray.LinkAttribute(&VertexBuffer, 2, 2, GL_FLOAT, sizeof(SVertex), (void *)(6 * sizeof(float)));
+    MVertexArray.Unbind();
 
-    TriangleCount = Indices->Num();
+    MTriangleCount = Indices->Num();
 
     delete Vertices;
     delete Indices;
 }
 
-CMesh::CMesh(CArray<SVertex> *Vertices, CArray<uint32_t> *Indices)
+CMesh::CMesh(CArray<SVertex> *IVertices, CArray<uint32_t> *IIndices)
 {
-    VertexArray.Bind();
-    CVertexBuffer VertexBuffer(Vertices);
-    CElementBuffer ElementBuffer(Indices);
+    MVertexArray.Bind();
+    CVertexBuffer VertexBuffer(IVertices);
+    CElementBuffer ElementBuffer(IIndices);
 
-    VertexArray.LinkAttribute(&VertexBuffer, 0, 3, GL_FLOAT, sizeof(SVertex), (void *)0);
-    VertexArray.LinkAttribute(&VertexBuffer, 1, 3, GL_FLOAT, sizeof(SVertex), (void *)(3 * sizeof(float)));
-    VertexArray.LinkAttribute(&VertexBuffer, 2, 2, GL_FLOAT, sizeof(SVertex), (void *)(6 * sizeof(float)));
-    VertexArray.Unbind();
+    MVertexArray.LinkAttribute(&VertexBuffer, 0, 3, GL_FLOAT, sizeof(SVertex), (void *)0);
+    MVertexArray.LinkAttribute(&VertexBuffer, 1, 3, GL_FLOAT, sizeof(SVertex), (void *)(3 * sizeof(float)));
+    MVertexArray.LinkAttribute(&VertexBuffer, 2, 2, GL_FLOAT, sizeof(SVertex), (void *)(6 * sizeof(float)));
+    MVertexArray.Unbind();
 
-    TriangleCount = Indices->Num();
+    MTriangleCount = IIndices->Num();
+}
+
+CMesh::CMesh(CArray<SVertex> *IVertices, CArray<uint32_t> *IIndices, CBoundingVolume IBoundingVolume)
+{
+    MVertexArray.Bind();
+    CVertexBuffer VertexBuffer(IVertices);
+    CElementBuffer ElementBuffer(IIndices);
+
+    MVertexArray.LinkAttribute(&VertexBuffer, 0, 3, GL_FLOAT, sizeof(SVertex), (void *)0);
+    MVertexArray.LinkAttribute(&VertexBuffer, 1, 3, GL_FLOAT, sizeof(SVertex), (void *)(3 * sizeof(float)));
+    MVertexArray.LinkAttribute(&VertexBuffer, 2, 2, GL_FLOAT, sizeof(SVertex), (void *)(6 * sizeof(float)));
+    MVertexArray.Unbind();
+
+    MTriangleCount = IIndices->Num();
+
+    MBoundingVolume = IBoundingVolume;
 }
 
 void CMesh::Draw()
 {
-    VertexArray.Bind();
-    glDrawElements(GL_TRIANGLES, TriangleCount, GL_UNSIGNED_INT, 0);
-    VertexArray.Unbind();
+    MVertexArray.Bind();
+    glDrawElements(GL_TRIANGLES, MTriangleCount, GL_UNSIGNED_INT, 0);
+    MVertexArray.Unbind();
 }
 
 CMesh::~CMesh()
 {
-    VertexArray.Delete();
+    MVertexArray.Delete();
 }
 
 void CMesh::SetMaterial(CMaterial *NewMaterial)
 {
-    Material = NewMaterial;
+    MMaterial = NewMaterial;
 }
 
 CMaterial *CMesh::GetMaterial()
 {
-    return Material;
+    return MMaterial;
+}
+
+void CMesh::SetBoundingVolume(CBoundingVolume BoundingVolume)
+{
+    MBoundingVolume = BoundingVolume;
+}
+
+CBoundingVolume CMesh::GetBoundingVolume()
+{
+    return MBoundingVolume;
 }

@@ -2,14 +2,15 @@
 #include "MainLevel.h"
 #include "MeshFactory.h"
 #include "GrassMaterial.h"
+#include "FunctionLibrary.h"
 
 CFDPerlinGrid::CFDPerlinGrid()
 {
     Controller = new CPlayerController();
     MainComponent = new CSceneComponent();
 
-    Width = 40;
-    Height = 40;
+    Width = 20;
+    Height = 20;
 
     PerlinLocation = glm::vec2(0.0f, 0.0f);
     PerlinScale = 0.07f;
@@ -60,7 +61,7 @@ void CFDPerlinGrid::Tick(float DeltaTime)
         CTransform *CurrentTransform = MeshComponent->GetLocalTransformRef();
         glm::vec3 CurrentLocation = CurrentTransform->GetLocation();
 
-        float NewY = powf(glm::perlin(
+        float NewY = powf(Perlin(
             glm::vec2(
                 (CurrentLocation.x + PerlinLocation.x) * PerlinScale,
                 (CurrentLocation.z + PerlinLocation.y) * PerlinScale
