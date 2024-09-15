@@ -79,13 +79,16 @@ CAsset *CAssetLoader::LoadStatic(const char *Filepath)
 
 #ifdef LOG_ASSET_LOADING
         std::cout << "Vertex Count: " << VertexCount << std::endl;
-#endif
-
-#ifdef LOG_ASSET_LOADING
         std::cout << "Index Count: " << IndicesCount << std::endl;
+
+        glm::vec3 Min = ToGLMVec3(AssimpMesh->mAABB.mMin);
+        glm::vec3 Max = ToGLMVec3(AssimpMesh->mAABB.mMax);
+
+        std::cout << "AABB Minimum: " << Min.x << " " << Min.y << " " << Min.z << std::endl;
+        std::cout << "AABB Maximum: " << Max.x << " " << Max.y << " " << Max.z << std::endl;
 #endif
         
-        CCuboidBoundingVolume CuboidBoundingVolume(
+        CCuboidBoundingVolume *CuboidBoundingVolume = new CCuboidBoundingVolume(
             ToGLMVec3(AssimpMesh->mAABB.mMin),
             ToGLMVec3(AssimpMesh->mAABB.mMax)
         );

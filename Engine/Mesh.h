@@ -12,19 +12,24 @@ private:
     CVertexArray MVertexArray;
     CMaterial *MMaterial;
 
-    CBoundingVolume MBoundingVolume;
+    CBoundingVolume *MBoundingVolume;
+public:
+    bool HasBoundingVolume;
+
+private:
+    void InitMembers();
 public:
     CMesh();
     CMesh(CArray<SVertex> *IVertices, CArray<uint32_t> *IIndices);
-    CMesh(CArray<SVertex> *IVertices, CArray<uint32_t> *IIndices, CBoundingVolume IBoundingVolume);
+    CMesh(CArray<SVertex> *IVertices, CArray<uint32_t> *IIndices, CBoundingVolume *IBoundingVolume);
     void Draw();
     ~CMesh();
 
     void SetMaterial(CMaterial *Material);
     CMaterial *GetMaterial();
 
-    void SetBoundingVolume(CBoundingVolume BoundingVolume);
-    CBoundingVolume GetBoundingVolume();
+    void SetBoundingVolume(CBoundingVolume *BoundingVolume);
+    CBoundingVolume *GetBoundingVolume();
 };
 
 #endif

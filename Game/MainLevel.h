@@ -5,6 +5,7 @@
 
 class CFDPlayer;
 class CFDPerlinGrid;
+class CAsset;
 
 class CFDMainLevel : public CLevel {
 public:
@@ -14,6 +15,8 @@ public:
 
     CFDPlayer *Player;
     CFDPerlinGrid *PerlinGrid;
+
+    CAsset *YuccaAsset;
 
     double LastX;
     double LastY;

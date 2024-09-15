@@ -27,24 +27,37 @@ void CMeshComponent::Tick(float DeltaTime)
 
 void CMeshComponent::Draw()
 {
-    if (MMesh) {
-        CMaterial *MeshMaterial = MMesh->GetMaterial();
-        if (MeshMaterial) {
-            if (MCachedCameraComponent) {
-                if (CCamera *Camera = MCachedCameraComponent->GetCamera()) {
-                    MeshMaterial->Bind();
-                    MeshMaterial->SetProjection(Camera->GetProjectionMatrix());
-                    MeshMaterial->SetView(Camera->GetViewMatrix(
-                        MCachedCameraComponent->GetWorldTransform(),
-                        MCachedCameraComponent->GetLocalTransform()
-                    ));
-                    MeshMaterial->SetTransform(GetWorldTransform());
-                    MMesh->Draw();
-                    MeshMaterial->Unbind();
-                }
-            }
-        }
+    if (!MMesh) return;
+
+    CMaterial *MeshMaterial = MMesh->GetMaterial();
+    if (!MeshMaterial) return;
+    
+    if (!MCachedCameraComponent) return;
+
+    CCamera *Camera = MCachedCameraComponent->GetCamera();
+    if (!Camera) return;
+
+    glm::mat4 ProjectionMatrix = Camera->GetProjectionMatrix();
+    glm::mat4 ViewMatrix = Camera->GetViewMatrix(
+        MCachedCameraComponent->GetWorldTransform(),
+        MCachedCameraComponent->GetLocalTransform()
+    );
+    glm::mat4 CameraMatrix = ProjectionMatrix * ViewMatrix;
+
+    if (MMesh->HasBoundingVolume) {
+        CBoundingVolume *BoundingVolume = MMesh->GetBoundingVolume();
+
+        if (!BoundingVolume->InFrustum(&CameraMatrix, GetWorldTransformRef())) {
+            return;
+        } 
     }
+
+    MeshMaterial->Bind();
+    MeshMaterial->SetProjection(ProjectionMatrix);
+    MeshMaterial->SetView(ViewMatrix);
+    MeshMaterial->SetTransform(GetWorldTransform());
+    MMesh->Draw();
+    MeshMaterial->Unbind();
 }
 
 CMeshComponent::~CMeshComponent()

@@ -5,20 +5,20 @@
 #include "Transform.h"
 
 enum class EBoundingVolumeType : int8_t {
-    Sphere = 0,
-    AxisAlignedBoundingBox = 1,
-    OrientedBoundingBox = 2,
-    EightDirectionalOrientedPolytope = 3,
-    ConvexHull = 4
+    None,
+    Sphere,
+    AxisAlignedBoundingBox,
+    OrientedBoundingBox,
+    EightDirectionalOrientedPolytope,
+    ConvexHull
 };
 
 class CBoundingVolume {
 private:
 	EBoundingVolumeType MType;
 public:
-    CBoundingVolume() = default;
+    CBoundingVolume() : MType(EBoundingVolumeType::None) {}
 	virtual bool InFrustum(glm::mat4 *CameraTransform, glm::mat4 *WorldTransform);
-    ~CBoundingVolume() = default;
 
     EBoundingVolumeType GetType();
     void SetType(EBoundingVolumeType Type);

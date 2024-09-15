@@ -9,20 +9,20 @@ CFDPerlinGrid::CFDPerlinGrid()
     Controller = new CPlayerController();
     MainComponent = new CSceneComponent();
 
-    Width = 20;
-    Height = 20;
+    Width = 30;
+    Height = 30;
 
     PerlinLocation = glm::vec2(0.0f, 0.0f);
     PerlinScale = 0.07f;
     SphereFactor = 3.0f;
     Spheres.Resize(Width * Height);
 
-    SphereRadius = 0.1f;
+    SphereRadius = 5.0f;
     SphereMaterial = new CFDGrassMaterial();
     SphereMesh = CMeshFactory::GenerateCube(SphereRadius);
     SphereMesh->SetMaterial(SphereMaterial);
 
-    float Spacing = SphereRadius;
+    Spacing = SphereRadius;
 
     int32_t HalfWidth = Width / 2;
     int32_t HalfHeight = Height / 2;
@@ -57,16 +57,22 @@ void CFDPerlinGrid::Tick(float DeltaTime)
 {
     CActor::Tick(DeltaTime);
 
+    CCameraComponent *CCComponent = GetLevel()->GetPlayerController()->GetCameraComponent();
+    glm::vec3 CameraLocation = CCComponent->GetWorldTransform() * glm::vec4(CCComponent->GetLocalTransform().GetLocation(), 1.0f);
+
     for (CMeshComponent *MeshComponent : Spheres) {
         CTransform *CurrentTransform = MeshComponent->GetLocalTransformRef();
         glm::vec3 CurrentLocation = CurrentTransform->GetLocation();
 
+        CFDGrassMaterial *Material = Cast<CFDGrassMaterial *>(MeshComponent->GetMesh()->GetMaterial());
+        Material->CameraPosition = CameraLocation;
+
         float NewY = powf(Perlin(
             glm::vec2(
-                (CurrentLocation.x + PerlinLocation.x) * PerlinScale,
-                (CurrentLocation.z + PerlinLocation.y) * PerlinScale
+                (CurrentLocation.x / 50.0f + PerlinLocation.x) * PerlinScale * 10.0f,
+                (CurrentLocation.z / 50.0f + PerlinLocation.y) * PerlinScale * 10.0f
             )
-        ) * SphereFactor, 2.0f);
+        ) * SphereFactor, 3.0f);
 
         CurrentTransform->SetLocation(glm::vec3(CurrentLocation.x, NewY, CurrentLocation.z));
     }

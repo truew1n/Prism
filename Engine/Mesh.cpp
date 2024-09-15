@@ -1,8 +1,18 @@
 #include "Mesh.h"
 
 
+void CMesh::InitMembers()
+{
+    MTriangleCount = 0;
+    MMaterial = nullptr;
+    MBoundingVolume = nullptr;
+    HasBoundingVolume = false;
+}
+
 CMesh::CMesh()
 {
+    InitMembers();
+
     SVertex StackVertices[4] = {
         SVertex(glm::vec3(-1.0f, -1.0f, 0.0f), glm::vec2(0.0f, 0.0f)),
         SVertex(glm::vec3(1.0f, -1.0f, 0.0f), glm::vec2(1.0f, 0.0f)),
@@ -34,6 +44,8 @@ CMesh::CMesh()
 
 CMesh::CMesh(CArray<SVertex> *IVertices, CArray<uint32_t> *IIndices)
 {
+    InitMembers();
+
     MVertexArray.Bind();
     CVertexBuffer VertexBuffer(IVertices);
     CElementBuffer ElementBuffer(IIndices);
@@ -46,8 +58,10 @@ CMesh::CMesh(CArray<SVertex> *IVertices, CArray<uint32_t> *IIndices)
     MTriangleCount = IIndices->Num();
 }
 
-CMesh::CMesh(CArray<SVertex> *IVertices, CArray<uint32_t> *IIndices, CBoundingVolume IBoundingVolume)
+CMesh::CMesh(CArray<SVertex> *IVertices, CArray<uint32_t> *IIndices, CBoundingVolume *IBoundingVolume)
 {
+    InitMembers();
+
     MVertexArray.Bind();
     CVertexBuffer VertexBuffer(IVertices);
     CElementBuffer ElementBuffer(IIndices);
@@ -84,12 +98,17 @@ CMaterial *CMesh::GetMaterial()
     return MMaterial;
 }
 
-void CMesh::SetBoundingVolume(CBoundingVolume BoundingVolume)
+void CMesh::SetBoundingVolume(CBoundingVolume *BoundingVolume)
 {
+    if (!BoundingVolume) {
+        HasBoundingVolume = false;
+    } else {
+        HasBoundingVolume = true;
+    }
     MBoundingVolume = BoundingVolume;
 }
 
-CBoundingVolume CMesh::GetBoundingVolume()
+CBoundingVolume *CMesh::GetBoundingVolume()
 {
     return MBoundingVolume;
 }

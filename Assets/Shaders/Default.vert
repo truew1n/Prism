@@ -8,6 +8,8 @@ out vec3 EPosition;
 out vec3 ENormal;
 out vec2 EUV;
 
+out vec3 EWorldPosition;
+
 uniform mat4 UProjection;
 uniform mat4 UView;
 uniform mat4 UTransform;
@@ -19,6 +21,8 @@ void main()
     EPosition = WorldPosition.xyz;
     ENormal = LNormal;
     EUV = LUV;
+
+    EWorldPosition = vec3(WorldPosition);
 
     gl_Position = UProjection * UView * WorldPosition;
 }

@@ -11,6 +11,11 @@ public:
     ~CFDGrassMaterial() override;
 
     CTexture *GrassDiffuse;
+
+    glm::vec3 CameraPosition;
+    float FogStart;
+    float FogEnd;
+    glm::vec3 FogColor;
 };
 
 #endif
