@@ -18,8 +18,8 @@ CFDGrassMaterial::CFDGrassMaterial()
     Textures.Add(GrassDiffuse);
 
     CameraPosition = glm::vec3(0.0f);
-    FogStart = 100.0f;
-    FogEnd = 300.0f;
+    FogStart = 200.0f;
+    FogEnd = 600.0f;
     FogColor = glm::vec3(1.0f, 1.0f, 1.0f);
 }
 

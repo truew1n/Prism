@@ -12,7 +12,7 @@ CFDPlayer::CFDPlayer()
 
     MainCameraComponent = new CCameraComponent();
     MainCamera = new CCamera();
-    MainCamera->SetFarPlane(400.0f);
+    MainCamera->SetFarPlane(600.0f);
     MainCameraComponent->SetCamera(MainCamera);
     MainCameraComponent->SetLocalTransform(
         CTransform(

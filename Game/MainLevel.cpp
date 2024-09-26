@@ -36,6 +36,7 @@ void CFDMainLevel::Tick(float DeltaTime)
 
     glm::mat4 TransformMatrix = glm::mat4(1.0f);
     TransformMatrix = glm::translate(TransformMatrix, glm::vec3(0.0f, 20.0f, 0.0f));
+    TransformMatrix = glm::scale(TransformMatrix, glm::vec3(3.0f, 3.0f, 3.0f));
     for (CPair<CMesh *, CMaterial *> Pair : YuccaAsset->AssetData) {
         CMaterial *MeshMaterial = Pair.GetFirst()->GetMaterial();
         if (MeshMaterial) {
@@ -65,9 +66,11 @@ void CFDMainLevel::Tick(float DeltaTime)
                         ));
                         MeshMaterial->SetTransform(TransformMatrix);
                         Pair.GetFirst()->Draw();
+                        GLint PolygonMode;
+                        glGetIntegerv(GL_POLYGON_MODE, &PolygonMode);
                         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
                         BoundingVolumeMesh->Draw();
-                        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+                        glPolygonMode(GL_FRONT_AND_BACK, PolygonMode);
                         MeshMaterial->Unbind();
                     }
                 }
