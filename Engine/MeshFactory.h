@@ -7,6 +7,7 @@
 
 class CMeshFactory {
 public:
+    static CBoundingVolume *GenerateAABB(CArray<SVertex> *Vertices);
     static CMesh *GenerateCube(float SideLength);
     static CMesh *GeneratePlaneRing(float InnerRadius, float OuterRadius, int32_t SegmentCount);
     static CMesh *GenerateSphere(float Radius, int32_t LatitudeSegments, int32_t LongitudeSegments);

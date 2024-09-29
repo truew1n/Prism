@@ -1,5 +1,19 @@
 #include "MeshFactory.h"
+#include "CuboidBoundingVolume.h"
 
+CBoundingVolume *CMeshFactory::GenerateAABB(CArray<SVertex> *Vertices)
+{
+    glm::vec3 minPoint = Vertices->Get(0).Position;
+    glm::vec3 maxPoint = Vertices->Get(0).Position;
+
+    for (int i = 1; i < Vertices->Num(); ++i) {
+        glm::vec3 pos = Vertices->Get(i).Position;
+        minPoint = glm::min(minPoint, pos);
+        maxPoint = glm::max(maxPoint, pos);
+    }
+
+    return new CCuboidBoundingVolume(minPoint, maxPoint);
+}
 
 CMesh *CMeshFactory::GenerateCube(float SideLength)
 {
@@ -70,6 +84,8 @@ CMesh *CMeshFactory::GenerateCube(float SideLength)
     Indices->Add(22); Indices->Add(23); Indices->Add(20);
 
     CMesh *ReturnMesh = new CMesh(Vertices, Indices);
+
+    ReturnMesh->SetBoundingVolume(GenerateAABB(Vertices));
     delete Vertices;
     delete Indices;
     return ReturnMesh;
@@ -228,6 +244,7 @@ CMesh *CMeshFactory::GenerateTerrain(int32_t Width, int32_t Depth, float RightSt
     }
 
     CMesh *ReturnMesh = new CMesh(Vertices, Indices);
+    ReturnMesh->SetBoundingVolume(GenerateAABB(Vertices));
     delete Vertices;
     delete Indices;
     return ReturnMesh;
@@ -316,11 +333,8 @@ CMesh *CMeshFactory::GenerateCuboid(glm::vec3 Minimum, glm::vec3 Maximum)
     Indices->Add(22); Indices->Add(23); Indices->Add(20);
 
     CMesh *ReturnMesh = new CMesh(Vertices, Indices);
+    ReturnMesh->SetBoundingVolume(GenerateAABB(Vertices));
     delete Vertices;
     delete Indices;
     return ReturnMesh;
 }
-
-
-
-
