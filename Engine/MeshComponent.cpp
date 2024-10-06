@@ -48,7 +48,6 @@ void CMeshComponent::Draw()
         CBoundingVolume *BoundingVolume = MMesh->GetBoundingVolume();
 
         if (!BoundingVolume->InFrustum(&CameraMatrix, GetWorldTransformRef())) {
-            std::cout << "Not In Frustum" << std::endl;
             return;
         } 
     }

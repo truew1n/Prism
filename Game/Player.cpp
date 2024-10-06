@@ -31,7 +31,7 @@ CFDPlayer::CFDPlayer()
 void CFDPlayer::Tick(float DeltaTime)
 {
     CActor::Tick(DeltaTime);
-
+    
 }
 
 CFDPlayer::~CFDPlayer()

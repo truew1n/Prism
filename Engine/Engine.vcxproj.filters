@@ -67,6 +67,12 @@
     <Filter Include="Pliki źródłowe\Scene">
       <UniqueIdentifier>{a06701ab-cebd-4a68-868f-aa833ee4d332}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Pliki nagłówkowe\Window">
+      <UniqueIdentifier>{1104ca99-59ab-45c5-acbc-b034014076ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki źródłowe\Window">
+      <UniqueIdentifier>{c1c35212-d899-48a0-a48c-d2e060dca1f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Asset.h">
@@ -177,6 +183,9 @@
     <ClInclude Include="CuboidBoundingVolume.h">
       <Filter>Pliki nagłówkowe\Render</Filter>
     </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>Pliki nagłówkowe\Window</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Asset.cpp">
@@ -259,6 +268,9 @@
     </ClCompile>
     <ClCompile Include="CuboidBoundingVolume.cpp">
       <Filter>Pliki źródłowe\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>Pliki źródłowe\Window</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,7 +1,4 @@
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-
-#include <chrono>
+#include "Window.h"
 
 #include "FunctionLibrary.h"
 #include "MainLevel.h"
@@ -131,34 +128,33 @@ void ProcessInputAndMoveActor(CFDPlayer *Player, float DeltaTime)
 
 int main(void)
 {
-    if (!glfwInit()) {
+    if (!CWindow::InitializeGLFW()) {
         return -1;
     }
 
     uint32_t WindowWidth = 1920;
     uint32_t WindowHeight = 1080;
-
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    
+    CWindow::Hint(EWindowHint::ContextVersionMajor, 4);
+    CWindow::Hint(EWindowHint::ContextVersionMinor, 6);
+    CWindow::Hint(EWindowHint::OpenGLProfile, EWindowHintValue::OpenGLCoreProfile);
 
     std::string WindowTitle = "Prism";
-    GLFWwindow *Window = glfwCreateWindow(WindowWidth, WindowHeight, WindowTitle.c_str(), NULL, NULL);
-    if (!Window) {
+    CWindow *MainWindow = CWindow::Create(WindowWidth, WindowHeight, WindowTitle.c_str());
+    if (!MainWindow) {
         const char *Message;
-        glfwGetError(&Message);
+        CWindow::GetError(&Message);
         std::cerr << "Failed to create GLFW Window!" << std::endl;
         std::cerr << Message << std::endl;
         glfwTerminate();
         return -1;
     }
 
-    glfwSetInputMode(Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    MainWindow->SetInputMode(EInputMode::Cursor, EInputModeValue::CursorDisabled);
+    CWindow::MakeContextCurrent(MainWindow);
+    CWindow::SwapInterval(0);
 
-    glfwMakeContextCurrent(Window);
-    glfwSwapInterval(0);
-
-    if (glewInit() != GLEW_OK) {
+    if (CWindow::InitializeGLEW()) {
         std::cerr << "Glew failed to initialize!" << std::endl;
         return -1;
     }
@@ -166,27 +162,25 @@ int main(void)
     CFDMainLevel *MainLevel = new CFDMainLevel();
     MainLevel->ResizeCallback(WindowWidth, WindowHeight);
 
-    glfwSetWindowUserPointer(Window, (void *)MainLevel);
+    MainWindow->SetWindowStorage((void *) MainLevel);
 
-    glfwSetFramebufferSizeCallback(Window, ResizeCallback);
-    glfwSetCursorPosCallback(Window, MouseCallback);
-    glfwSetKeyCallback(Window, KeyCallback);
-    glfwSetMouseButtonCallback(Window, MouseButtonCallback);
+    glfwSetFramebufferSizeCallback(MainWindow->Window, ResizeCallback);
+    glfwSetCursorPosCallback(MainWindow->Window, MouseCallback);
+    glfwSetKeyCallback(MainWindow->Window, KeyCallback);
+    glfwSetMouseButtonCallback(MainWindow->Window, MouseButtonCallback);
 
     glEnable(GL_DEPTH_TEST);
 
-     glEnable(GL_CULL_FACE);
-     glCullFace(GL_BACK);
-     glFrontFace(GL_CCW);
-
-    // glEnable(GL_BLEND);
-    // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
+    glFrontFace(GL_CCW);
 
     CFDPlayer *Player = Cast<CFDPlayer *>(MainLevel->GetActor(0));
 
     glClearColor(0.251f, 0.62f, 0.902f, 1.0f);
+
     auto LastTime = std::chrono::high_resolution_clock::now();
-    while (!glfwWindowShouldClose(Window)) {
+    while (!MainWindow->ShouldClose()) {
         auto CurrentTime = std::chrono::high_resolution_clock::now();
         std::chrono::duration<float> ElapsedTime = CurrentTime - LastTime;
         float DeltaTime = ElapsedTime.count();
@@ -199,13 +193,13 @@ int main(void)
         MainLevel->Tick(DeltaTime);
         MainLevel->Draw();
 
-        glfwSwapBuffers(Window);
-        glfwPollEvents();
+        MainWindow->SwapBuffers();
+        CWindow::PollEvents();
     }
 
     delete MainLevel;
 
-    glfwDestroyWindow(Window);
-    glfwTerminate();
+    delete MainWindow;
+    CWindow::Terminate();
     return 0;
 }
