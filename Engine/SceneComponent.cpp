@@ -106,23 +106,25 @@ void CSceneComponent::SetParentChildTransform()
 
 void CSceneComponent::AddComponent(CSceneComponent *SceneComponent)
 {
-    if (SceneComponent) {
-        glm::mat4 NewTransformMatrix = GetWorldTransform() * SceneComponent->GetLocalTransform().GetTransformMatrix();
-        SceneComponent->SetWorldTransform(NewTransformMatrix);
-        SceneComponent->SetParent(this);
-        SceneComponents.Add(SceneComponent);
-    }
+    if (!SceneComponent) return;
+
+    glm::mat4 NewTransformMatrix = GetWorldTransform() * SceneComponent->GetLocalTransform().GetTransformMatrix();
+    SceneComponent->SetWorldTransform(NewTransformMatrix);
+    SceneComponent->SetParent(this);
+    SceneComponents.Add(SceneComponent);
 }
 
 CSceneComponent *CSceneComponent::RemoveComponent(int32_t Index)
 {
-    CSceneComponent *SceneComponent = nullptr;
-    if (SceneComponents.InBounds(Index)) {
-        SceneComponent = SceneComponents.Get(Index);
-        SceneComponents.Remove(Index);
-    }
+    
+    if (!SceneComponents.InBounds(Index)) return nullptr;
 
-    return nullptr;
+    CSceneComponent *SceneComponent = nullptr;
+
+    SceneComponent = SceneComponents.Get(Index);
+    SceneComponents.Remove(Index);
+
+    return SceneComponent;
 }
 
 void CSceneComponent::RegisterComponents(CActor *NewOwner)

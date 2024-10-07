@@ -29,6 +29,8 @@ class CWindow {
 //private:
 public:
     GLFWwindow *Window;
+    int32_t Width;
+    int32_t Height;
 public:
     CWindow();
     ~CWindow();
@@ -59,6 +61,9 @@ public:
     void KeyCallback(GLFWwindow *Window, int32_t Key, int32_t Scancode, int32_t Action, int32_t Mods) {}
     void MouseCallback(GLFWwindow *Window, double X, double Y) {}
     void ResizeCallback(GLFWwindow *Window, int32_t FramebufferWidth, int32_t FramebufferHeight) {}
+
+    int32_t GetWidth() const { return Width; }
+    int32_t GetHeight() const { return Height; }
 };
 
 #endif

@@ -10,7 +10,6 @@ CWindow::~CWindow()
     if (Window) {
         glfwDestroyWindow(Window);
     }
-    glfwTerminate();
 }
 
 int CWindow::InitializeGLFW()
