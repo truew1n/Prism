@@ -4,7 +4,7 @@
 #include "MainLevel.h"
 
 
-CFDPlayer::CFDPlayer()
+GPlayer::GPlayer()
 {
     Controller = new CPlayerController();
 
@@ -12,7 +12,7 @@ CFDPlayer::CFDPlayer()
 
     MainCameraComponent = new CCameraComponent();
     MainCamera = new CCamera();
-    MainCamera->SetFarPlane(600.0f);
+    MainCamera->SetFarPlane(500.0f);
     MainCameraComponent->SetCamera(MainCamera);
     MainCameraComponent->SetLocalTransform(
         CTransform(
@@ -26,15 +26,16 @@ CFDPlayer::CFDPlayer()
     SceneComponent->AddComponent(MainCameraComponent);
 
     RootComponent->RegisterComponents(this);
+    RootComponent->GetLocalTransformRef()->Translate(-385.763, 30.9455, 436.567);
 }
 
-void CFDPlayer::Tick(float DeltaTime)
+void GPlayer::Tick(float DeltaTime)
 {
     CActor::Tick(DeltaTime);
     
 }
 
-CFDPlayer::~CFDPlayer()
+GPlayer::~GPlayer()
 {
     delete MainCamera;
 }

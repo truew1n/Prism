@@ -18,6 +18,8 @@ public:
     virtual ~CMaterial();
 
     CShader *GetShader() const { return Shader; }
+
+    CTexture *GetTexture(uint32_t Index);
     void AddTexture(CTexture *Texture);
 
     virtual void SetProjection(glm::mat4 Projection);

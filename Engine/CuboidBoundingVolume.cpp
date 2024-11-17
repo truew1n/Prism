@@ -30,6 +30,18 @@ bool CCuboidBoundingVolume::InFrustum(glm::mat4 *CameraTransform, glm::mat4 *Wor
     return false;
 }
 
+glm::vec3 CCuboidBoundingVolume::GetCentroid()
+{
+    return (MMinimum + MMaximum) * 0.5f;
+}
+
+float CCuboidBoundingVolume::GetDistance(glm::vec3 Origin)
+{
+    glm::vec3 Centroid = (MMinimum + MMaximum) * 0.5f;
+
+    return glm::distance(Origin, Centroid);
+}
+
 void CCuboidBoundingVolume::SetMinimum(glm::vec3 Minimum)
 {
     MMinimum = Minimum;

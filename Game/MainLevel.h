@@ -3,8 +3,8 @@
 
 #include "Level.h"
 
-class CFDPlayer;
-class CFDPerlinGrid;
+class GPlayer;
+class GMapController;
 class CAsset;
 
 class CFDMainLevel : public CLevel {
@@ -13,8 +13,8 @@ public:
     void Tick(float DeltaTime) override;
     ~CFDMainLevel() override;
 
-    CFDPlayer *Player;
-    CFDPerlinGrid *PerlinGrid;
+    GPlayer *Player;
+    GMapController *PerlinGrid;
 
     double LastX;
     double LastY;

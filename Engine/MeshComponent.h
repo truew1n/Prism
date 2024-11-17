@@ -18,6 +18,8 @@ public:
 
     CMesh *GetMesh();
     void SetMesh(CMesh *Mesh);
+
+    CCameraComponent *GetCachedCameraComponent() const { return MCachedCameraComponent; }
 };
 
 #endif

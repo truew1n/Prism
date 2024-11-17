@@ -11,6 +11,8 @@ public:
 	CCuboidBoundingVolume() : MMinimum(0.0f), MMaximum(0.0f) {}
 	CCuboidBoundingVolume(glm::vec3 IMinimum, glm::vec3 IMaximum) : MMinimum(IMinimum), MMaximum(IMaximum) {}
 	virtual bool InFrustum(glm::mat4 *CameraTransform, glm::mat4 *WorldTransform) override;
+	virtual glm::vec3 GetCentroid() override;
+	virtual float GetDistance(glm::vec3 Origin) override;
 
 	void SetMinimum(glm::vec3 Minimum);
 	glm::vec3 GetMinimum();

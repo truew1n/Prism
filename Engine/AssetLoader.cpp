@@ -32,7 +32,7 @@ CAsset *CAssetLoader::LoadStatic(const char *Filepath)
     }
 
 #ifdef LOG_ASSET_LOADING
-    std::cout << "Model Load Preparing: " << Filepath << std::endl;
+    std::cout << "Model Load Preparing: " << Filepath << "\n";
 #endif
 
     const aiVector3D Zero3D = aiVector3D(0.0f, 0.0f, 0.0f);
@@ -41,8 +41,8 @@ CAsset *CAssetLoader::LoadStatic(const char *Filepath)
     uint32_t MaterialCount = AssimpScene->mNumMaterials;
 
 #ifdef LOG_ASSET_LOADING
-    std::cout << "Mesh Count: " << MeshCount << std::endl;
-    std::cout << "Material Count: " << MaterialCount << std::endl;
+    std::cout << "Mesh Count: " << MeshCount << "\n";
+    std::cout << "Material Count: " << MaterialCount << "\n";
 #endif
 
     for (uint32_t I = 0; I < MeshCount; ++I) {
@@ -78,14 +78,14 @@ CAsset *CAssetLoader::LoadStatic(const char *Filepath)
         }
 
 #ifdef LOG_ASSET_LOADING
-        std::cout << "Vertex Count: " << VertexCount << std::endl;
-        std::cout << "Index Count: " << IndicesCount << std::endl;
+        std::cout << "Vertex Count: " << VertexCount << "\n";
+        std::cout << "Index Count: " << IndicesCount << "\n";
 
         glm::vec3 Min = ToGLMVec3(AssimpMesh->mAABB.mMin);
         glm::vec3 Max = ToGLMVec3(AssimpMesh->mAABB.mMax);
 
-        std::cout << "AABB Minimum: " << Min.x << " " << Min.y << " " << Min.z << std::endl;
-        std::cout << "AABB Maximum: " << Max.x << " " << Max.y << " " << Max.z << std::endl;
+        std::cout << "AABB Minimum: " << Min.x << " " << Min.y << " " << Min.z << "\n";
+        std::cout << "AABB Maximum: " << Max.x << " " << Max.y << " " << Max.z << "\n";
 #endif
         
         CCuboidBoundingVolume *CuboidBoundingVolume = new CCuboidBoundingVolume(
@@ -107,19 +107,21 @@ CAsset *CAssetLoader::LoadStatic(const char *Filepath)
         aiMaterial *AssimpMaterial = AssimpScene->mMaterials[AssimpMesh->mMaterialIndex];
 
         aiString Path;
-        if (AssimpMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &Path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
+        if (AssimpMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &Path, NULL, NULL, NULL, NULL, NULL) == aiReturn_SUCCESS) {
             std::string TextureFullPath = DirectoryPath + Path.C_Str();
 #ifdef LOG_ASSET_LOADING
-            std::cout << "Texture: " << TextureFullPath << std::endl;
+            std::cout << "Diffuse Texture: " << TextureFullPath << "\n";
 #endif
-            PrismMaterial->AddTexture(new CTexture(TextureFullPath.c_str(), "UDiffuse", 0));
+            CTexture *TempTexture = new CTexture(TextureFullPath.c_str(), "UDiffuse", 0);
+            TempTexture->SetType(ETextureType::Diffuse);
+            PrismMaterial->AddTexture(TempTexture);
         }
 
         Asset->AssetData.Add(CPair<CMesh *, CMaterial *>(PrismMesh, PrismMaterial));
     }
 
 #ifdef LOG_ASSET_LOADING
-    std::cout << "Model Loaded: " << Filepath << std::endl;
+    std::cout << "Model Loaded: " << Filepath << "\n";
 #endif
     return Asset;
 }

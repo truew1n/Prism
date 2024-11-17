@@ -19,6 +19,8 @@ void main()
 {
     vec4 TempColor = texture(UDiffuse, EUV);
     
+    if(TempColor.a < 0.1) discard;
+
     if(UFogColor != vec3(0.0)) {
         float CameraDistance = length(EWorldPosition - UCameraPosition);
         float FogFactor = clamp((UFogEnd - CameraDistance) / (UFogEnd - UFogStart), 0.0, 1.0);

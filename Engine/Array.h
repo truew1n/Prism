@@ -4,6 +4,10 @@
 #include <iostream>
 #include <cstdlib>
 #include <cstring>
+#include <algorithm>
+
+template<typename T>
+using FComparator = bool (*)(T, T);
 
 template<typename T>
 class CArray
@@ -168,6 +172,42 @@ public:
         if (First == Second) return true;
         if ((!(First && Second)) || (First->Num() != Second->Num())) return false;
         return (memcmp(First->begin(), Second->begin(), First->Num() * sizeof(T)) == 0);
+    }
+
+    void Sort(FComparator<T> Comparator)
+    {
+        if (Data && Size > 1)
+        {
+            QuickSort(0, Size - 1, Comparator);
+        }
+    }
+
+    void QuickSort(int32_t Low, int32_t High, FComparator<T> Comparator)
+    {
+        if (Low < High)
+        {
+            int32_t PivotIndex = Partition(Low, High, Comparator);
+            QuickSort(Low, PivotIndex - 1, Comparator);
+            QuickSort(PivotIndex + 1, High, Comparator);
+        }
+    }
+
+    int32_t Partition(int32_t Low, int32_t High, FComparator<T> Comparator)
+    {
+        T Pivot = Data[High];
+        int32_t i = Low - 1;
+
+        for (int32_t j = Low; j < High; ++j)
+        {
+            if (Comparator(Data[j], Pivot))
+            {
+                ++i;
+                std::swap(Data[i], Data[j]);
+            }
+        }
+
+        std::swap(Data[i + 1], Data[High]);
+        return i + 1;
     }
 
     T *begin()

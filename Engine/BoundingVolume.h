@@ -19,6 +19,8 @@ private:
 public:
     CBoundingVolume() : MType(EBoundingVolumeType::None) {}
 	virtual bool InFrustum(glm::mat4 *CameraTransform, glm::mat4 *WorldTransform);
+    virtual glm::vec3 GetCentroid();
+    virtual float GetDistance(glm::vec3 Origin);
 
     EBoundingVolumeType GetType();
     void SetType(EBoundingVolumeType Type);

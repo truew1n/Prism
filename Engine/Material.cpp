@@ -35,6 +35,13 @@ CMaterial::~CMaterial()
     }
 }
 
+CTexture *CMaterial::GetTexture(uint32_t Index)
+{
+    if (!Textures.InBounds(Index)) return nullptr;
+
+    return Textures.Get(Index);
+}
+
 void CMaterial::AddTexture(CTexture *Texture)
 {
     if (Texture) {

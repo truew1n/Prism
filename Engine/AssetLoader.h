@@ -7,7 +7,7 @@
 
 #include "Asset.h"
 
-#define LOG_ASSET_LOADING
+//#define LOG_ASSET_LOADING
 
 class CAssetLoader {
 private:

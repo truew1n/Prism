@@ -6,9 +6,9 @@ CTexture::CTexture(const char *ITexturePath, const char *IUniformName, uint32_t 
 {
 	MUniformName = IUniformName;
 
-	int32_t TextureWidth, TextureHeight, TextureChannels;
+	int32_t TextureWidth, TextureHeight;
 	stbi_set_flip_vertically_on_load(true);
-	uint8_t *TextureData = stbi_load(ITexturePath, &TextureWidth, &TextureHeight, &TextureChannels, 0);
+	uint8_t *TextureData = stbi_load(ITexturePath, &TextureWidth, &TextureHeight, &MChannels, 0);
 
 	glGenTextures(1, &Id);
 
@@ -22,13 +22,13 @@ CTexture::CTexture(const char *ITexturePath, const char *IUniformName, uint32_t 
 	SetTextureParameter(ETextureParameter::WrapU, ETextureParameterValue::Repeat);
 	SetTextureParameter(ETextureParameter::WrapV, ETextureParameterValue::Repeat);
 
-	if (TextureChannels == 4) {
+	if (MChannels == 4) {
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, TextureWidth, TextureHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, TextureData);
 	}
-	else if (TextureChannels == 3) {
+	else if (MChannels == 3) {
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, TextureWidth, TextureHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, TextureData);
 	}
-	else if (TextureChannels == 1) {
+	else if (MChannels == 1) {
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, TextureWidth, TextureHeight, 0, GL_RED, GL_UNSIGNED_BYTE, TextureData);
 	}
 

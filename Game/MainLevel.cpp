@@ -1,6 +1,6 @@
 #include "MainLevel.h"
 #include "Player.h"
-#include "PerlinGrid.h"
+#include "MapController.h"
 #include "MeshFactory.h"
 #include "BaseMaterial.h"
 
@@ -13,16 +13,14 @@ CFDMainLevel::CFDMainLevel()
     LastX = 0.0;
     LastY = 0.0;
 
-    Player = new CFDPlayer();
-    PerlinGrid = new CFDPerlinGrid();
+    Player = new GPlayer();
+    PerlinGrid = new GMapController();
 
     AddActor(Player);
     AddActor(PerlinGrid);
 
     SetPlayerController(Cast<CPlayerController *>(Player->GetController()));
 }
-
-#include "iomanip"
 
 void CFDMainLevel::Tick(float DeltaTime)
 {

@@ -92,8 +92,10 @@ private:
 	ETextureType MType;
 	const char *MUniformName;
 	uint32_t MUnit;
+
+	int32_t MChannels;
 public:
-	CTexture() : MType(ETextureType::None), MUniformName(nullptr), MUnit(0) {};
+	CTexture() : MType(ETextureType::None), MUniformName(nullptr), MUnit(0), MChannels(0) {};
 	CTexture(const char *ITexturePath, const char *IUniformName, uint32_t ISlot);
 
 	void SetUniform(CShader *Shader);
@@ -109,6 +111,8 @@ public:
 	void SetUniformName(const char *UniformName) { MUniformName = UniformName; }
 
 	uint32_t GetUnit() const { return MUnit; }
+
+	uint32_t GetChannels() const { return MChannels; }
 };
 
 #endif

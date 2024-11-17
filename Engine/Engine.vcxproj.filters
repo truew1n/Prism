@@ -99,9 +99,6 @@
     <ClInclude Include="VertexBuffer.h">
       <Filter>Pliki nagłówkowe\Buffer</Filter>
     </ClInclude>
-    <ClInclude Include="CollisionManager.h">
-      <Filter>Pliki nagłówkowe\Collisions</Filter>
-    </ClInclude>
     <ClInclude Include="CollisionSolver.h">
       <Filter>Pliki nagłówkowe\Collisions</Filter>
     </ClInclude>
@@ -168,15 +165,6 @@
     <ClInclude Include="Level.h">
       <Filter>Pliki nagłówkowe\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="CollisionEvent.h">
-      <Filter>Pliki nagłówkowe\Collisions</Filter>
-    </ClInclude>
-    <ClInclude Include="HitEvent.h">
-      <Filter>Pliki nagłówkowe\Collisions</Filter>
-    </ClInclude>
-    <ClInclude Include="OverlapEvent.h">
-      <Filter>Pliki nagłówkowe\Collisions</Filter>
-    </ClInclude>
     <ClInclude Include="BoundingVolume.h">
       <Filter>Pliki nagłówkowe\Render</Filter>
     </ClInclude>
@@ -208,9 +196,6 @@
     </ClCompile>
     <ClCompile Include="VertexBuffer.cpp">
       <Filter>Pliki źródłowe\Buffer</Filter>
-    </ClCompile>
-    <ClCompile Include="CollisionManager.cpp">
-      <Filter>Pliki źródłowe\Collisions</Filter>
     </ClCompile>
     <ClCompile Include="CollisionSolver.cpp">
       <Filter>Pliki źródłowe\Collisions</Filter>

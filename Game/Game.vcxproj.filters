@@ -48,7 +48,7 @@
     <ClCompile Include="Player.cpp">
       <Filter>Pliki źródłowe\Actors</Filter>
     </ClCompile>
-    <ClCompile Include="PerlinGrid.cpp">
+    <ClCompile Include="MapController.cpp">
       <Filter>Pliki źródłowe\Actors</Filter>
     </ClCompile>
   </ItemGroup>
@@ -65,7 +65,7 @@
     <ClInclude Include="Player.h">
       <Filter>Pliki nagłówkowe\Actors</Filter>
     </ClInclude>
-    <ClInclude Include="PerlinGrid.h">
+    <ClInclude Include="MapController.h">
       <Filter>Pliki nagłówkowe\Actors</Filter>
     </ClInclude>
   </ItemGroup>

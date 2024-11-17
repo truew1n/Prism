@@ -89,7 +89,7 @@ void MouseButtonCallback(GLFWwindow *Window, int Button, int Action, int Mods)
 
 float Speed = 5.0f;
 
-void ProcessInputAndMoveActor(CFDPlayer *Player, float DeltaTime)
+void ProcessInputAndMoveActor(GPlayer *Player, float DeltaTime)
 {
     CTransform *PlayerTransform = Player->GetTransformRef();
     CPlayerController *Controller = Cast<CPlayerController *>(Player->GetController());
@@ -175,7 +175,11 @@ int main(void)
     glCullFace(GL_BACK);
     glFrontFace(GL_CCW);
 
-    CFDPlayer *Player = Cast<CFDPlayer *>(MainLevel->GetActor(0));
+    glEnable(GL_ALPHA_TEST);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    GPlayer *Player = Cast<GPlayer *>(MainLevel->GetActor(0));
 
     glClearColor(0.251f, 0.62f, 0.902f, 1.0f);
 

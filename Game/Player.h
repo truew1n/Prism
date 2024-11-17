@@ -1,15 +1,15 @@
-#ifndef CFD_PLAYER_H
-#define CFD_PLAYER_H
+#ifndef G_PLAYER_H
+#define G_PLAYER_H
 
 #include "Actor.h"
 #include "MeshComponent.h"
 #include "CameraComponent.h"
 
-class CFDPlayer : public CActor {
+class GPlayer : public CActor {
 public:
-    CFDPlayer();
+    GPlayer();
     void Tick(float DeltaTime) override;
-    ~CFDPlayer() override;
+    ~GPlayer() override;
 
     CSceneComponent *SceneComponent;
 

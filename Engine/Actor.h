@@ -16,7 +16,7 @@ public:
     CSceneComponent *RootComponent;
 
     CActor();
-    void Draw();
+    virtual void Draw();
     virtual void Tick(float DeltaTime) override;
     ~CActor() override;
 
